@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams, withRouter } from 'react-router-dom';
 import EmployeeCard from './EmployeeCard';
 import KontaktOss from './KontaktOss';
+import Banner from '../Banner';
 
 
 const WholePageContainer = styled.section`
@@ -62,6 +63,8 @@ export const OfficeDetail = ({ number }) => {
   const { id } = useParams();
 
   return (
+    <>
+    <Banner title={`Kontor Rørlegger ${id}`}/>
     <WholePageContainer>
       <GreetingContainer>
         <Title>Velkommen til Rørlegger {id}</Title>
@@ -84,6 +87,7 @@ export const OfficeDetail = ({ number }) => {
         <KontaktOss />
       </Container>
     </WholePageContainer>
+    </>
   );
 };
 
