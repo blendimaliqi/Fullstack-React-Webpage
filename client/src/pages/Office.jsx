@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThLarge, faThList } from '@fortawesome/free-solid-svg-icons';
 import OfficeGrid from '../components/Office/OfficeGrid.jsx';
+import OfficeList from '../components/Office/OfficeList.jsx';
 
 const Container = styled.section`
   margin-top: 8rem;
@@ -61,6 +62,7 @@ const FlexContainer = styled.section`
   padding: 0 11.5rem;
 `;
 
+
 const Office = () => {
   const [offices, setOffices] = useState([
     {
@@ -99,11 +101,18 @@ const Office = () => {
       email: 'lokasjonnummer@epost.no',
     },
   ]);
+  const [gridView, setGridView] = useState(true);
+  const [listView, setListView] = useState(false);
 
-  const location = 'Fredikstad';
-  const location2 = 'Sarpsborg';
-  const location3 = 'Moss';
-  const location4 = 'Oslo';
+  const onListBtnClick = () => {
+    setListView(true);
+    setGridView(false);
+  };
+
+  const onGridBtnClick = () => {
+    setGridView(true);
+    setListView(false);
+  };
 
   return (
     <Container>
@@ -113,21 +122,36 @@ const Office = () => {
         </LocationTitleWithBtns>
         <BtnContainer>
           <FilterBtn>FILTER</FilterBtn>
-          <ListBtn>
+          <ListBtn onClick={onListBtnClick}>
             <FontAwesomeIcon icon={faThList} />
           </ListBtn>
-          <GridBtn>
+          <GridBtn onClick={onGridBtnClick}>
             <FontAwesomeIcon icon={faThLarge} />
           </GridBtn>
         </BtnContainer>
       </FlexContainer>
-      <OfficeGrid location={location} offices={offices} />
-      <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
-      <OfficeGrid location={location2} offices={offices} />
-      <LocationTitle>Moss ({offices.length})</LocationTitle>
-      <OfficeGrid location={location3} offices={offices} />
-      <LocationTitle>Oslo ({offices.length})</LocationTitle>
-      <OfficeGrid location={location4} offices={offices} />
+      {gridView && (
+        <>
+          <OfficeGrid offices={offices} />
+          <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
+          <OfficeGrid offices={offices} />
+          <LocationTitle>Moss ({offices.length})</LocationTitle>
+          <OfficeGrid offices={offices} />
+          <LocationTitle>Oslo ({offices.length})</LocationTitle>
+          <OfficeGrid offices={offices} />
+        </>
+      )}
+      {listView && (
+        <>
+          <OfficeList offices={offices} />
+          <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
+          <OfficeList offices={offices} />
+          <LocationTitle>Moss ({offices.length})</LocationTitle>
+          <OfficeList offices={offices} />
+          <LocationTitle>Oslo ({offices.length})</LocationTitle>
+          <OfficeList offices={offices} />
+        </>
+      )}
     </Container>
   );
 };

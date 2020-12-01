@@ -21,7 +21,6 @@ const Container = styled.section`
   margin: 0 auto;
 `;
 
-
 export const OfficeGrid = ({ offices }) => (
   <Container>
     <Grid>
