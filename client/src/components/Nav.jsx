@@ -62,14 +62,13 @@ display: flex;
 
 const Login = styled.p `
   width: 7rem;
-  height: 4.2em;
+  height: 5.2em;
   padding: 14.5px 0px;
   text-align: center;
   background-color: #469FB9;
   color: white;
-  font-size: 1em;
 
-  & p {
+  &  {
     font-size: 0.8em;
   }
 
@@ -106,10 +105,7 @@ const Nav = () => (
       <NavMenuItem>
         <NavLink  exact to="/login" activeClassName="active">
           <Login>
-            <p>
             LOGG INN
-            </p>
-            
           </Login>
         </NavLink>
       </NavMenuItem>
