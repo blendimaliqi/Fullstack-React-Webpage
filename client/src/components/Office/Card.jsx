@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useParams, withRouter } from 'react-router-dom';
 
 const Container = styled.article`
   border: 1px solid black;
@@ -18,13 +19,13 @@ const Paragraph = styled.p`
   font-size: 0.9rem;
 `;
 
-const Card = ({name, adress, phone, email}) => (
-  <Container>
-    <Name>{name}</Name>
+const Card = ({name, adress, phone, email, index, history}) => (
+  <Container onClick={() => history.push(`kontorer/${index + 1}`)}>
+    <Name>{`Rørlegger nummer ${index + 1}`}</Name>
     <Paragraph>{adress}</Paragraph>
     <Paragraph>{phone}</Paragraph>
     <Paragraph>{email}</Paragraph>
   </Container>
 );
 
-export default Card;
+export default withRouter(Card);

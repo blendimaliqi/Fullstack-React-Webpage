@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import { useParams, withRouter } from 'react-router-dom';
 import EmployeeCard from './EmployeeCard';
 import KontaktOss from './KontaktOss';
+
 
 const WholePageContainer = styled.section`
   display: flex;
@@ -58,10 +59,12 @@ export const OfficeDetail = ({ number }) => {
     14,
   ]);
 
+  const { id } = useParams();
+
   return (
     <WholePageContainer>
       <GreetingContainer>
-        <Title>Velkommen til Rørlegger {number}</Title>
+        <Title>Velkommen til Rørlegger {id}</Title>
         <Paragraph>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
           nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,

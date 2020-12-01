@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useParams, withRouter } from 'react-router-dom';
+
 
 const Container = styled.article`
   display: flex;
@@ -33,14 +35,20 @@ const BlackBox = styled.section`
   padding: 3px;
 `;
 
-const ListItem = ({ index, name, adress, phone, email }) => (
-  <Container>
+
+const ListItem = ({ index, name, adress, phone, email, history }) => {
+
+  const { id } = useParams();
+
+    return (
+  <Container onClick={() => history.push(`kontorer/${index + 1}`)}>
     <BlackBox>{index + 1}</BlackBox>
     <Name>{name}</Name>
     <Paragraph>{adress}</Paragraph>
     <Paragraph>{phone}</Paragraph>
     <Paragraph>{email}</Paragraph>
   </Container>
-);
+  );
+}
 
-export default ListItem;
+export default withRouter(ListItem);
