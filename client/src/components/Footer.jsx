@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const StyledFooter = styled.footer `
     display: flex;
     justify-content: center;
+    align-self: flex-end;
     flex-wrap: wrap;
     margin: 6px;
 

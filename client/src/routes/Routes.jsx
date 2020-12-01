@@ -4,6 +4,7 @@ import NoMatch from '../components/NoMatch';
 import { Footer } from '../components/Footer';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
+import OfficeDetail from '../components/OfficeDetail/OfficeDetail';
 
 const Routes = () => (
   <Router>
@@ -11,6 +12,9 @@ const Routes = () => (
       <Switch>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route exact path="/detaljer">
+          <OfficeDetail />
         </Route>
         <Route path="*">
           <NoMatch />
