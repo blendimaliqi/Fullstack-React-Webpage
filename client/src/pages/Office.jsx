@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThLarge, faThList } from '@fortawesome/free-solid-svg-icons';
 import OfficeGrid from '../components/Office/OfficeGrid.jsx';
 import OfficeList from '../components/Office/OfficeList.jsx';
+import Banner from '../components/Banner';
 
 const Container = styled.section`
   margin-top: 8rem;
@@ -62,6 +63,10 @@ const FlexContainer = styled.section`
   padding: 0 11.5rem;
 `;
 
+const NoMarginContainer = styled.section`
+  margin: 0;
+  padding: 0;
+`;
 
 const Office = () => {
   const [offices, setOffices] = useState([
@@ -115,44 +120,47 @@ const Office = () => {
   };
 
   return (
-    <Container>
-      <FlexContainer>
-        <LocationTitleWithBtns>
-          Fredrikstad ({offices.length})
-        </LocationTitleWithBtns>
-        <BtnContainer>
-          <FilterBtn>FILTER</FilterBtn>
-          <ListBtn onClick={onListBtnClick}>
-            <FontAwesomeIcon icon={faThList} />
-          </ListBtn>
-          <GridBtn onClick={onGridBtnClick}>
-            <FontAwesomeIcon icon={faThLarge} />
-          </GridBtn>
-        </BtnContainer>
-      </FlexContainer>
-      {gridView && (
-        <>
-          <OfficeGrid offices={offices} />
-          <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
-          <OfficeGrid offices={offices} />
-          <LocationTitle>Moss ({offices.length})</LocationTitle>
-          <OfficeGrid offices={offices} />
-          <LocationTitle>Oslo ({offices.length})</LocationTitle>
-          <OfficeGrid offices={offices} />
-        </>
-      )}
-      {listView && (
-        <>
-          <OfficeList offices={offices} />
-          <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
-          <OfficeList offices={offices} />
-          <LocationTitle>Moss ({offices.length})</LocationTitle>
-          <OfficeList offices={offices} />
-          <LocationTitle>Oslo ({offices.length})</LocationTitle>
-          <OfficeList offices={offices} />
-        </>
-      )}
-    </Container>
+    <>
+      <Banner title="Våre kontorer" />
+      <Container>
+        <FlexContainer>
+          <LocationTitleWithBtns>
+            Fredrikstad ({offices.length})
+          </LocationTitleWithBtns>
+          <BtnContainer>
+            <FilterBtn>FILTER</FilterBtn>
+            <ListBtn onClick={onListBtnClick}>
+              <FontAwesomeIcon icon={faThList} />
+            </ListBtn>
+            <GridBtn onClick={onGridBtnClick}>
+              <FontAwesomeIcon icon={faThLarge} />
+            </GridBtn>
+          </BtnContainer>
+        </FlexContainer>
+        {gridView && (
+          <>
+            <OfficeGrid offices={offices} />
+            <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
+            <OfficeGrid offices={offices} />
+            <LocationTitle>Moss ({offices.length})</LocationTitle>
+            <OfficeGrid offices={offices} />
+            <LocationTitle>Oslo ({offices.length})</LocationTitle>
+            <OfficeGrid offices={offices} />
+          </>
+        )}
+        {listView && (
+          <>
+            <OfficeList offices={offices} />
+            <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
+            <OfficeList offices={offices} />
+            <LocationTitle>Moss ({offices.length})</LocationTitle>
+            <OfficeList offices={offices} />
+            <LocationTitle>Oslo ({offices.length})</LocationTitle>
+            <OfficeList offices={offices} />
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 

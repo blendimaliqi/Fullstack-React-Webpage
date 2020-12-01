@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const StyledNav = styled.nav`
   width: 100%;
-  display:flex;
+  display: flex;
   justify-content: flex-end;
   box-shadow: 0px 2px 2px rgba(196, 199, 204, 0.6);
 `;
@@ -17,10 +17,7 @@ const NavMenu = styled.ul`
   list-style: none;
   padding: 0;
   justify-content: flex-end;
-  
 `;
-
-
 
 const NavMenuItem = styled.li`
   padding: 0px 0px 0px 20px;
@@ -37,14 +34,13 @@ const NavMenuItem = styled.li`
     text-decoration: none;
 
     &.active {
-      color: #53A5BE;
-      
+      color: #53a5be;
     }
   }
 `;
 
 const Title = styled.h1`
-display: flex;
+  display: flex;
   padding: 20px;
   font-weight: bolder;
   color: #333;
@@ -57,30 +53,28 @@ display: flex;
   &.active {
     color: #007b5f;
   }
-
 `;
 
-const Login = styled.p `
+const Login = styled.p`
   width: 7rem;
   height: 5.2em;
   padding: 14.5px 0px;
   text-align: center;
-  background-color: #469FB9;
+  background-color: #469fb9;
   color: white;
 
-  &  {
+  & {
     font-size: 0.8em;
   }
-
 `;
 
 const Nav = () => (
   <StyledNav>
-        <Title>
-        <NavLink exact to="/" activeClassName="active">
-          FG
-        </NavLink>
-      </Title>
+    <Title>
+      <NavLink exact to="/" activeClassName="active">
+        FG
+      </NavLink>
+    </Title>
     <NavMenu>
       <NavMenuItem>
         <NavLink exact to="/" activeClassName="active">
@@ -88,7 +82,7 @@ const Nav = () => (
         </NavLink>
       </NavMenuItem>
       <NavMenuItem>
-      <NavLink exact to="/kontorer" activeClassName="active">
+        <NavLink exact to="/kontorer" activeClassName="active">
           Kontorer
         </NavLink>
       </NavMenuItem>
@@ -103,10 +97,8 @@ const Nav = () => (
         </NavLink>
       </NavMenuItem>
       <NavMenuItem>
-        <NavLink  exact to="/login" activeClassName="active">
-          <Login>
-            LOGG INN
-          </Login>
+        <NavLink exact to="/login" activeClassName="active">
+          <Login>LOGG INN</Login>
         </NavLink>
       </NavMenuItem>
     </NavMenu>
