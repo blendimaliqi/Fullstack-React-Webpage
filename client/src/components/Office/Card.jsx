@@ -5,7 +5,7 @@ const Container = styled.article`
   border: 1px solid black;
   padding: 1rem;
 `;
-const Title = styled.h3`
+const Name = styled.h3`
   font-weight: bold;
   padding: 0;
   margin: 0;
@@ -18,12 +18,12 @@ const Paragraph = styled.p`
   font-size: 0.9rem;
 `;
 
-const Card = () => (
+const Card = ({name, adress, phone, email}) => (
   <Container>
-    <Title>Rørlegger nummer</Title>
-    <Paragraph>Rørleggerveien nummer</Paragraph>
-    <Paragraph>69 99 00 00</Paragraph>
-    <Paragraph>LokasjonNummer@epost.no</Paragraph>
+    <Name>{name}</Name>
+    <Paragraph>{adress}</Paragraph>
+    <Paragraph>{phone}</Paragraph>
+    <Paragraph>{email}</Paragraph>
   </Container>
 );
 
