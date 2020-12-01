@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.article`
   border: 1px solid black;
-  max-width: 12%;
   padding: 1rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 `;
 const Title = styled.h3`
   font-weight: bold;
