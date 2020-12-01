@@ -5,6 +5,7 @@ import { Footer } from '../components/Footer';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
 import OfficeDetail from '../components/OfficeDetail/OfficeDetail';
+import { Contact } from '../pages/Contact';
 
 const Routes = () => (
   <Router>
@@ -12,6 +13,9 @@ const Routes = () => (
       <Switch>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route exact path="/kontakt">
+          <Contact />
         </Route>
         <Route exact path="/detaljer">
           <OfficeDetail />
