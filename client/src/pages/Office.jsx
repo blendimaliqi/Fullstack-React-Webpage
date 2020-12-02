@@ -12,18 +12,6 @@ const Container = styled.section`
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 `;
 
-const FilterBtn = styled.button`
-  display: flex;
-  background-color: lightgray;
-  padding: 1.5rem 2.7rem;
-  border: 0;
-  font-weight: bold;
-  font-size: 0.6rem;
-  max-height: 4rem;
-  align-items: center;
-  margin-right: 1.3rem;
-`;
-
 const ListBtn = styled.button`
   font-size: 2rem;
   background-color: white;
@@ -69,8 +57,7 @@ const NoMarginContainer = styled.section`
   padding: 0;
 `;
 
-
-const Select = styled.select `
+const Select = styled.select`
   display: flex;
   background-color: lightgray;
   padding: 1.5rem 2.7rem;
@@ -120,7 +107,7 @@ const Office = () => {
       email: 'lokasjonnummer@epost.no',
     },
   ]);
-  
+
   const [officesFredrikstad, setOfficesFredrikstad] = useState([
     {
       id: 1,
@@ -179,7 +166,7 @@ const Office = () => {
       email: 'lokasjonnummer@epost.no',
     },
   ]);
-  
+
   const [officesMoss, setOfficesMoss] = useState([
     {
       id: 1,
@@ -216,12 +203,13 @@ const Office = () => {
       phone: '69 99 00 00',
       email: 'lokasjonnummer@epost.no',
     },
-    {id: 6,
-    name: 'rørlegger nummer',
-    adress: 'rørlegger gata',
-    phone: '69 99 00 00',
-    email: 'lokasjonnummer@epost.no',
-  },
+    {
+      id: 6,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
   ]);
 
   const [officesOslo, setOfficesOslo] = useState([
@@ -260,27 +248,28 @@ const Office = () => {
       phone: '69 99 00 00',
       email: 'lokasjonnummer@epost.no',
     },
-    {id: 6,
-    name: 'rørlegger nummer',
-    adress: 'rørlegger gata',
-    phone: '69 99 00 00',
-    email: 'lokasjonnummer@epost.no',
-  },
-    {id: 7,
-    name: 'rørlegger nummer',
-    adress: 'rørlegger gata',
-    phone: '69 99 00 00',
-    email: 'lokasjonnummer@epost.no',
-  },
+    {
+      id: 6,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 7,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
   ]);
 
-  
-  const [offices, setOffices] = useState([])
+  const [offices, setOffices] = useState([]);
 
   const [gridView, setGridView] = useState(true);
   const [listView, setListView] = useState(false);
 
-  const [filterOptions, setFilterOption] = useState("Alle kontorer");
+  const [filterOptions, setFilterOption] = useState('Alle kontorer');
 
   const [chosenOffice, setChosenOffice] = useState([]);
 
@@ -297,22 +286,18 @@ const Office = () => {
   const handleFilter = (e) => {
     e.preventDefault();
     setFilterOption(e.target.value);
-    console.log(filterOptions + " i handleFIlter");
-    
-    if(filterOptions === "Fredrikstad") {
+    console.log(`${filterOptions} i handleFIlter`);
+
+    if (e.target.value === 'Fredrikstad') {
       setChosenOffice(officesFredrikstad);
-    } else if(filterOptions === "Sarpsborg") {
+    } else if (e.target.value === 'Sarpsborg') {
       setChosenOffice(officesSarpsborg);
-    }
-   else if(filterOptions === "Moss") {
+    } else if (e.target.value === 'Moss') {
       setChosenOffice(officesMoss);
-    }
-    else if(filterOptions === "Oslo") {
+    } else if (e.target.value === 'Oslo') {
       setChosenOffice(officesOslo);
     }
-  }
-
-
+  };
 
   return (
     <>
@@ -321,21 +306,11 @@ const Office = () => {
         <FlexContainer>
           <BtnContainer>
             <Select onChange={handleFilter} value={filterOptions}>
-            <option value="Alle kontorer">
-                Alle kontorer
-              </option>
-              <option value="Fredrikstad">
-                Fredrikstad
-              </option>
-              <option value="Sarpsborg">
-                Sarspborg
-              </option>
-              <option value="Moss">
-                Moss
-              </option>
-              <option value="Oslo">
-                Oslo
-              </option>
+              <option value="Alle kontorer">Alle kontorer</option>
+              <option value="Fredrikstad">Fredrikstad</option>
+              <option value="Sarpsborg">Sarspborg</option>
+              <option value="Moss">Moss</option>
+              <option value="Oslo">Oslo</option>
             </Select>
             <ListBtn onClick={onListBtnClick}>
               <FontAwesomeIcon icon={faThList} />
@@ -345,44 +320,71 @@ const Office = () => {
             </GridBtn>
           </BtnContainer>
         </FlexContainer>
-        {gridView &&  (
+        {gridView && (
           <>
-            {filterOptions==="Alle kontorer" &&
-            <>
-              <LocationTitle>Fredrikstad ({officesFredrikstad.length})</LocationTitle>
-              <OfficeGrid offices={officesFredrikstad} />
-              <LocationTitle>Sarpsborg ({officesSarpsborg.length})</LocationTitle>
-              <OfficeGrid offices={officesSarpsborg} />
-              <LocationTitle>Moss ({officesMoss.length})</LocationTitle>
-              <OfficeGrid offices={officesMoss} />
-              <LocationTitle>Oslo ({officesOslo.length})</LocationTitle>
-              <OfficeGrid offices={officesOslo} />
+            {filterOptions === 'Alle kontorer' && (
+              <>
+                <LocationTitle>
+                  Fredrikstad ({officesFredrikstad.length})
+                </LocationTitle>
+                <OfficeGrid offices={officesFredrikstad} />
+                <LocationTitle>
+                  Sarpsborg ({officesSarpsborg.length})
+                </LocationTitle>
+                <OfficeGrid offices={officesSarpsborg} />
+                <LocationTitle>Moss ({officesMoss.length})</LocationTitle>
+                <OfficeGrid offices={officesMoss} />
+                <LocationTitle>Oslo ({officesOslo.length})</LocationTitle>
+                <OfficeGrid offices={officesOslo} />
               </>
-            }
+            )}
 
-            {filterOptions!=="Alle kontorer" &&
-            <>
-            {chosenOffice.length!=0 &&
-            <>
-              <LocationTitle>{filterOptions} ({chosenOffice.length} {console.log(filterOptions + chosenOffice)})</LocationTitle>
-              <OfficeGrid offices={chosenOffice} />
-            </>
-            }
-            </>
-            
-            }
+            {filterOptions !== 'Alle kontorer' && (
+              <>
+                {chosenOffice.length != 0 && (
+                  <>
+                    <LocationTitle>
+                      {filterOptions} ({chosenOffice.length}{' '}
+                      {console.log(filterOptions + chosenOffice)})
+                    </LocationTitle>
+                    <OfficeGrid offices={chosenOffice} />
+                  </>
+                )}
+              </>
+            )}
           </>
-          
         )}
         {listView && (
           <>
-            <OfficeList offices={offices} />
-            <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
-            <OfficeList offices={offices} />
-            <LocationTitle>Moss ({offices.length})</LocationTitle>
-            <OfficeList offices={offices} />
-            <LocationTitle>Oslo ({offices.length})</LocationTitle>
-            <OfficeList offices={offices} />
+            {filterOptions === 'Alle kontorer' && (
+              <>
+                <LocationTitle>
+                  Fredrikstad ({officesFredrikstad.length})
+                </LocationTitle>
+                <OfficeList offices={officesFredrikstad} />
+                <LocationTitle>
+                  Sarpsborg ({officesSarpsborg.length})
+                </LocationTitle>
+                <OfficeList offices={officesSarpsborg} />
+                <LocationTitle>Moss ({officesMoss.length})</LocationTitle>
+                <OfficeList offices={officesMoss} />
+                <LocationTitle>Oslo ({officesOslo.length})</LocationTitle>
+                <OfficeList offices={officesOslo} />
+              </>
+            )}
+            {filterOptions !== 'Alle kontorer' && (
+              <>
+                {chosenOffice.length != 0 && (
+                  <>
+                    <LocationTitle>
+                      {filterOptions} ({chosenOffice.length}{' '}
+                      {console.log(filterOptions + chosenOffice)})
+                    </LocationTitle>
+                    <OfficeList offices={chosenOffice} />
+                  </>
+                )}
+              </>
+            )}
           </>
         )}
       </Container>
