@@ -19,12 +19,12 @@ const Paragraph = styled.p`
   font-size: 0.9rem;
 `;
 
-const Card = ({name, adress, phone, email, index, history}) => (
+const Card = ({ adress, phone, location, index, history }) => (
   <Container onClick={() => history.push(`kontorer/${index + 1}`)}>
     <Name>{`Rørlegger nummer ${index + 1}`}</Name>
-    <Paragraph>{adress}</Paragraph>
+    <Paragraph>{`${adress} ${index + 1}`}</Paragraph>
     <Paragraph>{phone}</Paragraph>
-    <Paragraph>{email}</Paragraph>
+    <Paragraph>{`${location}${index}@epost.no`}</Paragraph>
   </Container>
 );
 
