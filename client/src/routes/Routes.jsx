@@ -8,6 +8,7 @@ import OfficeDetail from '../components/OfficeDetail/OfficeDetail';
 import Office from '../pages/Office';
 import { Contact } from '../pages/Contact';
 import FagartiklerPage from '../pages/FagartiklerPage';
+import NewArticle from '../pages/NewArticle';
 
 const Routes = () => (
   <Router>
@@ -27,6 +28,9 @@ const Routes = () => (
         </Route>
         <Route exact path="/fagartikler">
           <FagartiklerPage />
+        </Route>
+        <Route exact path="/nyartikkel">
+          <NewArticle />
         </Route>
         <Route path="*">
           <NoMatch />
