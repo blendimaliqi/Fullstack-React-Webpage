@@ -61,6 +61,7 @@ const FlexContainer = styled.section`
   flex-direction: row;
   justify-content: space-between;
   padding: 0 11.5rem;
+  margin-bottom: 50px;
 `;
 
 const NoMarginContainer = styled.section`
@@ -68,8 +69,21 @@ const NoMarginContainer = styled.section`
   padding: 0;
 `;
 
+
+const Select = styled.select `
+  display: flex;
+  background-color: lightgray;
+  padding: 1.5rem 2.7rem;
+  border: 0;
+  font-weight: bold;
+  font-size: 0.6rem;
+  max-height: 4rem;
+  align-items: center;
+  margin-right: 1.3rem;
+`;
+
 const Office = () => {
-  const [offices, setOffices] = useState([
+  const [officesSarpsborg, setOfficesSarpsborg] = useState([
     {
       id: 1,
       name: 'rørlegger nummer',
@@ -106,8 +120,169 @@ const Office = () => {
       email: 'lokasjonnummer@epost.no',
     },
   ]);
+  
+  const [officesFredrikstad, setOfficesFredrikstad] = useState([
+    {
+      id: 1,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 2,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 3,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 4,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 5,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 6,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 7,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 8,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+  ]);
+  
+  const [officesMoss, setOfficesMoss] = useState([
+    {
+      id: 1,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 2,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 3,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 4,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 5,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {id: 6,
+    name: 'rørlegger nummer',
+    adress: 'rørlegger gata',
+    phone: '69 99 00 00',
+    email: 'lokasjonnummer@epost.no',
+  },
+  ]);
+
+  const [officesOslo, setOfficesOslo] = useState([
+    {
+      id: 1,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 2,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 3,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 4,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {
+      id: 5,
+      name: 'rørlegger nummer',
+      adress: 'rørlegger gata',
+      phone: '69 99 00 00',
+      email: 'lokasjonnummer@epost.no',
+    },
+    {id: 6,
+    name: 'rørlegger nummer',
+    adress: 'rørlegger gata',
+    phone: '69 99 00 00',
+    email: 'lokasjonnummer@epost.no',
+  },
+    {id: 7,
+    name: 'rørlegger nummer',
+    adress: 'rørlegger gata',
+    phone: '69 99 00 00',
+    email: 'lokasjonnummer@epost.no',
+  },
+  ]);
+
+  
+  const [offices, setOffices] = useState([])
+
   const [gridView, setGridView] = useState(true);
   const [listView, setListView] = useState(false);
+
+  const [filterOptions, setFilterOption] = useState("Alle kontorer");
+
+  const [chosenOffice, setChosenOffice] = useState([]);
 
   const onListBtnClick = () => {
     setListView(true);
@@ -119,16 +294,49 @@ const Office = () => {
     setListView(false);
   };
 
+  const handleFilter = (e) => {
+    e.preventDefault();
+    setFilterOption(e.target.value);
+    console.log(filterOptions + " i handleFIlter");
+    
+    if(filterOptions === "Fredrikstad") {
+      setChosenOffice(officesFredrikstad);
+    } else if(filterOptions === "Sarpsborg") {
+      setChosenOffice(officesSarpsborg);
+    }
+   else if(filterOptions === "Moss") {
+      setChosenOffice(officesMoss);
+    }
+    else if(filterOptions === "Oslo") {
+      setChosenOffice(officesOslo);
+    }
+  }
+
+
+
   return (
     <>
       <Banner title="Våre kontorer" />
       <Container>
         <FlexContainer>
-          <LocationTitleWithBtns>
-            Fredrikstad ({offices.length})
-          </LocationTitleWithBtns>
           <BtnContainer>
-            <FilterBtn>FILTER</FilterBtn>
+            <Select onChange={handleFilter} value={filterOptions}>
+            <option value="Alle kontorer">
+                Alle kontorer
+              </option>
+              <option value="Fredrikstad">
+                Fredrikstad
+              </option>
+              <option value="Sarpsborg">
+                Sarspborg
+              </option>
+              <option value="Moss">
+                Moss
+              </option>
+              <option value="Oslo">
+                Oslo
+              </option>
+            </Select>
             <ListBtn onClick={onListBtnClick}>
               <FontAwesomeIcon icon={faThList} />
             </ListBtn>
@@ -137,16 +345,34 @@ const Office = () => {
             </GridBtn>
           </BtnContainer>
         </FlexContainer>
-        {gridView && (
+        {gridView &&  (
           <>
-            <OfficeGrid offices={offices} />
-            <LocationTitle>Sarpsborg ({offices.length})</LocationTitle>
-            <OfficeGrid offices={offices} />
-            <LocationTitle>Moss ({offices.length})</LocationTitle>
-            <OfficeGrid offices={offices} />
-            <LocationTitle>Oslo ({offices.length})</LocationTitle>
-            <OfficeGrid offices={offices} />
+            {filterOptions==="Alle kontorer" &&
+            <>
+              <LocationTitle>Fredrikstad ({officesFredrikstad.length})</LocationTitle>
+              <OfficeGrid offices={officesFredrikstad} />
+              <LocationTitle>Sarpsborg ({officesSarpsborg.length})</LocationTitle>
+              <OfficeGrid offices={officesSarpsborg} />
+              <LocationTitle>Moss ({officesMoss.length})</LocationTitle>
+              <OfficeGrid offices={officesMoss} />
+              <LocationTitle>Oslo ({officesOslo.length})</LocationTitle>
+              <OfficeGrid offices={officesOslo} />
+              </>
+            }
+
+            {filterOptions!=="Alle kontorer" &&
+            <>
+            {chosenOffice.length!=0 &&
+            <>
+              <LocationTitle>{filterOptions} ({chosenOffice.length} {console.log(filterOptions + chosenOffice)})</LocationTitle>
+              <OfficeGrid offices={chosenOffice} />
+            </>
+            }
+            </>
+            
+            }
           </>
+          
         )}
         {listView && (
           <>
