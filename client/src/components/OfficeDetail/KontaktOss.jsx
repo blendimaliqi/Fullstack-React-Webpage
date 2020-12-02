@@ -13,7 +13,7 @@ const KontaktBanner = styled.section`
 `;
 
 export const KontaktOss = () => (
-  <KontaktBanner>Kontakt oss på 69 99 00 00</KontaktBanner>
+  <KontaktBanner>`Kontakt oss på 69 99 00 00`</KontaktBanner>
 );
 
 export default KontaktOss;

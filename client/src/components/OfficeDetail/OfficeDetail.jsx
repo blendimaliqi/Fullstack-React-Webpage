@@ -5,7 +5,6 @@ import EmployeeCard from './EmployeeCard';
 import KontaktOss from './KontaktOss';
 import Banner from '../Banner';
 
-
 const WholePageContainer = styled.section`
   display: flex;
   flex-direction: column;
@@ -64,29 +63,29 @@ export const OfficeDetail = ({ number }) => {
 
   return (
     <>
-    <Banner title={`Kontor Rørlegger ${id}`}/>
-    <WholePageContainer>
-      <GreetingContainer>
-        <Title>Velkommen til Rørlegger {id}</Title>
-        <Paragraph>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-          ipsum dolor sit amet
-        </Paragraph>
-      </GreetingContainer>
+      <Banner title={`Kontor Rørlegger ${id}`} />
+      <WholePageContainer>
+        <GreetingContainer>
+          <Title>Velkommen til Rørlegger {id}</Title>
+          <Paragraph>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet
+          </Paragraph>
+        </GreetingContainer>
 
-      <Container>
-        <Title>Våre Ansatte</Title>
-        <EmployeesGrid>
-          {employees.map((number) => (
-            <EmployeeCard key={number} />
-          ))}
-        </EmployeesGrid>
-        <KontaktOss />
-      </Container>
-    </WholePageContainer>
+        <Container>
+          <Title>Våre Ansatte</Title>
+          <EmployeesGrid>
+            {employees.map((number) => (
+              <EmployeeCard key={number} />
+            ))}
+          </EmployeesGrid>
+          <KontaktOss />
+        </Container>
+      </WholePageContainer>
     </>
   );
 };
