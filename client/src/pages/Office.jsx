@@ -323,16 +323,24 @@ const Office = () => {
             {filterOptions === 'Alle kontorer' && (
               <>
                 <LocationTitle>
-                  Fredrikstad ({officesFredrikstad.length})
+                  Fredrikstad ({officesFredrikstad.length}
+                  {' Kontorer'})
                 </LocationTitle>
                 <OfficeGrid offices={officesFredrikstad} />
                 <LocationTitle>
-                  Sarpsborg ({officesSarpsborg.length})
+                  Sarpsborg ({officesSarpsborg.length}
+                  {' Kontorer'})
                 </LocationTitle>
                 <OfficeGrid offices={officesSarpsborg} />
-                <LocationTitle>Moss ({officesMoss.length})</LocationTitle>
+                <LocationTitle>
+                  Moss ({officesMoss.length}
+                  {' Kontorer'})
+                </LocationTitle>
                 <OfficeGrid offices={officesMoss} />
-                <LocationTitle>Oslo ({officesOslo.length})</LocationTitle>
+                <LocationTitle>
+                  Oslo ({officesOslo.length}
+                  {' Kontorer'})
+                </LocationTitle>
                 <OfficeGrid offices={officesOslo} />
               </>
             )}
@@ -342,7 +350,8 @@ const Office = () => {
                 {chosenOffice.length != 0 && (
                   <>
                     <LocationTitle>
-                      {filterOptions} ({chosenOffice.length}{' '}
+                      {filterOptions} ({chosenOffice.length}
+                      {' Kontorer'}
                       {console.log(filterOptions + chosenOffice)})
                     </LocationTitle>
                     <OfficeGrid offices={chosenOffice} />
@@ -357,16 +366,24 @@ const Office = () => {
             {filterOptions === 'Alle kontorer' && (
               <>
                 <LocationTitle>
-                  Fredrikstad ({officesFredrikstad.length})
+                  Fredrikstad ({officesFredrikstad.length}
+                  {' Kontorer'})
                 </LocationTitle>
                 <OfficeList offices={officesFredrikstad} />
                 <LocationTitle>
-                  Sarpsborg ({officesSarpsborg.length})
+                  Sarpsborg ({officesSarpsborg.length}
+                  {' Kontorer'})
                 </LocationTitle>
                 <OfficeList offices={officesSarpsborg} />
-                <LocationTitle>Moss ({officesMoss.length})</LocationTitle>
+                <LocationTitle>
+                  Moss ({officesMoss.length}
+                  {' Kontorer'})
+                </LocationTitle>
                 <OfficeList offices={officesMoss} />
-                <LocationTitle>Oslo ({officesOslo.length})</LocationTitle>
+                <LocationTitle>
+                  Oslo ({officesOslo.length}
+                  {' Kontorer'})
+                </LocationTitle>
                 <OfficeList offices={officesOslo} />
               </>
             )}
@@ -375,7 +392,8 @@ const Office = () => {
                 {chosenOffice.length != 0 && (
                   <>
                     <LocationTitle>
-                      {filterOptions} ({chosenOffice.length}{' '}
+                      {filterOptions} ({chosenOffice.length}
+                      {' Kontorer'}
                       {console.log(filterOptions + chosenOffice)})
                     </LocationTitle>
                     <OfficeList offices={chosenOffice} />
