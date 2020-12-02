@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
 
+
 const PageContainer = styled.section`
   display: flex;
   justify-content: center;
@@ -118,6 +119,7 @@ export const Fagartikler = ({ history }) => {
       </WholePage>
     </>
   );
+
 };
 
 export default withRouter(Fagartikler);
