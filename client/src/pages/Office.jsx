@@ -8,8 +8,6 @@ import Banner from '../components/Banner';
 
 const Container = styled.section`
   margin-top: 8rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 `;
 
 const FilterBtn = styled.button`

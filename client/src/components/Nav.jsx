@@ -4,9 +4,10 @@ import styled from 'styled-components';
 
 const StyledNav = styled.nav`
   width: 100%;
+  max-height: 3rem;
   display: flex;
   justify-content: flex-end;
-  box-shadow: 0px 2px 2px rgba(196, 199, 204, 0.6);
+  box-shadow: 0px 4px 4px rgba(196, 199, 204, 0.6);
 `;
 
 const NavMenu = styled.ul`
@@ -41,27 +42,34 @@ const NavMenuItem = styled.li`
 
 const Title = styled.h1`
   display: flex;
-  padding: 20px;
+  //padding: 20px;
   font-weight: bolder;
   color: #333;
   font-size: 14px;
   font-weight: 700;
-  line-height: 3.456;
-  padding: 5px 0;
-  text-decoration: none;
+  //line-height: 3.456;
+  //padding: 5px 0;
+  text-decoration: none !important;
 
-  &.active {
-    color: #007b5f;
+  & > a {
+    color: #333;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0px;
+    text-decoration: none;
   }
 `;
 
+
+
 const Login = styled.p`
   width: 7rem;
-  height: 5.2em;
-  padding: 14.5px 0px;
+  height: 3rem;
   text-align: center;
   background-color: #469fb9;
   color: white;
+  margin: 0;
 
   & {
     font-size: 0.8em;

@@ -4,10 +4,8 @@ import customTheme from './src/styles/theme';
 import Routes from './src/routes/Routes';
 
 const App = () => (
-  <ThemeProvider theme={customTheme}>
-    <CSSReset />
-    <Routes />
-  </ThemeProvider>
-);
+<>
+<Routes />
+</>);
 
 export default App;
