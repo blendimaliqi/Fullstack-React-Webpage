@@ -7,7 +7,7 @@ const StyledNav = styled.nav`
   max-height: 3rem;
   display: flex;
   justify-content: flex-end;
-  box-shadow: 0px 4px 4px rgba(196, 199, 204, 0.6);
+  box-shadow: 3px 9px 9px rgba(196, 199, 204, 0.6);
 `;
 
 const NavMenu = styled.ul`

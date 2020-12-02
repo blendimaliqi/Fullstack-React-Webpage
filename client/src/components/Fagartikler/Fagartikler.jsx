@@ -1,7 +1,9 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
+
 
 
 const PageContainer = styled.section `
@@ -58,14 +60,16 @@ const WholePage = styled.section `
     justify-content: center; 
 `;
 
-export const Fagartikler = () => {
+
+
+export const Fagartikler = ({history}) => {
     return (
         <>
         <Banner title={"Fagartikler"} />
         <WholePage>
         <PageContainer>
             <NyArtikkelContainer>
-                <NyArtikkelButton>NY ARTIKKEL</NyArtikkelButton>
+                <NyArtikkelButton onClick={() => history.push("/nyartikkel")}>NY ARTIKKEL</NyArtikkelButton>
             </NyArtikkelContainer>
         <SearchAndFilterContainer>
             <SearchAndFilterButton>SØK</SearchAndFilterButton>
@@ -90,4 +94,4 @@ export const Fagartikler = () => {
     )
 };
 
-export default Fagartikler;
+export default withRouter(Fagartikler);
