@@ -1,6 +1,8 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Banner from '../components/Banner';
+import ModalCategory from '../components/Fagartikler/ModalCategory';
 
 const Input = styled.input `
     border: 1px solid black;
@@ -68,15 +70,100 @@ const NewCategoryButton = styled.button `
 
 const CategoryWrapper = styled.section `
     display:grid;
-    grid-template-columns: 6fr 1fr;
+    grid-template-columns: 12fr 1fr;
     grid-gap: 30px;
+    margin-bottom: 50px;
+`;
+
+const AuthorWrapper = styled.section `
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-gap: 30px;
+    height: 50px;
+    margin-bottom: 50px;
 `;
 
 export const NewArticle = () => {
+
+    const [state, setState] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setState(false);
+    }
+
+    const handleCategoryChange = (e) => {
+        console.log(e.target.value);
+    }
+
+    const handleSelect = (e) => {
+        console.log(e.target.value)
+    }
+
+    const handleAuthor = (e) => {
+        console.log(e.target.value)
+    }
+
+    const closeModal = () => {
+        setState(false);
+    }
+
+    const [category, setCategory] = useState();
+
+    const [author, setAuthor] = useState();
+
+        const selectCategory = () => {
+        setCategory((
+            <select onChange={handleSelect} value={category}>
+                <option>
+                    Julenisse
+                </option>
+                <option>
+                    Pepperkaker
+                </option>
+                <option>
+                    Brun Julebrus
+                </option>
+                <option>
+                    Pinnekjøtt
+                </option>
+            </select>
+        ))
+    };
+
+    const selectAuthor = () => {
+        setAuthor((
+            <select onChange={handleAuthor} value={author}>
+                <option>
+                    Iron Man
+                </option>
+                <option>
+                    Nissefar
+                </option>
+                <option>
+                    Magnus Carlsen
+                </option>
+                <option>
+                    Justin Bieber
+                </option>
+            </select>
+        ))
+    };
+    
+
+    useEffect(() => {
+        selectCategory();
+        selectAuthor();
+    }, []);
+    
+
+
     return (
         <>
         <Banner title={"Ny Artikkel"} />
         <InputWrapper>
+            <ModalCategory state={state} handleCategoryChange={handleCategoryChange} handleSubmit={handleSubmit} setModalOpen={closeModal}/>
+
             <Label>Label for inputfelt </Label>
             <Input />
             <Label>Label for inputfelt </Label>
@@ -89,12 +176,14 @@ export const NewArticle = () => {
             <Input />
             <Label>Label for kategori </Label>
             <CategoryWrapper>
-            <Input />
-            <NewCategoryButton>NY</NewCategoryButton>
+            {category}
+            <NewCategoryButton onClick={() => setState(true)}>NY</NewCategoryButton>
             </CategoryWrapper>
 
             <Label>Label for forfatter </Label>
-            <Input />
+            <AuthorWrapper>
+                {author}
+            </AuthorWrapper>
 
             <NyArtikkelButton >CREATE</NyArtikkelButton>
         </InputWrapper>

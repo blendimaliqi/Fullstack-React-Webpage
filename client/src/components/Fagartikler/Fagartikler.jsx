@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
 
-
-
 const PageContainer = styled.section `
     display: flex;
     justify-content: center;
@@ -26,7 +24,6 @@ const SearchAndFilterButton = styled.button `
     max-height: 4rem;
     align-items: center;
     margin-right: 1.3rem;
-
 `;
 
 const NyArtikkelContainer = styled.section `
@@ -54,42 +51,35 @@ const MainPage = styled.section `
     justify-content: center;
 `;
 
-
 const WholePage = styled.section `
     display: grid;
     justify-content: center; 
 `;
 
-
-
 export const Fagartikler = ({history}) => {
     return (
         <>
         <Banner title={"Fagartikler"} />
-        <WholePage>
-        <PageContainer>
-            <NyArtikkelContainer>
-                <NyArtikkelButton onClick={() => history.push("/nyartikkel")}>NY ARTIKKEL</NyArtikkelButton>
-            </NyArtikkelContainer>
-        <SearchAndFilterContainer>
-            <SearchAndFilterButton>SØK</SearchAndFilterButton>
-            <SearchAndFilterButton>FILTER</SearchAndFilterButton>
-        </SearchAndFilterContainer>
-        </PageContainer>
-        
-        <MainPage>
-            <Artikkel title={"Ny tittel"} text={"Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text "}/>
+            <WholePage>
+                <PageContainer>
+                    <NyArtikkelContainer>
+                        <NyArtikkelButton onClick={() => history.push("/nyartikkel")}>NY ARTIKKEL</NyArtikkelButton>
+                    </NyArtikkelContainer>
+                    <SearchAndFilterContainer>
+                        <SearchAndFilterButton>SØK</SearchAndFilterButton>
+                        <SearchAndFilterButton>FILTER</SearchAndFilterButton>
+                    </SearchAndFilterContainer>
+                </PageContainer>
+                <MainPage>
+                    <Artikkel title={"Ny tittel"} text={"Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text "}/>
 
-            <Artikkel title={"Ny tittel"} text={"Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text "}/>
-            
-            <Artikkel title={"Ny tittel"} text={"Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text "}/>
+                    <Artikkel title={"Ny tittel"} text={"Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text "}/>
+                    
+                    <Artikkel title={"Ny tittel"} text={"Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text "}/>
 
-            <Artikkel title={"Ny tittel"} text={"Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text "}/>
-            
-        </MainPage>
-        </WholePage>
-
-        
+                    <Artikkel title={"Ny tittel"} text={"Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text "}/>    
+                </MainPage>
+            </WholePage>
         </>
     )
 };
