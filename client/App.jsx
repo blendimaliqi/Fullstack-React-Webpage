@@ -5,9 +5,10 @@ import Routes from './src/routes/Routes';
 import ArticleDetails from './src/components/Article Details/ArticleDetails.jsx';
 
 const App = () => (
-/*<>
+<>
 <Routes />
-</>*/
-<ArticleDetails />);
+</>
+);
+//<ArticleDetails />);
 
 export default App;
