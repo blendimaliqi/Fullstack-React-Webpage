@@ -24,7 +24,8 @@ const ContainerAll = styled.section `
 
 const CategoryContainer = styled.h1 `
    margin-top: 20px;
-   margin-left: 4rem;
+   font-size: 1em;
+   margin-left: 10rem;
 `;
 
 const Header = styled.h1 `
@@ -37,11 +38,13 @@ const Header = styled.h1 `
 
 const Paragraph = styled.p `
     margin-left: 10px;
-    // kodesnutt under for å begrense tekst i paragraf hentet fra : https://stackoverflow.com/questions/21447269/how-to-limit-the-length-of-text-in-a-paragraph/21447588
+    width: 500px;
+    /* kodesnutt under for å begrense tekst i paragraf hentet fra : https://stackoverflow.com/questions/21447269/how-to-limit-the-length-of-text-in-a-paragraph/21447588
     width: 600px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    */
 `;
 
 
