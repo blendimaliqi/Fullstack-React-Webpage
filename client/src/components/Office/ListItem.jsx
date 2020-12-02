@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { useParams, withRouter } from 'react-router-dom';
 
-
 const Container = styled.article`
   display: flex;
   flex-direction: row;
@@ -35,20 +34,18 @@ const BlackBox = styled.section`
   padding: 3px;
 `;
 
-
-const ListItem = ({ index, name, adress, phone, email, history }) => {
-
+const ListItem = ({ index, name, adress, phone, location, history }) => {
   const { id } = useParams();
 
-    return (
-  <Container onClick={() => history.push(`kontorer/${index + 1}`)}>
-    <BlackBox>{index + 1}</BlackBox>
-    <Name>{name}</Name>
-    <Paragraph>{adress}</Paragraph>
-    <Paragraph>{phone}</Paragraph>
-    <Paragraph>{email}</Paragraph>
-  </Container>
+  return (
+    <Container onClick={() => history.push(`kontorer/${index + 1}`)}>
+      <BlackBox>{index + 1}</BlackBox>
+      <Name>{`${name} ${index + 1}`}</Name>
+      <Paragraph>{`${adress} ${index + 1}`}</Paragraph>
+      <Paragraph>{phone}</Paragraph>
+      <Paragraph>{`${location}${index}@epost.no`}</Paragraph>
+    </Container>
   );
-}
+};
 
 export default withRouter(ListItem);

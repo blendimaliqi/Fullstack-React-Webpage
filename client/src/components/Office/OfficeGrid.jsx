@@ -32,7 +32,7 @@ export const OfficeGrid = ({ offices }) => (
             name={office.name}
             adress={office.adress}
             phone={office.phone}
-            email={office.email}
+            location={office.location}
             index={index}
           />
         ))}
