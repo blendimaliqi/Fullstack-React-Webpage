@@ -35,7 +35,6 @@ const InputWrapper = styled.form`
 
 const NyArtikkelButton = styled.button`
   display: flex;
-  background-color: #469fb9;
   padding: 1.5rem 2.7rem;
   border: 0;
   width: 140px;
@@ -104,17 +103,35 @@ export const NewArticle = () => {
     author: '',
   });
 
+  const [state, setState] = useState(false);
+  const [inputValid, setInputValid] = useState(false);
+  const [category, setCategory] = useState();
+  const [author, setAuthor] = useState();
+
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
     setFormData((prev) => ({
       ...prev,
       ...inputValue,
     }));
+
+    Object.keys(formData).map(function (key, value) {
+        console.log(formData[key]);
+        if (formData[key] === '') {
+          setInputValid(false);
+          return;
+        }
+  
+        setInputValid(true);
+        return null;
+      });
   };
 
-  const [state, setState] = useState(false);
-
   const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleModalSubmit = (e) => {
     e.preventDefault();
     setState(false);
   };
@@ -123,36 +140,24 @@ export const NewArticle = () => {
     console.log(e.target.value);
   };
 
-  const handleSelect = (e) => {
-    console.log(e.target.value);
-  };
-
-  const handleAuthor = (e) => {
-    console.log(e.target.value);
-  };
-
   const closeModal = () => {
     setState(false);
   };
 
-  const [category, setCategory] = useState();
-
-  const [author, setAuthor] = useState();
-
   const selectCategory = () => {
     setCategory(
-      <select onChange={handleSelect} value={category}>
-        <option>Julenisse</option>
-        <option>Pepperkaker</option>
-        <option>Brun Julebrus</option>
-        <option>Pinnekjøtt</option>
+      <select name="category" onChange={updateValue}>
+        <option value="Julenisse">Julenisse</option>
+        <option value="Pepperkaker">Pepperkaker</option>
+        <option value="Brun Julebrus">Brun Julebrus</option>
+        <option value="Pinnekjøtt">Pinnekjøtt</option>
       </select>
     );
   };
 
   const selectAuthor = () => {
     setAuthor(
-      <select onChange={handleAuthor} value={author}>
+      <select name="author" onChange={updateValue}>
         <option>Iron Man</option>
         <option>Nissefar</option>
         <option>Magnus Carlsen</option>
@@ -166,6 +171,7 @@ export const NewArticle = () => {
     selectAuthor();
   }, []);
 
+
   return (
     <>
       <Banner title="Ny Artikkel" />
@@ -173,7 +179,7 @@ export const NewArticle = () => {
         <ModalCategory
           state={state}
           handleCategoryChange={handleCategoryChange}
-          handleSubmit={handleSubmit}
+          handleSubmit={handleModalSubmit}
           setModalOpen={closeModal}
         />
         <Label htmlFor="title">Tittel </Label>
@@ -204,7 +210,7 @@ export const NewArticle = () => {
         <Input type="text" name="date" value={formattedDate} readOnly />
         <Label>Label for inputfelt </Label>
         <Input />
-        <Label>Label for kategori </Label>
+        <Label htmlFor="category">Label for kategori </Label>
         <CategoryWrapper>
           {category}
           <NewCategoryButton onClick={() => setState(true)}>
@@ -212,9 +218,18 @@ export const NewArticle = () => {
           </NewCategoryButton>
         </CategoryWrapper>
 
-        <Label>Label for forfatter </Label>
+        <Label htmlFor="author">Label for forfatter </Label>
         <AuthorWrapper>{author}</AuthorWrapper>
-        <NyArtikkelButton>CREATE</NyArtikkelButton>
+        <NyArtikkelButton
+          type="submit"
+          onClick={handleSubmit}
+          style={{
+            backgroundColor: inputValid === true ? '#53a5be' : '#DBDBDB',
+          }}
+          disabled={inputValid === false}
+        >
+          CREATE
+        </NyArtikkelButton>
       </InputWrapper>
     </>
   );
