@@ -9,6 +9,7 @@ import Office from '../pages/Office';
 import { Contact } from '../pages/Contact';
 import FagartiklerPage from '../pages/FagartiklerPage';
 import NewArticle from '../pages/NewArticle';
+import ArticleDetails from '../components/Article Details/ArticleDetails';
 
 const Routes = () => (
   <Router>
@@ -28,6 +29,9 @@ const Routes = () => (
         </Route>
         <Route exact path="/fagartikler">
           <FagartiklerPage />
+        </Route>
+        <Route exact path="/fagartikler/:id">
+          <ArticleDetails />
         </Route>
         <Route exact path="/nyartikkel">
           <NewArticle />

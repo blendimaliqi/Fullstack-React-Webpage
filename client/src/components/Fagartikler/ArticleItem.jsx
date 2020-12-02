@@ -1,45 +1,44 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import styled from 'styled-components';
 
-const ArtikkelPhoto = styled.section `
-    width: 200px;
-    height: 200px;
-    background-color: #F9F9F9;
-
+const ArtikkelPhoto = styled.section`
+  width: 200px;
+  height: 200px;
+  background-color: #f9f9f9;
 `;
 
-const Container = styled.section `
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    margin-left: 23rem;
+const Container = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-left: 23rem;
 `;
 
-const ContainerAll = styled.section `
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 40px;
-    
+const ContainerAll = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 40px;
 `;
 
-const CategoryContainer = styled.h1 `
-   margin-top: 20px;
-   font-size: 1em;
-   margin-left: 10rem;
+const CategoryContainer = styled.h1`
+  margin-top: 20px;
+  font-size: 1em;
+  margin-left: 10rem;
 `;
 
-const Header = styled.h1 `
-    font-size: 28px;
-    font-weight: bolder;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 10px;
+const Header = styled.h1`
+  font-size: 28px;
+  font-weight: bolder;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 10px;
 `;
 
-const Paragraph = styled.p `
-    margin-left: 10px;
-    width: 500px;
-    /* kodesnutt under for å begrense tekst i paragraf hentet fra : https://stackoverflow.com/questions/21447269/how-to-limit-the-length-of-text-in-a-paragraph/21447588
+const Paragraph = styled.p`
+  margin-left: 10px;
+  width: 500px;
+  /* kodesnutt under for å begrense tekst i paragraf hentet fra : https://stackoverflow.com/questions/21447269/how-to-limit-the-length-of-text-in-a-paragraph/21447588
     width: 600px;
     white-space: nowrap;
     overflow: hidden;
@@ -47,17 +46,14 @@ const Paragraph = styled.p `
     */
 `;
 
+export const ArticleItem = ({ id, title, text, history }) => {
+  const handleSelect = (e) => {
+    console.log(e.target.value);
+  };
 
-export const ArticleItem = ({title, text}) => {
+  const [category, setCategory] = useState('Kategori');
 
-    const handleSelect = (e) => {
-        console.log(e.target.value)
-    }
-
-    
-    const [category, setCategory] = useState("Kategori");
-
-    /*const select = () => {
+  /* const select = () => {
         setCategory((
             <select onChange={handleSelect} value="Kategori">
                 <option>
@@ -82,24 +78,20 @@ export const ArticleItem = ({title, text}) => {
     }, []);
     */
 
-    return (
-        <> 
-        <ContainerAll>
-
+  return (
+    <>
+      <ContainerAll onClick={() => history.push(`fagartikler/${id}`)}>
         <Container>
-            <ArtikkelPhoto />
-            <section>
-                <Header> {title} </Header>
-                <Paragraph>{text}</Paragraph>
-            </section>
-         </Container>
-         <CategoryContainer>
-            {category}
-         </CategoryContainer>
-
-        </ContainerAll>
-        </>
-    )
+          <ArtikkelPhoto />
+          <section>
+            <Header> {title} </Header>
+            <Paragraph>{text}</Paragraph>
+          </section>
+        </Container>
+        <CategoryContainer>{category}</CategoryContainer>
+      </ContainerAll>
+    </>
+  );
 };
 
-export default ArticleItem;
+export default withRouter(ArticleItem);
