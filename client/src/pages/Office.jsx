@@ -15,6 +15,7 @@ const ListBtn = styled.button`
   background-color: white;
   border: 0;
   color: #5e5e5e;
+  outline: none;
 `;
 
 const GridBtn = styled.button`
@@ -22,6 +23,7 @@ const GridBtn = styled.button`
   background-color: white;
   border: 0;
   color: #5e5e5e;
+  outline: none;
 `;
 
 const BtnContainer = styled.section`
@@ -29,11 +31,6 @@ const BtnContainer = styled.section`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-`;
-
-const LocationTitleWithBtns = styled.h1`
-  font-weight: bold;
-  font-size: 2.5rem;
 `;
 
 const LocationTitle = styled.h1`
@@ -45,14 +42,8 @@ const LocationTitle = styled.h1`
 const FlexContainer = styled.section`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 11.5rem;
-  margin-bottom: 50px;
-`;
-
-const NoMarginContainer = styled.section`
-  margin: 0;
-  padding: 0;
 `;
 
 const Select = styled.select`
@@ -310,10 +301,16 @@ const Office = () => {
               <option value="Moss">Moss</option>
               <option value="Oslo">Oslo</option>
             </Select>
-            <ListBtn onClick={onListBtnClick}>
+            <ListBtn
+              style={{ color: listView ? '#53a5be' : '#5e5e5e' }}
+              onClick={onListBtnClick}
+            >
               <FontAwesomeIcon icon={faThList} />
             </ListBtn>
-            <GridBtn onClick={onGridBtnClick}>
+            <GridBtn
+              style={{ color: gridView ? '#53a5be' : '#5e5e5e' }}
+              onClick={onGridBtnClick}
+            >
               <FontAwesomeIcon icon={faThLarge} />
             </GridBtn>
           </BtnContainer>
@@ -322,7 +319,7 @@ const Office = () => {
           <>
             {filterOptions === 'Alle kontorer' && (
               <>
-                <LocationTitle>
+                <LocationTitle style={{ marginTop: '0' }}>
                   Fredrikstad ({officesFredrikstad.length}
                   {' Kontorer'})
                 </LocationTitle>
@@ -349,7 +346,7 @@ const Office = () => {
               <>
                 {chosenOffice.length != 0 && (
                   <>
-                    <LocationTitle>
+                    <LocationTitle style={{ marginTop: '0' }}>
                       {filterOptions} ({chosenOffice.length}
                       {' Kontorer'}
                       {console.log(filterOptions + chosenOffice)})
@@ -365,7 +362,7 @@ const Office = () => {
           <>
             {filterOptions === 'Alle kontorer' && (
               <>
-                <LocationTitle>
+                <LocationTitle style={{ marginTop: '0' }}>
                   Fredrikstad ({officesFredrikstad.length}
                   {' Kontorer'})
                 </LocationTitle>
@@ -391,7 +388,7 @@ const Office = () => {
               <>
                 {chosenOffice.length != 0 && (
                   <>
-                    <LocationTitle>
+                    <LocationTitle style={{ marginTop: '0' }}>
                       {filterOptions} ({chosenOffice.length}
                       {' Kontorer'}
                       {console.log(filterOptions + chosenOffice)})
