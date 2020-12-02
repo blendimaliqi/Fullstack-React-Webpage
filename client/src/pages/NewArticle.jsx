@@ -115,21 +115,25 @@ export const NewArticle = () => {
       ...inputValue,
     }));
 
-    Object.keys(formData).map(function (key, value) {
-        console.log(formData[key]);
-        if (formData[key] === '') {
+    Object.keys(formData).map(function (key) {
+        if (formData[key].value === '' && formData[key] !== 'date') {
           setInputValid(false);
           return;
         }
-  
-        setInputValid(true);
-        return null;
+            
+        return setInputValid(true);    
+        
       });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  const showModal = (e) => {
+      e.preventDefault();
+    setState(true);
+  }
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
@@ -179,7 +183,7 @@ export const NewArticle = () => {
         <ModalCategory
           state={state}
           handleCategoryChange={handleCategoryChange}
-          handleSubmit={handleModalSubmit}
+          handleModalSubmit={handleModalSubmit}
           setModalOpen={closeModal}
         />
         <Label htmlFor="title">Tittel </Label>
@@ -213,7 +217,7 @@ export const NewArticle = () => {
         <Label htmlFor="category">Label for kategori </Label>
         <CategoryWrapper>
           {category}
-          <NewCategoryButton onClick={() => setState(true)}>
+          <NewCategoryButton onClick={showModal}>
             NY
           </NewCategoryButton>
         </CategoryWrapper>
@@ -221,7 +225,6 @@ export const NewArticle = () => {
         <Label htmlFor="author">Label for forfatter </Label>
         <AuthorWrapper>{author}</AuthorWrapper>
         <NyArtikkelButton
-          type="submit"
           onClick={handleSubmit}
           style={{
             backgroundColor: inputValid === true ? '#53a5be' : '#DBDBDB',
