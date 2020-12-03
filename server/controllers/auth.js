@@ -34,5 +34,13 @@ export const login = catchAsyncErrors(async (req, res, next) => {
 })
 
 export const logout = catchAsyncErrors(async (req,res,next) => {
+    res.cookie('token', 'none', {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+    });
 
+    res.status(200).json({
+        success: true,
+        data: 'Logget ut',
+    })
 })
