@@ -4,6 +4,5 @@ import { userController } from '../controllers/index.js';
 const router = express.Router();
 
 router.post('/', userController.create);
-router.get('/:id/events', userController.listEvents);
 
 export default router;
