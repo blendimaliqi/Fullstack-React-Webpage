@@ -6,11 +6,11 @@ import jwt from 'jsonwebtoken';
 const { Schema } = mongoose;
 
 const UserSchema = new Schema(
-  {    
+  {
     name: {
-    type: String,
-    required: [true, 'Fyll ut navn'],
-  },
+      type: String,
+      required: [true, 'Fyll ut navn'],
+    },
     email: {
       type: String,
       required: [true, 'Fyll ut epost'],
@@ -40,19 +40,19 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-UserSchema.methods.getJwtToken = function() {
-  //HUSK Å LAG DISSE ENV VARIABLENE
-  return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_TIME
-  })
-}
+UserSchema.methods.getJwtToken = function () {
+  // HUSK Å LAG DISSE ENV VARIABLENE
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_TIME,
+  });
+};
 
 UserSchema.methods.comparePassword = async function (password) {
   const result = argon2.verify(this.password, password);
 
   return result;
-}
- 
+};
+
 UserSchema.virtual('ArticleAdmin', {
   ref: 'Article',
   localField: '_id',
