@@ -11,6 +11,7 @@ import event from './routes/event.js';
 import user from './routes/user.js';
 import article from './routes/article.js';
 import category from './routes/category.js';
+import author from './routes/author.js';
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(`${process.env.BASEURL}/events`, event);
 app.use(`${process.env.BASEURL}/users`, user);
 app.use(`${process.env.BASEURL}/articles`, article);
 app.use(`${process.env.BASEURL}/categories`, category);
+app.use(`${process.env.BASEURL}/authors`, author);
 
 app.use(errorMiddleware);
 
