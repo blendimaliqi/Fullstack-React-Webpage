@@ -1,11 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-
 import { PORT } from './constants/index.js';
 import 'dotenv/config.js';
 import errorMiddleware from './middleware/errors.js';
-
 import connectDatabase from './config/db.js';
 import event from './routes/event.js';
 import user from './routes/user.js';
@@ -13,6 +11,7 @@ import article from './routes/article.js';
 import category from './routes/category.js';
 import auth from './routes/auth.js';
 import author from './routes/author.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -31,13 +30,14 @@ app.use(
   })
 );
 
+app.use(cookieParser());
+
 app.use(`${process.env.BASEURL}/events`, event);
 app.use(`${process.env.BASEURL}/users`, user);
 app.use(`${process.env.BASEURL}/articles`, article);
 app.use(`${process.env.BASEURL}/categories`, category);
-app.use(`${process.env.BASEURL}/`, auth);
 app.use(`${process.env.BASEURL}/authors`, author);
-
+app.use(`${process.env.BASEURL}/`, auth);
 
 app.use(errorMiddleware);
 
