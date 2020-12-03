@@ -48,7 +48,7 @@ export const ModalCategory = ({
   state,
   close,
   handleCategoryChange,
-  handleSubmit,
+  handleModalSubmit,
   setModalOpen,
 }) =>
   state ? (
@@ -82,7 +82,7 @@ export const ModalCategory = ({
           placeholder="Placeholder for input felt"
           onChange={handleCategoryChange}
         />
-        <NewCategoryButtonm onClick={handleSubmit}>Create</NewCategoryButtonm>
+        <NewCategoryButtonm onClick={handleModalSubmit}>Create</NewCategoryButtonm>
       </Wrapper>
     </Modal>
   ) : null;
