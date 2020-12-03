@@ -19,6 +19,7 @@ CategorySchema.virtual('ArticleCategory', {
   ref: 'Article',
   localField: '_id',
   foreignField: 'category',
+  justOne: false,
 });
 
 export default mongoose.model('Category', CategorySchema);

@@ -35,9 +35,9 @@ const ArticleSchema = new Schema(
       type: String,
       required: true,
     },
-    aministrator: {
+    administrator: {
       type: mongoose.Schema.ObjectId,
-      ref: 'Administrator',
+      ref: 'User',
       required: true,
     },
   },
