@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Banner from '../components/Banner';
 import ModalCategory from '../components/Fagartikler/ModalCategory';
@@ -88,7 +89,7 @@ const AuthorWrapper = styled.section`
   margin-bottom: 50px;
 `;
 
-export const NewArticle = () => {
+export const NewArticle = ({ history }) => {
   const toDay = new Date();
   const formattedDate = `${toDay.getDate()}.${
     toDay.getMonth() + 1
@@ -114,15 +115,6 @@ export const NewArticle = () => {
       ...prev,
       ...inputValue,
     }));
-
-    /* Object.keys(formData).map(function (key) {
-      if (formData[key].value === '' && formData[key] !== 'date') {
-        setInputValid(false);
-        return;
-      }
-
-      return setInputValid(true);
-    }); */
   };
 
   const validateInput = (title, ingress, content, category, author) => ({
@@ -161,9 +153,7 @@ export const NewArticle = () => {
       return;
     }
 
-    alert(
-      `${formData.title} - ${formData.ingress} - ${formData.content} - ${formData.date} - ${formData.category} - ${formData.author}`
-    );
+    history.push('/fagartikler');
   };
 
   const showModal = (e) => {
@@ -281,4 +271,4 @@ export const NewArticle = () => {
   );
 };
 
-export default NewArticle;
+export default withRouter(NewArticle);
