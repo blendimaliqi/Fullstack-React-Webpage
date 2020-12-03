@@ -46,12 +46,12 @@ const Paragraph = styled.p`
     */
 `;
 
-export const ArticleItem = ({ id, title, text, history }) => {
+export const ArticleItem = ({ id, title, text, category, history }) => {
   const handleSelect = (e) => {
     console.log(e.target.value);
   };
 
-  const [category, setCategory] = useState('Kategori');
+  //const [category, setCategory] = useState('Kategori');
 
   /* const select = () => {
         setCategory((

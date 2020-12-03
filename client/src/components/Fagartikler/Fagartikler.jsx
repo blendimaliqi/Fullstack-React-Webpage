@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { list } from '../../utils/articleService';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
-
 
 const PageContainer = styled.section`
   display: flex;
@@ -59,34 +59,20 @@ const WholePage = styled.section`
 
 export const Fagartikler = ({ history }) => {
   const [articles, setArticles] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
-    setArticles([
-      {
-        id: 133782,
-        title: 'How to fix your toilet?',
-        ingress:
-          'Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text',
-      },
-      {
-        id: 133783,
-        title: 'How to tile your bathroom?',
-        ingress:
-          'Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text',
-      },
-      {
-        id: 133784,
-        title: 'How to keep the shower clean?',
-        ingress:
-          'Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text',
-      },
-      {
-        id: 133785,
-        title: 'How to save toilet paper with geberit aquaclean?',
-        ingress:
-          'Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text here Lorem ipsum text',
-      },
-    ]);
+    const fetchArticles = async () => {
+      const { data, err } = await list();
+      if (data.success === false) {
+        console.log(data);
+        setError(data.success);
+        console.log('fikk feil');
+      } else {
+        setArticles(data);
+      }
+    };
+    fetchArticles();
   }, []);
 
   return (
@@ -113,13 +99,13 @@ export const Fagartikler = ({ history }) => {
                 key={article.id}
                 title={article.title}
                 text={article.ingress}
+                category={article.category.name}
               />
             ))}
         </MainPage>
       </WholePage>
     </>
   );
-
 };
 
 export default withRouter(Fagartikler);
