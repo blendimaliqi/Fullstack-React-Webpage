@@ -94,6 +94,7 @@ export const ArticleDetails = () => {
 
   return (
     <>
+      {error && <h1>{error}</h1>}
       {article && (
         <>
           <Banner title={article.title} />

@@ -92,6 +92,7 @@ export const Fagartikler = ({ history }) => {
         </PageContainer>
 
         <MainPage>
+          {error && <h1>{error}</h1>}
           {articles &&
             articles.map((article) => (
               <Artikkel
