@@ -104,7 +104,7 @@ export const NewArticle = () => {
   });
 
   const [state, setState] = useState(false);
-  const [inputValid, setInputValid] = useState(false);
+  const [inputValid, setInputValid] = useState(true);
   const [category, setCategory] = useState();
   const [author, setAuthor] = useState();
 
@@ -115,25 +115,61 @@ export const NewArticle = () => {
       ...inputValue,
     }));
 
-    Object.keys(formData).map(function (key) {
-        if (formData[key].value === '' && formData[key] !== 'date') {
-          setInputValid(false);
-          return;
-        }
-            
-        return setInputValid(true);    
-        
-      });
+    /* Object.keys(formData).map(function (key) {
+      if (formData[key].value === '' && formData[key] !== 'date') {
+        setInputValid(false);
+        return;
+      }
+
+      return setInputValid(true);
+    }); */
   };
+
+  const validateInput = (title, ingress, content, category, author) => ({
+    title: title.length === 0,
+    ingress: ingress.length === 0,
+    content: content.length === 0,
+    category: category.length === 0,
+    author: author.length === 0,
+  });
+
+  const isValid = () => {
+    const errors = validateInput(
+      formData.title,
+      formData.ingress,
+      formData.content,
+      formData.category,
+      formData.author
+    );
+    const isDisabled = Object.keys(errors).some((i) => errors[i]);
+    return !isDisabled;
+  };
+
+  const errors = validateInput(
+    formData.title,
+    formData.ingress,
+    formData.content,
+    formData.category,
+    formData.author
+  );
+
+  const isDisabled = Object.keys(errors).some((i) => errors[i]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!isValid) {
+      return;
+    }
+
+    alert(
+      `${formData.title} - ${formData.ingress} - ${formData.content} - ${formData.date} - ${formData.category} - ${formData.author}`
+    );
   };
 
   const showModal = (e) => {
-      e.preventDefault();
+    e.preventDefault();
     setState(true);
-  }
+  };
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
@@ -150,7 +186,11 @@ export const NewArticle = () => {
 
   const selectCategory = () => {
     setCategory(
-      <select name="category" onChange={updateValue}>
+      <select
+        className={errors.category ? 'error' : ''}
+        name="category"
+        onChange={updateValue}
+      >
         <option value="Julenisse">Julenisse</option>
         <option value="Pepperkaker">Pepperkaker</option>
         <option value="Brun Julebrus">Brun Julebrus</option>
@@ -161,7 +201,11 @@ export const NewArticle = () => {
 
   const selectAuthor = () => {
     setAuthor(
-      <select name="author" onChange={updateValue}>
+      <select
+        className={errors.author ? 'error' : ''}
+        name="author"
+        onChange={updateValue}
+      >
         <option>Iron Man</option>
         <option>Nissefar</option>
         <option>Magnus Carlsen</option>
@@ -175,11 +219,10 @@ export const NewArticle = () => {
     selectAuthor();
   }, []);
 
-
   return (
     <>
       <Banner title="Ny Artikkel" />
-      <InputWrapper>
+      <InputWrapper onSubmit={handleSubmit}>
         <ModalCategory
           state={state}
           handleCategoryChange={handleCategoryChange}
@@ -188,6 +231,7 @@ export const NewArticle = () => {
         />
         <Label htmlFor="title">Tittel </Label>
         <Input
+          className={errors.title ? 'error' : ''}
           type="text"
           name="title"
           autoComplete="off"
@@ -196,6 +240,7 @@ export const NewArticle = () => {
         />
         <Label htmlFor="ingress">Ingress </Label>
         <Input
+          className={errors.ingress ? 'error' : ''}
           type="text"
           name="ingress"
           autoComplete="off"
@@ -204,6 +249,7 @@ export const NewArticle = () => {
         />
         <Label htmlFor="content">Innhold </Label>
         <Content
+          className={errors.content ? 'error' : ''}
           type="text"
           name="content"
           autoComplete="off"
@@ -217,19 +263,16 @@ export const NewArticle = () => {
         <Label htmlFor="category">Label for kategori </Label>
         <CategoryWrapper>
           {category}
-          <NewCategoryButton onClick={showModal}>
-            NY
-          </NewCategoryButton>
+          <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
         </CategoryWrapper>
 
         <Label htmlFor="author">Label for forfatter </Label>
         <AuthorWrapper>{author}</AuthorWrapper>
         <NyArtikkelButton
-          onClick={handleSubmit}
           style={{
-            backgroundColor: inputValid === true ? '#53a5be' : '#DBDBDB',
+            backgroundColor: !isDisabled ? '#53a5be' : '#DBDBDB',
           }}
-          disabled={inputValid === false}
+          disabled={isDisabled}
         >
           CREATE
         </NyArtikkelButton>
