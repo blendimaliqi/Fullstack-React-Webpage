@@ -61,8 +61,6 @@ const Title = styled.h1`
   }
 `;
 
-
-
 const Login = styled.p`
   width: 7rem;
   height: 3rem;
