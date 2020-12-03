@@ -1,6 +1,7 @@
 import Article from '../models/article.js';
 
-export const getArticleById = async (id) => Article.findById(id);
+export const getArticleById = async (id) =>
+  Article.findById(id).populate('category', 'name');
 
 export const listArticles = async () =>
   Article.find().populate('category', 'name');

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { get } from '../../utils/articleService.js';
 import Banner from '../Banner.jsx';
 
 const Container = styled.article`
@@ -24,7 +26,7 @@ const SubTitle = styled.h2`
 `;
 
 const SubTitleParagraph = styled.p`
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 `;
 
 const AuthorDateContainer = styled.section`
@@ -72,68 +74,49 @@ const EditBtn = styled.button`
 `;
 
 export const ArticleDetails = () => {
-  const [articles, setArticle] = useState('');
+  const [article, setArticle] = useState();
+  const [error, setError] = useState();
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      const { data, err } = await get(id);
+      if (data.success === false) {
+        console.log(data);
+        setError(data.success);
+        console.log('fikk feil');
+      } else {
+        setArticle(data);
+      }
+    };
+    fetchArticle();
+  }, []);
 
   return (
     <>
-      <Banner title="Title" />
-      <Container>
-        <Ingress>
-          <AuthorDateContainer>
-            <Author>Forfatter</Author>
-            <Date>02.12.2020</Date>
-          </AuthorDateContainer>
-          Dette er ingressen. Vi pusser opp små og mellomst ore bad for priv
-          atkunder og entreprenører . Vi er opptatt a v god kv alitet og bruker
-          kun de beste rørleggerne i alt vi foretar oss. Vi hjelper deg med å
-          planlegge drømmebadet ditt fr a A til Å! Med hjer tet for faget yter
-          vi kv alitet i alle ledd for at du skal være i trygge hender .
-        </Ingress>
-        <SubTitleContainer>
-          <SubTitle>SubTitle</SubTitle>
-          <SubTitleParagraph>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr , sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam er
-            at, sed diam v oluptua. A t ver o eos et accusam et just o duo
-            dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-            sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-            consetetur sadipscing elitr , sed diam nonumy eirmod tempor invidunt
-            ut labore et dolore magna aliquyam er at, sed diam v oluptua. A t
-            ver o eos et accusam et just o duo dolores et ea rebum. Stet clita
-            kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-            amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr , sed
-            diam nonumy eirmod tempor invidunt ut labore et dolore magna
-            aliquyam er at, sed diam v oluptua. Lorem ipsum dolor sit amet,
-            consetetur sadipscing elitr , sed diam nonumy eirmod tempor invidunt
-            ut labore et dolore magna aliquyam er at, sed diam v oluptua. A t
-            ver o eos et accusam et just o duo dolores et ea rebum. Stet clita
-            kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-            amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr , sed
-            diam nonumy eirmod tempor invidunt ut labore et dolore magna
-            aliquyam er at, sed diam v oluptua. A t ver o eos et accusam et just
-            o duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-            takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor
-            sit amet, consetetur sadipscing elitr , sed diam nonumy eirmod
-            tempor invidunt ut labore et dolore magna aliquyam er at, sed diam v
-            oluptua.
-          </SubTitleParagraph>
-          <SubTitle>SubTitle</SubTitle>
-          <SubTitleParagraph>
-            A t ver o eos et accusam et just o duo dolores et ea rebum. Stet
-            clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
-            sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr ,
-            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-            aliquyam er at, sed diam v oluptua. A t ver o eos et accusam et just
-            o duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-            takimata sanctus est Lorem ipsum dolor sit amet.
-          </SubTitleParagraph>
-          <Category>Kategorinavn</Category>
-        </SubTitleContainer>
-        <BtnContainer>
-          <DeleteBtn>SLETT</DeleteBtn>
-          <EditBtn>REDIGER</EditBtn>
-        </BtnContainer>
-      </Container>
+      {error && <h1>{error}</h1>}
+      {article && (
+        <>
+          <Banner title={article.title} />
+          <Container>
+            <Ingress>
+              <AuthorDateContainer>
+                <Author>{article.author}</Author>
+                <Date>{article.date}</Date>
+              </AuthorDateContainer>
+              {article.ingress}
+            </Ingress>
+            <SubTitleContainer>
+              <SubTitleParagraph>{article.content}</SubTitleParagraph>
+              <Category>{article.category.name}</Category>
+            </SubTitleContainer>
+            <BtnContainer>
+              <DeleteBtn>SLETT</DeleteBtn>
+              <EditBtn>REDIGER</EditBtn>
+            </BtnContainer>
+          </Container>
+        </>
+      )}
     </>
   );
 };
