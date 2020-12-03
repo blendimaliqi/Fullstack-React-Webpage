@@ -9,6 +9,8 @@ import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
 import event from './routes/event.js';
 import user from './routes/user.js';
+import article from './routes/article.js';
+import category from './routes/category.js';
 
 const app = express();
 
@@ -18,13 +20,17 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json());
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  allowedHeaders: ['Content-Type']
-}))
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Content-Type'],
+  })
+);
 
 app.use(`${process.env.BASEURL}/events`, event);
 app.use(`${process.env.BASEURL}/users`, user);
+app.use(`${process.env.BASEURL}/articles`, article);
+app.use(`${process.env.BASEURL}/categories`, category);
 
 app.use(errorMiddleware);
 
