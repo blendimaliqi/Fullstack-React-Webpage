@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { loginPost } from '../../utils/loginService.js';
+import { useUserState, useUserDispatch } from '../../context/UserProvider.jsx';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -34,10 +35,26 @@ const BtnContainer = styled.section`
 `;
 
 export const LoginForm = () => {
+  const state = useUserState();
+  const dispatch = useUserDispatch();
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
+
+  const setCookie = (userData) => {
+    dispatch({
+      type: 'SET_COOKIE',
+      userData,
+    });
+  };
+
+  const setRole = (userData) => {
+    dispatch({
+      type: 'SET_ROLE',
+      userData,
+    });
+  };
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -53,7 +70,9 @@ export const LoginForm = () => {
     const login = async () => {
       const { data } = await loginPost(loginData);
       console.log(data);
-      alert(`Logget inn som: ${data.user.email}`);
+      setCookie(data);
+      setRole(data);
+      //alert(`Logget inn som: ${data.user.email}`);
     };
 
     login();

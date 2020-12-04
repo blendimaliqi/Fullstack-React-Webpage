@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { useUserState } from '../../context/UserProvider';
 import { list } from '../../utils/articleService';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
@@ -60,6 +61,7 @@ const WholePage = styled.section`
 export const Fagartikler = ({ history }) => {
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
+  const state = useUserState();
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -70,6 +72,8 @@ export const Fagartikler = ({ history }) => {
         console.log('fikk feil');
       } else {
         setArticles(data);
+        console.log(state.role);
+        console.log(state.cookie);
       }
     };
     fetchArticles();
