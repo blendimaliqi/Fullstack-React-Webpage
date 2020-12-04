@@ -52,7 +52,8 @@ export const LoginForm = () => {
 
     const login = async () => {
       const { data } = await loginPost(loginData);
-      console.log(data.user.email);
+      console.log(data);
+      alert(`Logget inn som: ${data.user.email}`);
     };
 
     login();
