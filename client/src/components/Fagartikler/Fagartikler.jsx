@@ -61,7 +61,7 @@ const WholePage = styled.section`
 export const Fagartikler = ({ history }) => {
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
-  const state = useUserState();
+  const { isAdmin } = useUserState();
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -72,8 +72,6 @@ export const Fagartikler = ({ history }) => {
         console.log('fikk feil');
       } else {
         setArticles(data);
-        console.log(state.role);
-        console.log(state.cookie);
       }
     };
     fetchArticles();
@@ -85,9 +83,11 @@ export const Fagartikler = ({ history }) => {
       <WholePage>
         <PageContainer>
           <NyArtikkelContainer>
-            <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
-              NY ARTIKKEL
-            </NyArtikkelButton>
+            {isAdmin && (
+              <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
+                NY ARTIKKEL
+              </NyArtikkelButton>
+            )}
           </NyArtikkelContainer>
           <SearchAndFilterContainer>
             <SearchAndFilterButton>SØK</SearchAndFilterButton>

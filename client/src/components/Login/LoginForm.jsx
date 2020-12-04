@@ -35,26 +35,12 @@ const BtnContainer = styled.section`
 `;
 
 export const LoginForm = () => {
-  const state = useUserState();
-  const dispatch = useUserDispatch();
+  const { setUser, isLoggedIn } = useUserState();
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
-
-  const setCookie = (userData) => {
-    dispatch({
-      type: 'SET_COOKIE',
-      userData,
-    });
-  };
-
-  const setRole = (userData) => {
-    dispatch({
-      type: 'SET_ROLE',
-      userData,
-    });
-  };
+  const [error, setError] = useState(null);
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -70,9 +56,15 @@ export const LoginForm = () => {
     const login = async () => {
       const { data } = await loginPost(loginData);
       console.log(data);
-      setCookie(data);
-      setRole(data);
-      //alert(`Logget inn som: ${data.user.email}`);
+      if (!data.success) {
+        console.log(data.message);
+        setError(data.message);
+      } else {
+        const user = data?.user;
+        setUser({ ...user });
+      }
+
+      // alert(`Logget inn som: ${data.user.email}`);
     };
 
     login();

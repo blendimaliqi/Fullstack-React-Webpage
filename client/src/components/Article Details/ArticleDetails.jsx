@@ -78,7 +78,7 @@ export const ArticleDetails = () => {
   const [article, setArticle] = useState();
   const [error, setError] = useState();
   const { id } = useParams();
-  const state = useUserState();
+  const { isAdmin } = useUserState();
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -112,7 +112,7 @@ export const ArticleDetails = () => {
               <SubTitleParagraph>{article.content}</SubTitleParagraph>
               <Category>{article.category.name}</Category>
             </SubTitleContainer>
-            {state.role === 'admin' ? (
+            {isAdmin ? (
               <BtnContainer>
                 <DeleteBtn>SLETT</DeleteBtn>
                 <EditBtn>REDIGER</EditBtn>

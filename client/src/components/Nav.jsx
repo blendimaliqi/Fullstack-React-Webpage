@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { useUserState } from '../context/UserProvider';
+import { logoutPost } from '../utils/loginService.js';
 
 const StyledNav = styled.nav`
   width: 100%;
@@ -74,41 +76,58 @@ const Login = styled.p`
   }
 `;
 
-const Nav = () => (
-  <StyledNav>
-    <Title>
-      <NavLink exact to="/" activeClassName="active">
-        FG
-      </NavLink>
-    </Title>
-    <NavMenu>
-      <NavMenuItem>
+const Nav = () => {
+  const { isLoggedIn, IsAdmin, setUser } = useUserState();
+  const logout = async () => {
+    await logoutPost();
+    setUser(null);
+  };
+
+  return (
+    <StyledNav>
+      <Title>
         <NavLink exact to="/" activeClassName="active">
-          Hjem
+          FG
         </NavLink>
-      </NavMenuItem>
-      <NavMenuItem>
-        <NavLink exact to="/kontorer" activeClassName="active">
-          Kontorer
-        </NavLink>
-      </NavMenuItem>
-      <NavMenuItem>
-        <NavLink exact to="/fagartikler" activeClassName="active">
-          Fagartikler
-        </NavLink>
-      </NavMenuItem>
-      <NavMenuItem>
-        <NavLink exact to="/kontakt" activeClassName="active">
-          Kontakt
-        </NavLink>
-      </NavMenuItem>
-      <NavMenuItem>
-        <NavLink exact to="/login" activeClassName="active">
-          <Login>LOGG INN</Login>
-        </NavLink>
-      </NavMenuItem>
-    </NavMenu>
-  </StyledNav>
-);
+      </Title>
+      <NavMenu>
+        <NavMenuItem>
+          <NavLink exact to="/" activeClassName="active">
+            Hjem
+          </NavLink>
+        </NavMenuItem>
+        <NavMenuItem>
+          <NavLink exact to="/kontorer" activeClassName="active">
+            Kontorer
+          </NavLink>
+        </NavMenuItem>
+        <NavMenuItem>
+          <NavLink exact to="/fagartikler" activeClassName="active">
+            Fagartikler
+          </NavLink>
+        </NavMenuItem>
+        <NavMenuItem>
+          <NavLink exact to="/kontakt" activeClassName="active">
+            Kontakt
+          </NavLink>
+        </NavMenuItem>
+        {!isLoggedIn && (
+          <NavMenuItem>
+            <NavLink exact to="/login" activeClassName="active">
+              <Login>LOGG INN</Login>
+            </NavLink>
+          </NavMenuItem>
+        )}
+        {isLoggedIn && (
+          <NavMenuItem>
+            <NavLink exact to="/login" activeClassName="active">
+              <Login onClick={logout}>LOGG UT</Login>
+            </NavLink>
+          </NavMenuItem>
+        )}
+      </NavMenu>
+    </StyledNav>
+  );
+};
 
 export default Nav;

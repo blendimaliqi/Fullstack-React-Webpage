@@ -1,21 +1,21 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { getCurrentUser } from '../utils/loginService';
 
 const UserContext = createContext();
 const UserDispatchContext = createContext();
 
-const initialState = {
-  cookie: '',
-  role: '',
-};
+const initialState = [];
 
 const reducer = (state, { type, userData }) => {
   switch (type) {
-    case 'SET_COOKIE': {
+    case 'SET_USER': {
       state.cookie = userData.token;
-      return state;
-    }
-    case 'SET_ROLE': {
-      state.role = userData.user.role;
       return state;
     }
     default:
@@ -25,11 +25,38 @@ const reducer = (state, { type, userData }) => {
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchCurrentUserData = async () => {
+      if (user === null) {
+        const { data } = await getCurrentUser();
+        if (data?.success) {
+          const currentUser = data.data;
+          setUser(currentUser);
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    };
+    fetchCurrentUserData();
+    console.log(user);
+  }, [user]);
 
   return (
-    <UserDispatchContext.Provider value={dispatch}>
-      <UserContext.Provider value={state}>{children}</UserContext.Provider>
-    </UserDispatchContext.Provider>
+    <UserContext.Provider
+      value={{
+        isLoading: loading,
+        isAdmin: user?.role === 'admin',
+        isLoggedIn: !!user,
+        user,
+        setUser,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
   );
 };
 
