@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { loginPost } from '../../utils/loginService.js';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -32,14 +33,52 @@ const BtnContainer = styled.section`
   align-items: flex-start;
 `;
 
-export const LoginForm = () => (
-  <Form>
-    <Input type="text" placeholder="Brukernavn.." />
-    <Input type="password" placeholder="Passord.." />
-    <BtnContainer>
-      <SumbitBtn>Logg inn</SumbitBtn>
-    </BtnContainer>
-  </Form>
-);
+export const LoginForm = () => {
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const updateValue = (event) => {
+    const inputValue = { [event.target.name]: event.target.value };
+    setLoginData((prev) => ({
+      ...prev,
+      ...inputValue,
+    }));
+  };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    const login = async () => {
+      const { data } = await loginPost(loginData);
+      console.log(data.user.email);
+    };
+
+    login();
+  };
+
+  return (
+    <Form onSubmit={handleLogin}>
+      <Input
+        name="email"
+        type="text"
+        placeholder="Brukernavn.."
+        value={loginData.email}
+        onChange={updateValue}
+      />
+      <Input
+        name="password"
+        type="password"
+        placeholder="Passord.."
+        value={loginData.password}
+        onChange={updateValue}
+      />
+      <BtnContainer>
+        <SumbitBtn>Logg inn</SumbitBtn>
+      </BtnContainer>
+    </Form>
+  );
+};
 
 export default LoginForm;
