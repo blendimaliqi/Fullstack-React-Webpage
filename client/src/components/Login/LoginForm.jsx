@@ -74,6 +74,7 @@ export const LoginForm = () => {
       } else {
         const user = data?.user;
         setUser({ ...user });
+        setError(null);
       }
 
       // alert(`Logget inn som: ${data.user.email}`);

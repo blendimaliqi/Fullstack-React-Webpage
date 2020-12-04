@@ -60,5 +60,6 @@ export const currentUser = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: user,
+    message: `Velykket innlogging. Du er logget inn som ${user.email}`,
   });
 });

@@ -33,7 +33,7 @@ export const UserProvider = ({ children }) => {
       if (user === null) {
         const { data } = await getCurrentUser();
         if (data?.success) {
-          const currentUser = data.data;
+          const currentUser = { user: data.data, message: data.message };
           setUser(currentUser);
         } else {
           setUser(null);
