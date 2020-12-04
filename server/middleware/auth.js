@@ -10,7 +10,9 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
   }
 
   if (!token) {
-    return next(new ErrorHandler('Du er ikke logget inn eller mangler rettigheter.', 401));
+    return next(
+      new ErrorHandler('Du er ikke logget inn eller mangler rettigheter.', 401)
+    );
   }
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -26,7 +28,10 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
 
 export const isAuthorized = (...roles) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
-    return next(new ErrorHandler('Du har ikke tilgang', 403));
+    return next(new ErrorHandler(`${req.user.role}`, 403));
   }
-  next();
+
+  if (req.user.role === 'admin') {
+    next();
+  }
 };
