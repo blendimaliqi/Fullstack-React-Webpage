@@ -11,19 +11,19 @@ export const register = catchAsyncErrors(async (req, res, next) => {
 export const login = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return next(new ErrorHandler('Fyll ut epost og passord', 400));
+    return next(new ErrorHandler('Fyll ut riktig epost og passord', 400));
   }
 
   const user = await userService.getUserByEmail({ email }, true);
 
   if (!user) {
-    return next(new ErrorHandler('Fyll ut epost og passord', 400));
+    return next(new ErrorHandler('Fyll ut riktig epost og passord', 400));
   }
 
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
-    return next(new ErrorHandler('Fyll ut epost og passord', 400));
+    return next(new ErrorHandler('Fyll ut riktig epost og passord', 400));
   }
 
   sendToken(user, res);

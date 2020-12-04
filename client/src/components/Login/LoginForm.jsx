@@ -31,9 +31,21 @@ const SumbitBtn = styled.button`
 const BtnContainer = styled.section`
   width: 60%;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  margin: 0;
+  padding: 0;
+`;
+
+const ErrorContainer = styled.section`
+    display: flex;
+    align-items: flex-start;
+    width: 60%;
+`;
 export const LoginForm = () => {
   const { setUser, isLoggedIn } = useUserState();
   const [loginData, setLoginData] = useState({
@@ -72,6 +84,9 @@ export const LoginForm = () => {
 
   return (
     <Form onSubmit={handleLogin}>
+        <ErrorContainer>
+        {error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage />}
+        </ErrorContainer>
       <Input
         name="email"
         type="text"
