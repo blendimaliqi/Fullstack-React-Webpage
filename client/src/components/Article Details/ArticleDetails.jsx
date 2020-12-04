@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { useUserState } from '../../context/UserProvider.jsx';
 import { get } from '../../utils/articleService.js';
 import Banner from '../Banner.jsx';
 
@@ -77,6 +78,7 @@ export const ArticleDetails = () => {
   const [article, setArticle] = useState();
   const [error, setError] = useState();
   const { id } = useParams();
+  const state = useUserState();
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -110,10 +112,14 @@ export const ArticleDetails = () => {
               <SubTitleParagraph>{article.content}</SubTitleParagraph>
               <Category>{article.category.name}</Category>
             </SubTitleContainer>
-            <BtnContainer>
-              <DeleteBtn>SLETT</DeleteBtn>
-              <EditBtn>REDIGER</EditBtn>
-            </BtnContainer>
+            {state.role === 'admin' ? (
+              <BtnContainer>
+                <DeleteBtn>SLETT</DeleteBtn>
+                <EditBtn>REDIGER</EditBtn>
+              </BtnContainer>
+            ) : (
+              <BtnContainer />
+            )}
           </Container>
         </>
       )}
