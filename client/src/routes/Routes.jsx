@@ -10,6 +10,7 @@ import { Contact } from '../pages/Contact';
 import FagartiklerPage from '../pages/FagartiklerPage';
 import NewArticle from '../pages/NewArticle';
 import ArticleDetails from '../components/Article Details/ArticleDetails';
+import Login from '../pages/Login.jsx';
 
 const Routes = () => (
   <Router>
@@ -35,6 +36,9 @@ const Routes = () => (
         </Route>
         <Route exact path="/nyartikkel">
           <NewArticle />
+        </Route>
+        <Route exact path="/login">
+          <Login /> 
         </Route>
         <Route path="*">
           <NoMatch />

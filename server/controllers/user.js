@@ -8,7 +8,7 @@ export const create = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const listEvents = catchAsyncErrors(async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.user;
   const events = await userService.listUserEvents(id);
   res.status(200).json(events);
 });

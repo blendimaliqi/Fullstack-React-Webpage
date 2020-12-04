@@ -1,11 +1,16 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import argon2 from 'argon2';
+import jwt from 'jsonwebtoken';
 
 const { Schema } = mongoose;
 
 const UserSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, 'Fyll ut navn'],
+    },
     email: {
       type: String,
       required: [true, 'Fyll ut epost'],
@@ -35,10 +40,22 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-UserSchema.virtual('events', {
-  ref: 'Event',
+UserSchema.methods.getJwtToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_TIME,
+  });
+};
+
+UserSchema.methods.comparePassword = async function (password) {
+  const result = argon2.verify(this.password, password);
+
+  return result;
+};
+
+UserSchema.virtual('ArticleAdmin', {
+  ref: 'Article',
   localField: '_id',
-  foreignField: 'user',
+  foreignField: 'administrator',
   justOne: false,
 });
 
