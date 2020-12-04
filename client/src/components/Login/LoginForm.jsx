@@ -42,9 +42,9 @@ const ErrorMessage = styled.p`
 `;
 
 const ErrorContainer = styled.section`
-    display: flex;
-    align-items: flex-start;
-    width: 60%;
+  display: flex;
+  align-items: flex-start;
+  width: 60%;
 `;
 export const LoginForm = () => {
   const { setUser, isLoggedIn } = useUserState();
@@ -84,9 +84,9 @@ export const LoginForm = () => {
 
   return (
     <Form onSubmit={handleLogin}>
-        <ErrorContainer>
+      <ErrorContainer>
         {error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage />}
-        </ErrorContainer>
+      </ErrorContainer>
       <Input
         name="email"
         type="text"
