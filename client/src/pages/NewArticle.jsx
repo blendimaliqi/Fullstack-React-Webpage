@@ -5,7 +5,7 @@ import Banner from '../components/Banner';
 import ModalCategory from '../components/Fagartikler/ModalCategory';
 import { create } from '../utils/articleService.js';
 import { getCurrentUser } from '../utils/loginService.js';
-import { listCategories } from '../utils/categoryService.js';
+import { listCategories, createCategory } from '../utils/categoryService.js';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -114,6 +114,7 @@ export const NewArticle = ({ history }) => {
   const [author, setAuthor] = useState();
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('category');
+  const [modalCategory, setModalCategory] = useState();
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -124,9 +125,6 @@ export const NewArticle = ({ history }) => {
     console.log(inputValue);
   };
 
-  const updateCategory = (event) => {
-    setSelectedCategory(event.target.value);
-  };
 
   const validateInput = (title, ingress, content, category, author) => ({
     title: title.length === 0,
@@ -163,11 +161,14 @@ export const NewArticle = ({ history }) => {
     console.log(data);
   };
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isValid) {
       return;
     }
+
     console.log(formData);
     createArticle(formData);
     history.push('/fagartikler');
@@ -180,10 +181,17 @@ export const NewArticle = ({ history }) => {
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
+    //createCategoryFunction(modalCategory);
+  //setFormData((prev) => (prev.category, <option value={categoryObject._id}>{modalCategory}</option>)  )
+    const categoryObject = {
+      name: modalCategory,
+    };
+    createCategory(categoryObject);
     setState(false);
   };
 
   const handleCategoryChange = (e) => {
+    setModalCategory(e.target.value);
     console.log(e.target.value);
   };
 
@@ -227,6 +235,7 @@ export const NewArticle = ({ history }) => {
     };
     fetchCategories();
     selectAuthor();
+
     getAdminId();
   }, []);
 
