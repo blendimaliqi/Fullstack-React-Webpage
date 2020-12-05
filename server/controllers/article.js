@@ -1,6 +1,7 @@
 import { articleService } from '../services/index.js';
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
+import Article from '../models/article.js';
 
 export const get = catchAsyncErrors(async (req, res, next) => {
   const article = await articleService.getArticleById(req.params.id);
@@ -15,6 +16,23 @@ export const get = catchAsyncErrors(async (req, res, next) => {
 export const list = catchAsyncErrors(async (req, res, next) => {
   const result = await articleService.listArticles();
   res.status(200).json(result);
+});
+
+export const listHidden = catchAsyncErrors(async (req, res, next) => {
+  const result = await articleService.listArticles();
+
+  const hiddenArticles = [];
+
+  result.map((r) => {
+      if(r.secret){
+          hiddenArticles.push(r);
+      }
+    }
+  );
+
+  //console.log(hiddenArticles)
+
+  res.status(200).json(hiddenArticles);
 });
 
 export const create = catchAsyncErrors(async (req, res, next) => {
