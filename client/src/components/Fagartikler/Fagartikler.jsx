@@ -60,9 +60,10 @@ const WholePage = styled.section`
 `;
 
 export const Fagartikler = ({ history }) => {
-  const { isAdmin } = useUserState();
+  const { isAdmin, isLoggedIn } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
+  
   
 
   useEffect(() => {
@@ -109,7 +110,7 @@ export const Fagartikler = ({ history }) => {
 
         <MainPage>
           {error && <h1>{error}</h1>}
-          {articles &&
+          {articles && isLoggedIn &&
             articles.map((article) => (
               <Artikkel
                 id={article.id}
@@ -118,6 +119,21 @@ export const Fagartikler = ({ history }) => {
                 text={article.ingress}
                 category={article.category.name}
               />
+            ))}
+
+            {articles && !isLoggedIn &&
+            articles.map((article) => (
+              <>
+              {!article.secret &&
+              <Artikkel
+                id={article.id}
+                key={article.id}
+                title={article.title}
+                text={article.ingress}
+                category={article.category.name}
+              />
+              }
+              </>
             ))}
         </MainPage>
       </WholePage>

@@ -14,6 +14,7 @@ const userSchema = {
     }),
 };
 
+
 export const registerSchema = Joi.object().keys({
     name: Joi.string(),
     ...userSchema,
