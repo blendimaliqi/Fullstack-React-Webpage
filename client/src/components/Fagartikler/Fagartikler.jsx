@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider';
-import { list } from '../../utils/articleService';
+import { list } from '../../utils/articleService.js';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
 
@@ -64,18 +65,27 @@ export const Fagartikler = ({ history }) => {
   const { isAdmin } = useUserState();
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+    let mounted = true;
     const fetchArticles = async () => {
-      const { data, err } = await list();
-      if (data.success === false) {
-        console.log(data);
-        setError(data.success);
-        console.log('fikk feil');
-      } else {
-        setArticles(data);
+      if (mounted) {
+        const { data, err } = await list();
+        if (data.success === false) {
+          console.log(data);
+          setError(data.success);
+          console.log('fikk feil');
+        } else {
+          setArticles(data);
+        }
       }
     };
     fetchArticles();
-  }, []);
+
+    return function cleanup() {
+      mounted = false;
+      source.cancel();
+    };
+  }, [articles]);
 
   return (
     <>
