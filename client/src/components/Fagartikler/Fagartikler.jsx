@@ -71,9 +71,9 @@ export const Fagartikler = ({ history }) => {
       if (mounted) {
         const { data, err } = await list();
         if (data.success === false) {
-          console.log(data);
+          //console.log(data);
           setError(data.success);
-          console.log('fikk feil');
+          //console.log('fikk feil');
         } else {
           setArticles(data);
         }
