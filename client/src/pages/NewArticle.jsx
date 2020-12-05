@@ -186,8 +186,10 @@ export const NewArticle = ({ history }) => {
     const categoryObject = {
       name: modalCategory,
     };
-    createCategory(categoryObject);
-    setState(false);
+    setTimeout(() => {
+      createCategory(categoryObject);
+      setState(false);
+    }, 1000)
   };
 
   const handleCategoryChange = (e) => {

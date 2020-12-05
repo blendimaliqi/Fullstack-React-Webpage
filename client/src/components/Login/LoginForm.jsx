@@ -37,8 +37,6 @@ const BtnContainer = styled.section`
 
 const ErrorMessage = styled.p`
   color: red;
-  margin: 0;
-  padding: 0;
 `;
 
 const ErrorContainer = styled.section`
@@ -46,6 +44,7 @@ const ErrorContainer = styled.section`
   align-items: flex-start;
   width: 60%;
 `;
+
 export const LoginForm = () => {
   const { setUser, isLoggedIn } = useUserState();
   const [loginData, setLoginData] = useState({
@@ -72,7 +71,7 @@ export const LoginForm = () => {
         console.log(data.message);
         setError(data.message);
       } else {
-        const user = data?.user;
+        const user = data?.user.user;
         setUser({ ...user }); 
         //setUser(user);
         setError(null);
@@ -87,7 +86,12 @@ export const LoginForm = () => {
   return (
     <Form onSubmit={handleLogin}>
       <ErrorContainer>
-        {error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage />}
+        {/*error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage />*/}
+        {error && (
+          error.map((err) => (
+          <ErrorMessage key={err.field}>{err.message}</ErrorMessage>
+          ))
+        )}
       </ErrorContainer>
       <Input
         name="email"
