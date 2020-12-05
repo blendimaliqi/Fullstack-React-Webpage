@@ -36,6 +36,9 @@ const BtnContainer = styled.section`
 `;
 
 const ErrorMessage = styled.p`
+  display: flex;
+  font-weight: bolder;
+  margin-right: 10px;
   color: red;
 `;
 
@@ -69,7 +72,7 @@ export const LoginForm = () => {
       console.log(data);
       if (!data.success) {
         console.log(data.message);
-        setError(data.message);
+        setError(Array.from(data.message));
       } else {
         const user = data?.user;
         //setUser({ ...user }); 
@@ -83,13 +86,15 @@ export const LoginForm = () => {
     login();
   };
 
+
+
   return (
     <Form onSubmit={handleLogin}>
       <ErrorContainer>
         {/*error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage />*/}
         {error && (
-          error.map((err) => (
-          <ErrorMessage key={err.field}>{err.message}</ErrorMessage>
+          error.map((err, index) => (
+          <ErrorMessage key={(index + 1) * Math.random()}>{err.message}</ErrorMessage>
           ))
         )}
       </ErrorContainer>

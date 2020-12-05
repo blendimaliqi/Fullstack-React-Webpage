@@ -78,7 +78,6 @@ export const Fagartikler = ({ history }) => {
           //console.log('fikk feil');
         } else {
           setArticles(data);
-          
         }
       }
     };
@@ -88,7 +87,7 @@ export const Fagartikler = ({ history }) => {
       mounted = false;
       source.cancel();
     };
-  }, [articles]);
+  }, []);
 
   return (
     <>
