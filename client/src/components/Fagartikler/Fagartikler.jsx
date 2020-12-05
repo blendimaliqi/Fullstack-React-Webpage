@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import {useUserState} from '../../context/UserProvider';
 import axios from 'axios';
 import styled from 'styled-components';
+import { useUserState } from '../../context/UserProvider';
 import { list } from '../../utils/articleService.js';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
@@ -63,21 +63,20 @@ export const Fagartikler = ({ history }) => {
   const { isAdmin, isLoggedIn } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
-  
-  
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     let mounted = true;
     const fetchArticles = async () => {
       if (mounted) {
-        const { data, err } = await list();
+        const { data, err } = await list(5, 2);
         if (data.success === false) {
-          //console.log(data);
+          // console.log(data);
           setError(data.success);
-          //console.log('fikk feil');
+          // console.log('fikk feil');
         } else {
-          setArticles(data);
+          console.log(data.data);
+          setArticles(data.data.data);
         }
       }
     };
@@ -109,7 +108,8 @@ export const Fagartikler = ({ history }) => {
 
         <MainPage>
           {error && <h1>{error}</h1>}
-          {articles && isLoggedIn &&
+          {articles &&
+            isLoggedIn &&
             articles.map((article) => (
               <Artikkel
                 id={article.id}
@@ -120,18 +120,19 @@ export const Fagartikler = ({ history }) => {
               />
             ))}
 
-            {articles && !isLoggedIn &&
+          {articles &&
+            !isLoggedIn &&
             articles.map((article) => (
               <>
-              {!article.secret &&
-              <Artikkel
-                id={article.id}
-                key={article.id}
-                title={article.title}
-                text={article.ingress}
-                category={article.category.name}
-              />
-              }
+                {!article.secret && (
+                  <Artikkel
+                    id={article.id}
+                    key={article.id}
+                    title={article.title}
+                    text={article.ingress}
+                    category={article.category.name}
+                  />
+                )}
               </>
             ))}
         </MainPage>

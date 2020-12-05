@@ -1,10 +1,27 @@
 import Article from '../models/article.js';
+import { ApiFilters } from '../utils/apiFilters.js';
 
 export const getArticleById = async (id) =>
   Article.findById(id).populate('category', 'name');
 
-export const listArticles = async () =>
-  Article.find().populate('category', 'name');
+export const listArticles = async (queryStr) => {
+  const { page, limit } = queryStr;
+  const filters = new ApiFilters(Article.find(), queryStr);
+
+  const articles = await filters.query;
+  const paginated = await filters
+    .pagination()
+    .query.populate('category', 'name');
+
+  // Article.find().populate('category', 'name');
+
+  return {
+    results: articles.length,
+    totalPages: Math.ceil(articles.length / limit) || 1,
+    currentPage: page && page > 0 ? parseInt(page) : 1,
+    data: paginated,
+  };
+};
 
 export const createArticle = async (data) => Article.create(data);
 
