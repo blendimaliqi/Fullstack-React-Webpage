@@ -121,6 +121,7 @@ export const NewArticle = ({ history }) => {
       ...prev,
       ...inputValue,
     }));
+    console.log(inputValue);
   };
 
   const updateCategory = (event) => {
@@ -190,20 +191,6 @@ export const NewArticle = ({ history }) => {
     setState(false);
   };
 
-  const selectCategory = () => {
-    setCategory(
-      <select
-        className={errors.category ? 'error' : ''}
-        name="category"
-        onChange={updateValue}
-      >
-        <option value="Julenisse">Julenisse</option>
-        <option value="Pepperkaker">Pepperkaker</option>
-        <option value="Brun Julebrus">Brun Julebrus</option>
-        <option value="Pinnekjøtt">Pinnekjøtt</option>
-      </select>
-    );
-  };
 
   const selectAuthor = () => {
     setAuthor(

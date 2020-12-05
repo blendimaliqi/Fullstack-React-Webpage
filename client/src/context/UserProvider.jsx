@@ -23,10 +23,19 @@ const reducer = (state, { type, userData }) => {
   }
 };
 
+
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [admin, setAdmin] = useState(false);
+
+  const roleChecker = (userData) => {
+    if(userData?.user.role === 'admin') {
+      setAdmin(true);
+    }
+  }
+  
 
   useEffect(() => {
     const fetchCurrentUserData = async () => {
@@ -35,6 +44,7 @@ export const UserProvider = ({ children }) => {
         if (data?.success) {
           const currentUser = { user: data.data, message: data.message };
           setUser(currentUser);
+          roleChecker(currentUser);
         } else {
           setUser(null);
         }
@@ -49,7 +59,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         isLoading: loading,
-        isAdmin: user?.role === 'admin',
+        isAdmin: admin,
         isLoggedIn: !!user,
         user,
         setUser,

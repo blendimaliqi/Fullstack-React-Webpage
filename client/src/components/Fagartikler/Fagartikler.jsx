@@ -67,6 +67,7 @@ export const Fagartikler = ({ history }) => {
   useEffect(() => {
     const source = axios.CancelToken.source();
     let mounted = true;
+    console.log(isAdmin)
     const fetchArticles = async () => {
       if (mounted) {
         const { data, err } = await list();
