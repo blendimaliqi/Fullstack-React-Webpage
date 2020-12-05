@@ -77,7 +77,7 @@ const Login = styled.p`
 `;
 
 const Nav = () => {
-  const { isLoggedIn, IsAdmin, setUser } = useUserState();
+  const { isLoggedIn, setUser } = useUserState();
   const logout = async () => {
     await logoutPost();
     setUser(null);

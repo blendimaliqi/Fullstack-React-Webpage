@@ -73,8 +73,8 @@ export const LoginForm = () => {
         setError(data.message);
       } else {
         const user = data?.user;
-        //setUser({ ...user }); Denne gjorde sånn at ny artikkel knappen ikke ble vist pga jeg fjernet user.user.role ==='admin' i UserProvider
-        setUser(user);
+        setUser({ ...user }); 
+        //setUser(user);
         setError(null);
       }
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import {useUserState} from '../../context/UserProvider';
 import axios from 'axios';
 import styled from 'styled-components';
-import { useUserState } from '../../context/UserProvider';
 import { list } from '../../utils/articleService.js';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
@@ -60,14 +60,14 @@ const WholePage = styled.section`
 `;
 
 export const Fagartikler = ({ history }) => {
+  const { isAdmin } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
-  const { isAdmin } = useUserState();
+  
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     let mounted = true;
-    console.log(isAdmin)
     const fetchArticles = async () => {
       if (mounted) {
         const { data, err } = await list();
@@ -77,6 +77,7 @@ export const Fagartikler = ({ history }) => {
           //console.log('fikk feil');
         } else {
           setArticles(data);
+          
         }
       }
     };

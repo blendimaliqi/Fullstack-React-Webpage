@@ -11,10 +11,9 @@ import FagartiklerPage from '../pages/FagartiklerPage';
 import NewArticle from '../pages/NewArticle';
 import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
-import UserProvider from '../context/UserProvider.jsx';
+
 
 const Routes = () => (
-  <UserProvider>
     <Router>
       <MainLayout>
         <Switch>
@@ -49,7 +48,6 @@ const Routes = () => (
         <Footer />
       </MainLayout>
     </Router>
-  </UserProvider>
 );
 
 export default Routes;

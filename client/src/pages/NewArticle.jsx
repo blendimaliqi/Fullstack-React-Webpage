@@ -192,6 +192,7 @@ export const NewArticle = ({ history }) => {
   };
 
 
+
   const selectAuthor = () => {
     setAuthor(
       <select
