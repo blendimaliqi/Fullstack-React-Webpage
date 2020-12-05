@@ -27,10 +27,10 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const isAuthorized = (...roles) => (req, res, next) => {
+  console.log(req.user.role);
   if (!roles.includes(req.user.role)) {
     return next(new ErrorHandler(`${req.user.role}`, 403));
   }
-
   if (req.user.role === 'admin') {
     next();
   }

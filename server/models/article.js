@@ -40,6 +40,9 @@ const ArticleSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    secret: {
+      type: Boolean,
+    }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

@@ -3,6 +3,9 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Banner from '../components/Banner';
 import ModalCategory from '../components/Fagartikler/ModalCategory';
+import { create } from '../utils/articleService.js';
+import { getCurrentUser } from '../utils/loginService.js';
+import { listCategories, createCategory } from '../utils/categoryService.js';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -94,6 +97,7 @@ export const NewArticle = ({ history }) => {
   const formattedDate = `${toDay.getDate()}.${
     toDay.getMonth() + 1
   }.${toDay.getFullYear()}`;
+  const [adminId, setAdminId] = useState('');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -102,12 +106,15 @@ export const NewArticle = ({ history }) => {
     date: formattedDate,
     category: '',
     author: '',
+    administrator: adminId,
   });
 
   const [state, setState] = useState(false);
-  const [inputValid, setInputValid] = useState(true);
   const [category, setCategory] = useState();
   const [author, setAuthor] = useState();
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('category');
+  const [modalCategory, setModalCategory] = useState();
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -115,7 +122,9 @@ export const NewArticle = ({ history }) => {
       ...prev,
       ...inputValue,
     }));
+    console.log(inputValue);
   };
+
 
   const validateInput = (title, ingress, content, category, author) => ({
     title: title.length === 0,
@@ -147,12 +156,21 @@ export const NewArticle = ({ history }) => {
 
   const isDisabled = Object.keys(errors).some((i) => errors[i]);
 
+  const createArticle = async (inputData) => {
+    const { data } = await create(inputData);
+    console.log(data);
+  };
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isValid) {
       return;
     }
 
+    console.log(formData);
+    createArticle(formData);
     history.push('/fagartikler');
   };
 
@@ -163,10 +181,17 @@ export const NewArticle = ({ history }) => {
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
+    //createCategoryFunction(modalCategory);
+  //setFormData((prev) => (prev.category, <option value={categoryObject._id}>{modalCategory}</option>)  )
+    const categoryObject = {
+      name: modalCategory,
+    };
+    createCategory(categoryObject);
     setState(false);
   };
 
   const handleCategoryChange = (e) => {
+    setModalCategory(e.target.value);
     console.log(e.target.value);
   };
 
@@ -174,20 +199,7 @@ export const NewArticle = ({ history }) => {
     setState(false);
   };
 
-  const selectCategory = () => {
-    setCategory(
-      <select
-        className={errors.category ? 'error' : ''}
-        name="category"
-        onChange={updateValue}
-      >
-        <option value="Julenisse">Julenisse</option>
-        <option value="Pepperkaker">Pepperkaker</option>
-        <option value="Brun Julebrus">Brun Julebrus</option>
-        <option value="Pinnekjøtt">Pinnekjøtt</option>
-      </select>
-    );
-  };
+
 
   const selectAuthor = () => {
     setAuthor(
@@ -203,10 +215,28 @@ export const NewArticle = ({ history }) => {
       </select>
     );
   };
+  const getAdminId = async () => {
+    const { data } = await getCurrentUser();
+    setAdminId(data.data._id);
+    formData.administrator = data.data._id;
+    console.log(data.data._id);
+  };
 
   useEffect(() => {
-    selectCategory();
+    const fetchCategories = async () => {
+      const { data, err } = await listCategories();
+      if (data.success === false) {
+        console.log(data);
+        setError(data.success);
+        console.log('fikk feil');
+      } else {
+        setCategory(data);
+      }
+    };
+    fetchCategories();
     selectAuthor();
+
+    getAdminId();
   }, []);
 
   return (
@@ -252,7 +282,16 @@ export const NewArticle = ({ history }) => {
         <Input />
         <Label htmlFor="category">Label for kategori </Label>
         <CategoryWrapper>
-          {category}
+          <select
+            className={errors.category ? 'error' : ''}
+            name="category"
+            onChange={updateValue}
+          >
+            {category &&
+              category.map((categoryItem) => (
+                <option key={categoryItem.id} value={categoryItem.id}>{categoryItem.name}</option>
+              ))}
+          </select>
           <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
         </CategoryWrapper>
 

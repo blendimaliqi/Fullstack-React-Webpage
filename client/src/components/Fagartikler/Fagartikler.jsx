@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import {useUserState} from '../../context/UserProvider';
+import axios from 'axios';
 import styled from 'styled-components';
-import { list } from '../../utils/articleService';
+import { list } from '../../utils/articleService.js';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
 
@@ -58,21 +60,33 @@ const WholePage = styled.section`
 `;
 
 export const Fagartikler = ({ history }) => {
+  const { isAdmin, isLoggedIn } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
+  
+  
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+    let mounted = true;
     const fetchArticles = async () => {
-      const { data, err } = await list();
-      if (data.success === false) {
-        console.log(data);
-        setError(data.success);
-        console.log('fikk feil');
-      } else {
-        setArticles(data);
+      if (mounted) {
+        const { data, err } = await list();
+        if (data.success === false) {
+          //console.log(data);
+          setError(data.success);
+          //console.log('fikk feil');
+        } else {
+          setArticles(data);
+        }
       }
     };
     fetchArticles();
+
+    return function cleanup() {
+      mounted = false;
+      source.cancel();
+    };
   }, []);
 
   return (
@@ -81,9 +95,11 @@ export const Fagartikler = ({ history }) => {
       <WholePage>
         <PageContainer>
           <NyArtikkelContainer>
-            <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
-              NY ARTIKKEL
-            </NyArtikkelButton>
+            {isAdmin && (
+              <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
+                NY ARTIKKEL
+              </NyArtikkelButton>
+            )}
           </NyArtikkelContainer>
           <SearchAndFilterContainer>
             <SearchAndFilterButton>SØK</SearchAndFilterButton>
@@ -93,7 +109,7 @@ export const Fagartikler = ({ history }) => {
 
         <MainPage>
           {error && <h1>{error}</h1>}
-          {articles &&
+          {articles && isLoggedIn &&
             articles.map((article) => (
               <Artikkel
                 id={article.id}
@@ -102,6 +118,21 @@ export const Fagartikler = ({ history }) => {
                 text={article.ingress}
                 category={article.category.name}
               />
+            ))}
+
+            {articles && !isLoggedIn &&
+            articles.map((article) => (
+              <>
+              {!article.secret &&
+              <Artikkel
+                id={article.id}
+                key={article.id}
+                title={article.title}
+                text={article.ingress}
+                category={article.category.name}
+              />
+              }
+              </>
             ))}
         </MainPage>
       </WholePage>
