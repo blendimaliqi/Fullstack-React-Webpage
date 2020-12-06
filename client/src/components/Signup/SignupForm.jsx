@@ -50,7 +50,7 @@ const ErrorContainer = styled.section`
 
 export const SignupForm = () => {
 
-    const { setUser, isLoggedIn } = useUserState();
+    const { setUser } = useUserState();
     const [registerData, setRegisterData] = useState({
       name: '',
       email: '',
@@ -78,14 +78,10 @@ export const SignupForm = () => {
           setError(Array.from(data.message));
         } else {
           const user = data?.user;
-          //setUser({ ...user }); 
           setUser(user);
           setError(null);
         }
-  
-        // alert(`Logget inn som: ${data.user.email}`);
       };
-  
       register();
     };
   
