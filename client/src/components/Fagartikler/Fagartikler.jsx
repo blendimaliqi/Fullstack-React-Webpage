@@ -17,7 +17,7 @@ const PageContainer = styled.section`
 const SearchAndFilterContainer = styled.section`
   display: flex;
   justify-content: space-between;
-  width: 28%;
+  width: 21%;
 `;
 
 const SearchAndFilterButton = styled.button`
@@ -62,7 +62,7 @@ const MainPage = styled.section`
 
 const WholePage = styled.section`
   display: grid;
-  justify-content: center;
+  margin: 0 auto;
 `;
 
 const PageLinkContainer = styled.ul`

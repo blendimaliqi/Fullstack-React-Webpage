@@ -10,21 +10,26 @@ const ArtikkelPhoto = styled.section`
 `;
 
 const Container = styled.section`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  //margin-left: 23rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 `;
 
 const ContainerAll = styled.section`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   margin-top: 40px;
+  width: 100%;
 `;
 
-const CategoryContainer = styled.h1`
-  margin-top: 20px;
-  font-size: 1em;
-  margin-left: 10rem;
+const TextContentContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const TitleCategoryContainer = styled.section`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Header = styled.h1`
@@ -33,6 +38,12 @@ const Header = styled.h1`
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 10px;
+`;
+
+const Category = styled.p`
+  margin: 0;
+  font-weight: bolder;
+  margin-top: 14px;
 `;
 
 const Paragraph = styled.p`
@@ -51,7 +62,7 @@ export const ArticleItem = ({ id, title, text, category, history }) => {
     console.log(e.target.value);
   };
 
-  //const [category, setCategory] = useState('Kategori');
+  // const [category, setCategory] = useState('Kategori');
 
   /* const select = () => {
         setCategory((
@@ -83,12 +94,14 @@ export const ArticleItem = ({ id, title, text, category, history }) => {
       <ContainerAll onClick={() => history.push(`fagartikler/${id}`)}>
         <Container>
           <ArtikkelPhoto />
-          <section>
-            <Header> {title} </Header>
+          <TextContentContainer>
+            <TitleCategoryContainer>
+              <Header> {title} </Header>
+              <Category>{category}</Category>
+            </TitleCategoryContainer>
             <Paragraph>{text}</Paragraph>
-          </section>
+          </TextContentContainer>
         </Container>
-        <CategoryContainer>{category}</CategoryContainer>
       </ContainerAll>
     </>
   );
