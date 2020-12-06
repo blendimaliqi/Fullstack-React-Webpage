@@ -5,7 +5,8 @@ import Banner from '../components/Banner';
 import ModalCategory from '../components/Fagartikler/ModalCategory';
 import { create } from '../utils/articleService.js';
 import { getCurrentUser } from '../utils/loginService.js';
-import { listCategories, createCategory } from '../utils/categoryService.js';
+import { listCategories , createCategory } from '../utils/categoryService.js';
+import {listAuthors} from '../utils/authorService.js';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -89,8 +90,17 @@ const AuthorWrapper = styled.section`
   grid-template-columns: 1fr;
   grid-gap: 30px;
   height: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
+
+const SecretWrapper = styled.section `
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 2rem;
+  grid-gap: 20px;
+`;
+
+
 
 export const NewArticle = ({ history }) => {
   const toDay = new Date();
@@ -98,6 +108,7 @@ export const NewArticle = ({ history }) => {
     toDay.getMonth() + 1
   }.${toDay.getFullYear()}`;
   const [adminId, setAdminId] = useState('');
+
 
   const [formData, setFormData] = useState({
     title: '',
@@ -115,6 +126,8 @@ export const NewArticle = ({ history }) => {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('category');
   const [modalCategory, setModalCategory] = useState();
+  const [secret, setSecret] = useState(false);
+
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -169,8 +182,8 @@ export const NewArticle = ({ history }) => {
       return;
     }
 
-    console.log(formData);
-    createArticle(formData);
+    console.log("FORMDATA I SUBMIT",formData);
+    createArticle({...formData, secret: secret});
     history.push('/fagartikler');
   };
 
@@ -195,26 +208,15 @@ export const NewArticle = ({ history }) => {
     console.log(e.target.value);
   };
 
+  const handleSecretTrue = (e) => {
+    setSecret(!secret);
+  }
+
   const closeModal = () => {
     setState(false);
   };
 
 
-
-  const selectAuthor = () => {
-    setAuthor(
-      <select
-        className={errors.author ? 'error' : ''}
-        name="author"
-        onChange={updateValue}
-      >
-        <option>Iron Man</option>
-        <option>Nissefar</option>
-        <option>Magnus Carlsen</option>
-        <option>Justin Bieber</option>
-      </select>
-    );
-  };
   const getAdminId = async () => {
     const { data } = await getCurrentUser();
     setAdminId(data.data._id);
@@ -234,9 +236,21 @@ export const NewArticle = ({ history }) => {
       }
     };
     fetchCategories();
-    selectAuthor();
-
     getAdminId();
+  }, []);
+
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      const { data } = await listAuthors();
+      if (data.success === false) {
+        console.log(data);
+        setError(data.success);
+        console.log('fikk feil');
+      } else {
+        setAuthor(data);
+      }
+    };
+    fetchAuthors();
   }, []);
 
   return (
@@ -278,8 +292,7 @@ export const NewArticle = ({ history }) => {
         />
         <Label htmlFor="date">Dato </Label>
         <Input type="text" name="date" value={formattedDate} readOnly />
-        <Label>Label for inputfelt </Label>
-        <Input />
+
         <Label htmlFor="category">Label for kategori </Label>
         <CategoryWrapper>
           <select
@@ -296,7 +309,23 @@ export const NewArticle = ({ history }) => {
         </CategoryWrapper>
 
         <Label htmlFor="author">Label for forfatter </Label>
-        <AuthorWrapper>{author}</AuthorWrapper>
+        <AuthorWrapper>
+          <select
+            className={errors.author ? 'error' : ''}
+            name="author"
+            onChange={updateValue}
+          >
+            {author &&
+              author.map((authorItem) => (
+                <option key={authorItem.id} value={authorItem.name}>{authorItem.name}</option>
+              ))}
+          </select>
+        </AuthorWrapper>
+
+        <SecretWrapper>
+        <p style={({margin: 0})}>Gjør usynlig for brukere som ikke er logget inn</p>
+        <input style={({margin: 0})} type="checkbox" placeholder={"Gjør hemmelig"} onClick={handleSecretTrue} />
+        </SecretWrapper>
         <NyArtikkelButton
           style={{
             backgroundColor: !isDisabled ? '#53a5be' : '#DBDBDB',
