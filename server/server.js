@@ -12,7 +12,7 @@ import category from './routes/category.js';
 import auth from './routes/auth.js';
 import author from './routes/author.js';
 import cookieParser from 'cookie-parser';
-
+import contact from './routes/contact.js';
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {
@@ -37,6 +37,7 @@ app.use(`${process.env.BASEURL}/users`, user);
 app.use(`${process.env.BASEURL}/articles`, article);
 app.use(`${process.env.BASEURL}/categories`, category);
 app.use(`${process.env.BASEURL}/authors`, author);
+app.use(`${process.env.BASEURL}/sendmail`, contact);
 app.use(`${process.env.BASEURL}/`, auth);
 
 app.use(errorMiddleware);

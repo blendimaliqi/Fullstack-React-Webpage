@@ -4,7 +4,6 @@ import { ApiFilters } from '../utils/apiFilters.js';
 export const getArticleById = async (id) =>
   Article.findById(id).populate('category', 'name');
 
-
   export const listArticles = async (queryStr) => {
     const { limit, page } = queryStr;
     const filters = new ApiFilters(Article.find(), queryStr)
