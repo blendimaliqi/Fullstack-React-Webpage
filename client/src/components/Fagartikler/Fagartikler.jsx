@@ -161,7 +161,11 @@ export const Fagartikler = ({ history }) => {
   };
 
   const handleCategoryFilter = (event) => {
-    setFilter(event.target.value);
+    if(event.target.value === "Ingen filter") {
+      setFilter(null);
+    } else {
+      setFilter(event.target.value);
+    }
     console.log(filter);
   };
 
@@ -180,6 +184,9 @@ export const Fagartikler = ({ history }) => {
           <SearchAndFilterContainer>
             <SearchButton>SØK</SearchButton>
             <FilterSelect onChange={handleCategoryFilter}>
+              <option key={0} value="Ingen filter">
+                Ingen filter
+              </option>
               {categories &&
                 categories.map((category) => (
                   <option key={category.id} value={category.id}>
