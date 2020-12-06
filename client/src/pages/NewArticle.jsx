@@ -5,7 +5,8 @@ import Banner from '../components/Banner';
 import ModalCategory from '../components/Fagartikler/ModalCategory';
 import { create } from '../utils/articleService.js';
 import { getCurrentUser } from '../utils/loginService.js';
-import { listCategories, createCategory } from '../utils/categoryService.js';
+import { listCategories , createCategory } from '../utils/categoryService.js';
+import {listAuthors} from '../utils/authorService.js';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -216,21 +217,6 @@ export const NewArticle = ({ history }) => {
   };
 
 
-
-  const selectAuthor = () => {
-    setAuthor(
-      <select
-        className={errors.author ? 'error' : ''}
-        name="author"
-        onChange={updateValue}
-      >
-        <option>Iron Man</option>
-        <option>Nissefar</option>
-        <option>Magnus Carlsen</option>
-        <option>Justin Bieber</option>
-      </select>
-    );
-  };
   const getAdminId = async () => {
     const { data } = await getCurrentUser();
     setAdminId(data.data._id);
@@ -250,8 +236,21 @@ export const NewArticle = ({ history }) => {
       }
     };
     fetchCategories();
-    selectAuthor();
     getAdminId();
+  }, []);
+
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      const { data } = await listAuthors();
+      if (data.success === false) {
+        console.log(data);
+        setError(data.success);
+        console.log('fikk feil');
+      } else {
+        setAuthor(data);
+      }
+    };
+    fetchAuthors();
   }, []);
 
   return (
@@ -310,7 +309,18 @@ export const NewArticle = ({ history }) => {
         </CategoryWrapper>
 
         <Label htmlFor="author">Label for forfatter </Label>
-        <AuthorWrapper>{author}</AuthorWrapper>
+        <AuthorWrapper>
+          <select
+            className={errors.author ? 'error' : ''}
+            name="author"
+            onChange={updateValue}
+          >
+            {author &&
+              author.map((authorItem) => (
+                <option key={authorItem.id} value={authorItem.name}>{authorItem.name}</option>
+              ))}
+          </select>
+        </AuthorWrapper>
 
         <SecretWrapper>
         <p style={({margin: 0})}>Gjør usynlig for brukere som ikke er logget inn</p>
