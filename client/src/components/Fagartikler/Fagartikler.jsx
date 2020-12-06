@@ -4,6 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider';
 import { list } from '../../utils/articleService.js';
+import { listCategories } from '../../utils/categoryService.js';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
 
@@ -20,7 +21,7 @@ const SearchAndFilterContainer = styled.section`
   width: 21%;
 `;
 
-const SearchAndFilterButton = styled.button`
+const SearchButton = styled.button`
   display: flex;
   background-color: lightgray;
   padding: 1.5rem 2.7rem;
@@ -31,6 +32,17 @@ const SearchAndFilterButton = styled.button`
   //justify-content: space-around;
   //align-items: center;
   //margin-right: 1.3rem;
+`;
+
+const FilterSelect = styled.select`
+  display: flex;
+  background-color: lightgray;
+  padding: 1.5rem 2.7rem;
+  border: 0;
+  font-weight: bold;
+  font-size: 0.6rem;
+  max-height: 4rem;
+  margin-left: 1.3rem;
 `;
 
 const NyArtikkelContainer = styled.section`
@@ -87,13 +99,16 @@ export const Fagartikler = ({ history }) => {
   const [error, setError] = useState();
   const [pagination, setPagination] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [categories, setCategories] = useState();
+  const [categoryErr, setCategoryErr] = useState(null);
+  const [filter, setFilter] = useState(null);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     let mounted = true;
     const fetchArticles = async () => {
       if (mounted) {
-        const { data, err } = await list(5, currentPage);
+        const { data, err } = await list(filter, 5, currentPage);
         if (data.success === false) {
           // console.log(data);
           setError(data.success);
@@ -106,13 +121,26 @@ export const Fagartikler = ({ history }) => {
         }
       }
     };
+
+    const fetchCategories = async () => {
+      if (mounted) {
+        const { data } = await listCategories();
+        if (data.success === false) {
+          setCategoryErr(data.success);
+        } else {
+          setCategories(data);
+        }
+      }
+    };
+
     fetchArticles();
+    fetchCategories();
 
     return function cleanup() {
       mounted = false;
       source.cancel();
     };
-  }, [currentPage]);
+  }, [filter, currentPage]);
 
   const handlePageChange = (event) => {
     setCurrentPage(event.target.value);
@@ -132,6 +160,11 @@ export const Fagartikler = ({ history }) => {
     return links;
   };
 
+  const handleCategoryFilter = (event) => {
+    setFilter(event.target.value);
+    console.log(filter);
+  };
+
   return (
     <>
       <Banner title="Fagartikler" />
@@ -145,13 +178,21 @@ export const Fagartikler = ({ history }) => {
             )}
           </NyArtikkelContainer>
           <SearchAndFilterContainer>
-            <SearchAndFilterButton>SØK</SearchAndFilterButton>
-            <SearchAndFilterButton>FILTER</SearchAndFilterButton>
+            <SearchButton>SØK</SearchButton>
+            <FilterSelect onChange={handleCategoryFilter}>
+              {categories &&
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+            </FilterSelect>
           </SearchAndFilterContainer>
         </PageContainer>
 
         <MainPage>
           {error && <h1>{error}</h1>}
+          {categoryErr && <h1>{categoryErr}</h1>}
           {articles &&
             isLoggedIn &&
             articles.map((article) => (

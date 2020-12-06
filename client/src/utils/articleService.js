@@ -2,10 +2,16 @@ import http from './http';
 
 const API_URL = '/articles';
 
-export const list = async (limit, page) => {
+export const list = async (filter, limit, page) => {
   try {
-    return await http.get(`${API_URL}?limit=${limit}&page=${page}`);
-    //return await http.get(`${API_URL}`);
+    if (filter === null) {
+      return await http.get(`${API_URL}?limit=${limit}&page=${page}`);
+    }
+    return await http.get(
+      `${API_URL}?category=${filter}&limit=${limit}&page=${page}`
+    );
+
+    // return await http.get(`${API_URL}`);
   } catch (err) {
     return err.response;
   }
