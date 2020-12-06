@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 import styled from 'styled-components';
+import { useUserState } from '../context/UserProvider';
 
 const ContactSchema = styled.section`
   width: 90%;
@@ -49,10 +51,13 @@ const BoxSection = styled.section`
 export const ContactForm = () => {
   const [email, setEmail] = useState();
   const [question, setQuestion] = useState();
+  const { userName } = useUserState();
 
   const handleChange = (e) => {
     setQuestion(e.target.value);
   };
+
+  useEffect
 
   console.log(question);
 
@@ -61,7 +66,7 @@ export const ContactForm = () => {
       <BoxSection>
         <h1>Kontaktskjema</h1>
         <Form>
-          <input id="email__Input" type="text" />
+          <input id="email__Input" value={userName?.name} type="text" />
           <textarea type="text" onChange={handleChange} />
           <SendButton>Send</SendButton>
         </Form>
