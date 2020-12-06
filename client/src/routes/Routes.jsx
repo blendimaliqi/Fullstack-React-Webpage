@@ -11,6 +11,7 @@ import FagartiklerPage from '../pages/FagartiklerPage';
 import NewArticle from '../pages/NewArticle';
 import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
+import Signup from '../pages/Signup';
 
 
 const Routes = () => (
@@ -40,6 +41,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/registrer">
+            <Signup />
           </Route>
           <Route path="*">
             <NoMatch />

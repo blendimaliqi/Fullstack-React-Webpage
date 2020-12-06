@@ -15,12 +15,12 @@ export const get = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const listAllArticles = catchAsyncErrors(async (req, res, next) => {
-  const result = await articleService.listArticles();
-  
-  res.status(200).json(result);
+  console.log("REQ,QUERY CONTROLLER: ", req.query)
+  const result = await articleService.listArticles(req.query);
+  res.status(200).json({ success: true, data: result });
 });
 
-/*export const listHidden = catchAsyncErrors(async (req, res, next) => {
+/* export const listHidden = catchAsyncErrors(async (req, res, next) => {
   const result = await articleService.listArticles();
 
   const hiddenArticles = [];

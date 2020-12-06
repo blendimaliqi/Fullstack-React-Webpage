@@ -8,8 +8,8 @@ const ArticleSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      min: ['1', 'Tittel må bestå av minst 1 tegn'],
-      max: ['100', 'Tittel må være under 100 tegn'],
+      minlength: ['1', 'Tittel må bestå av minst 1 tegn'],
+      maxlength: ['100', 'Tittel må være under 100 tegn'],
     },
     // slug: String,
     ingress: {
@@ -46,5 +46,10 @@ const ArticleSchema = new Schema(
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+ArticleSchema.index({
+  title: 'text',
+});
+
 
 export default mongoose.model('Article', ArticleSchema);

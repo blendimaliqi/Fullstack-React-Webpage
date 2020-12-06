@@ -16,8 +16,11 @@ const userSchema = {
 
 
 export const registerSchema = Joi.object().keys({
-    name: Joi.string(),
+    name: Joi.string().required().messages({
+        'string.empty': 'Navn feltet kan ikke være tomt',
+    }),
     ...userSchema,
+    role: Joi.string().required(),
 }).options({abortEarly: false});
 
 export const loginSchema = Joi.object().keys({
