@@ -76,7 +76,8 @@ export const LoginForm = () => {
       } else {
         const user = data?.user;
         //setUser({ ...user }); 
-        setUser(user);
+        console.log({user: user});
+        setUser({user: user});
         setError(null);
       }
 

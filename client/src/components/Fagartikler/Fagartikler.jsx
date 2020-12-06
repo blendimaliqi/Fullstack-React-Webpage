@@ -60,7 +60,7 @@ const WholePage = styled.section`
 `;
 
 export const Fagartikler = ({ history }) => {
-  const { isAdmin, isLoggedIn } = useUserState();
+  const { isAdmin, isLoggedIn, user } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
 
@@ -81,6 +81,7 @@ export const Fagartikler = ({ history }) => {
       }
     };
     fetchArticles();
+    console.log(user);
 
     return function cleanup() {
       mounted = false;
