@@ -12,7 +12,7 @@ const ArtikkelPhoto = styled.section`
 const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 2fr;
-  margin-left: 23rem;
+  //margin-left: 23rem;
 `;
 
 const ContainerAll = styled.section`

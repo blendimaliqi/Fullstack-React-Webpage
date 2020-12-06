@@ -75,8 +75,8 @@ export const LoginForm = () => {
         setError(Array.from(data.message));
       } else {
         const user = data?.user;
-        //setUser({ ...user }); 
-        setUser(user);
+        // setUser({ ...user });
+        setUser({ user });
         setError(null);
       }
 
@@ -86,17 +86,16 @@ export const LoginForm = () => {
     login();
   };
 
-
-
   return (
     <Form onSubmit={handleLogin}>
       <ErrorContainer>
-        {/*error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage />*/}
-        {error && (
+        {/* error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage /> */}
+        {error &&
           error.map((err, index) => (
-          <ErrorMessage key={(index + 1) * Math.random()}>{err.message}</ErrorMessage>
-          ))
-        )}
+            <ErrorMessage key={(index + 1) * Math.random()}>
+              {err.message}
+            </ErrorMessage>
+          ))}
       </ErrorContainer>
       <Input
         name="email"

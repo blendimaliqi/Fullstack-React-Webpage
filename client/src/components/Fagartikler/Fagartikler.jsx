@@ -9,12 +9,15 @@ import Artikkel from './ArticleItem';
 
 const PageContainer = styled.section`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  width: 60%;
+  margin: 0 auto;
 `;
 
 const SearchAndFilterContainer = styled.section`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  width: 28%;
 `;
 
 const SearchAndFilterButton = styled.button`
@@ -25,8 +28,9 @@ const SearchAndFilterButton = styled.button`
   font-weight: bold;
   font-size: 0.6rem;
   max-height: 4rem;
-  align-items: center;
-  margin-right: 1.3rem;
+  //justify-content: space-around;
+  //align-items: center;
+  //margin-right: 1.3rem;
 `;
 
 const NyArtikkelContainer = styled.section`
@@ -51,7 +55,9 @@ const NyArtikkelButton = styled.button`
 
 const MainPage = styled.section`
   display: grid;
-  justify-content: center;
+  //justify-content: center;
+  margin: 0 auto;
+  width: 60%;
 `;
 
 const WholePage = styled.section`
@@ -59,23 +65,43 @@ const WholePage = styled.section`
   justify-content: center;
 `;
 
+const PageLinkContainer = styled.ul`
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  justify-content: flex-end;
+  padding: 0;
+`;
+
+const PageLink = styled.button`
+  list-style: none;
+  border: 0;
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.3rem;
+  background-color: lightgray;
+`;
+
 export const Fagartikler = ({ history }) => {
   const { isAdmin, isLoggedIn } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
+  const [pagination, setPagination] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     let mounted = true;
     const fetchArticles = async () => {
       if (mounted) {
-        const { data, err } = await list(5, 2);
+        const { data, err } = await list(5, currentPage);
         if (data.success === false) {
           // console.log(data);
           setError(data.success);
           // console.log('fikk feil');
         } else {
           console.log(data.data);
+          setPagination(data.data.totalPages);
+          setCurrentPage(data.data.currentPage);
           setArticles(data.data.data);
         }
       }
@@ -86,7 +112,25 @@ export const Fagartikler = ({ history }) => {
       mounted = false;
       source.cancel();
     };
-  }, []);
+  }, [currentPage]);
+
+  const handlePageChange = (event) => {
+    setCurrentPage(event.target.value);
+  };
+
+  const createPageLinks = () => {
+    const links = [];
+
+    for (let i = 1; i <= pagination; i++) {
+      links.push(
+        <PageLink key={i} value={i} onClick={handlePageChange}>
+          {i}
+        </PageLink>
+      );
+    }
+
+    return links;
+  };
 
   return (
     <>
@@ -94,7 +138,7 @@ export const Fagartikler = ({ history }) => {
       <WholePage>
         <PageContainer>
           <NyArtikkelContainer>
-            { isAdmin && (
+            {isAdmin && (
               <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
                 NY ARTIKKEL
               </NyArtikkelButton>
@@ -135,6 +179,7 @@ export const Fagartikler = ({ history }) => {
                 )}
               </>
             ))}
+          <PageLinkContainer>{createPageLinks()}</PageLinkContainer>
         </MainPage>
       </WholePage>
     </>
