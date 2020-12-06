@@ -89,8 +89,17 @@ const AuthorWrapper = styled.section`
   grid-template-columns: 1fr;
   grid-gap: 30px;
   height: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
+
+const SecretWrapper = styled.section `
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 2rem;
+  grid-gap: 20px;
+`;
+
+
 
 export const NewArticle = ({ history }) => {
   const toDay = new Date();
@@ -98,6 +107,7 @@ export const NewArticle = ({ history }) => {
     toDay.getMonth() + 1
   }.${toDay.getFullYear()}`;
   const [adminId, setAdminId] = useState('');
+
 
   const [formData, setFormData] = useState({
     title: '',
@@ -115,6 +125,8 @@ export const NewArticle = ({ history }) => {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('category');
   const [modalCategory, setModalCategory] = useState();
+  const [secret, setSecret] = useState(false);
+
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -169,8 +181,8 @@ export const NewArticle = ({ history }) => {
       return;
     }
 
-    console.log(formData);
-    createArticle(formData);
+    console.log("FORMDATA I SUBMIT",formData);
+    createArticle({...formData, secret: secret});
     history.push('/fagartikler');
   };
 
@@ -194,6 +206,10 @@ export const NewArticle = ({ history }) => {
     setModalCategory(e.target.value);
     console.log(e.target.value);
   };
+
+  const handleSecretTrue = (e) => {
+    setSecret(!secret);
+  }
 
   const closeModal = () => {
     setState(false);
@@ -235,7 +251,6 @@ export const NewArticle = ({ history }) => {
     };
     fetchCategories();
     selectAuthor();
-
     getAdminId();
   }, []);
 
@@ -278,8 +293,7 @@ export const NewArticle = ({ history }) => {
         />
         <Label htmlFor="date">Dato </Label>
         <Input type="text" name="date" value={formattedDate} readOnly />
-        <Label>Label for inputfelt </Label>
-        <Input />
+
         <Label htmlFor="category">Label for kategori </Label>
         <CategoryWrapper>
           <select
@@ -297,6 +311,11 @@ export const NewArticle = ({ history }) => {
 
         <Label htmlFor="author">Label for forfatter </Label>
         <AuthorWrapper>{author}</AuthorWrapper>
+
+        <SecretWrapper>
+        <p style={({margin: 0})}>Gjør usynlig for brukere som ikke er logget inn</p>
+        <input style={({margin: 0})} type="checkbox" placeholder={"Gjør hemmelig"} onClick={handleSecretTrue} />
+        </SecretWrapper>
         <NyArtikkelButton
           style={{
             backgroundColor: !isDisabled ? '#53a5be' : '#DBDBDB',

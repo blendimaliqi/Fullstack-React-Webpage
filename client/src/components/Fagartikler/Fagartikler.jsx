@@ -94,7 +94,7 @@ export const Fagartikler = ({ history }) => {
       <WholePage>
         <PageContainer>
           <NyArtikkelContainer>
-            {isAdmin && (
+            { isAdmin && (
               <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
                 NY ARTIKKEL
               </NyArtikkelButton>
