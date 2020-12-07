@@ -10,7 +10,7 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
     let token;
     if (req.cookies?.token) {
       token = req.cookies.token;
-    }
+    };
 
     //console.log("USER: i server: ", user);
 
@@ -64,7 +64,7 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
        
         } catch (error) {
             console.log(error);
-        }
+        };
     
 
 
@@ -81,7 +81,7 @@ export const get = catchAsyncErrors(async (req, res, next) => {
     const mail = await mailService.getMailById(req.params.id);
         if (!mail) {
             return next(new ErrorHandler(`Finner ikke mail`, 404));
-        }
+        };
     res.status(200).json(mail);
 });
     

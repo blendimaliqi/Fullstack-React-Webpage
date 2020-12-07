@@ -1,4 +1,5 @@
 import http from './http';
+import {getCsrfToken} from './loginService';
 
 const API_URL = '/articles';
 
@@ -12,8 +13,6 @@ export const list = async (filter, limit, page, searchTerm) => {
     return await http.get(
       `${API_URL}?category=${filter}&limit=${limit}&page=${page}&q=${searchTerm}`
     );
-
-    // return await http.get(`${API_URL}`);
   } catch (err) {
     return err.response;
   }
@@ -28,6 +27,7 @@ export const get = async (id) => {
 };
 
 export const create = async (data) => {
+  await getCsrfToken();
   try {
     return await http.post(`${API_URL}`, data);
   } catch (err) {

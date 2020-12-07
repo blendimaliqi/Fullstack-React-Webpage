@@ -1,11 +1,12 @@
 import http from './http';
+import {getCsrfToken} from './loginService';
 
 const API_URL = '/sendmail';
 
 export const sendMailToUser = async(data) => {
     try {
+      await getCsrfToken();
         return await http.post(`${API_URL}`, data); 
-        //return await http.get(`${API_URL}`);
     } catch (error) {
         return error.response;
     }

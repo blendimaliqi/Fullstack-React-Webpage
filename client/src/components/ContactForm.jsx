@@ -58,6 +58,7 @@ const BoxSection = styled.section`
   align-items: center;
   margin-bottom: 30rem;
   width: 80%;
+  margin-top: 200px;
 
   & h1 {
     font-size: 30px;
