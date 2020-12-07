@@ -63,6 +63,12 @@ export const ContactForm = () => {
     setQuestion(e.target.value);
   };
 
+  const epostToAdmin = {
+    name: name,
+    email: email,
+    question: question,
+  }
+
   useEffect(() => {
     const getUser = async () => {
       try{
@@ -82,10 +88,12 @@ export const ContactForm = () => {
     e.preventDefault();
 
     console.log("USER: ", user);
+
     const sendAsync = async () =>  {
-     await sendMailToUser();
+     await sendMailToUser(epostToAdmin);
      //console.log("MAIL fra client", mail);
     }
+    console.log("epostToAdmin: ", epostToAdmin)
     sendAsync();
   }
 
@@ -94,13 +102,20 @@ export const ContactForm = () => {
       <BoxSection>
         <h1>Kontaktskjema</h1>
         <Form>
+        {isLoggedIn && name?.length !=0 &&
+          <input defaultValue={name} type="text" />
+          }
+          {!isLoggedIn && !name?.length !=0 &&
+          <input defaultValue="" placeholder="Navn" type="text" />
+
+          }
           {isLoggedIn && email?.length !=0 &&
           <input defaultValue={email} type="text" />
           }
           {!isLoggedIn && !email?.length !=0 &&
-          <input defaultValue="" type="text" />
+          <input defaultValue="" placeholder="E-post" type="text" />
           }
-          <textarea type="text" onChange={handleChange} />
+          <textarea type="text" placeholder="Hendvendelse" onChange={handleChange} />
             
           <SendButton onClick={handleSubmit}>Send</SendButton>
         </Form>

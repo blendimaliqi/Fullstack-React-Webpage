@@ -18,6 +18,7 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
 
     console.log("USER: i server: ", user);
 
+    //Sender bekreftelse til kunden om at vi har mottatt mailen 
     try {
         await sendMail({
             from: `${process.env.EMAIL_FROM}`,
@@ -37,14 +38,13 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
         console.log(error);
     }
 
+    //Sender hendvendelsen til databasen
     try {
-        const mail = await mailService.createMail(req.body);
-        console.log("MAIL Fra server: ", mail)
-        
+        await mailService.createMail(req.body);
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-
+    
 });
 
 export const get = catchAsyncErrors(async (req, res, next) => {
