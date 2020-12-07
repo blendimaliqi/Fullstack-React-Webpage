@@ -63,9 +63,10 @@ export const UserProvider = ({ children }) => {
         isLoading: loading,
         isAdmin: user?.user.role === 'admin',
         isLoggedIn: !!user,
-        user,
+        userName: user?.user,
         setUser,
       }}
+
     >
       {children}
     </UserContext.Provider>
