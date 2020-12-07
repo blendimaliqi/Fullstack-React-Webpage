@@ -25,8 +25,14 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
                     email: user.email,
                     subject: 'Takk for hendvendelsen!',
                     message: `Hei ${user.name}, vi har motatt din epost og jobber med å svare deg tilbake snarest mulig.
+                    Under finner du kopi av din hendvendelse.
                     Vennlig hilsen,
-                    LG Rør AS.
+                    LG Rør AS. 
+
+                    Kopi: 
+                    ${req.body.email}: 
+                    ${req.body.question}
+
                     `,
                   }); 
         
@@ -40,8 +46,13 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
                     email: req.body.email,
                     subject: 'Takk for hendvendelsen!',
                     message: `Hei ${req.body.name}, vi har motatt din epost og jobber med å svare deg tilbake snarest mulig.
+                    Under finner du kopi av din hendvendelse.
                     Vennlig hilsen,
                     LG Rør AS.
+
+                    Kopi fra ${req.body.email}: 
+
+                    ${req.body.question}
                     `,
                   }); 
         
