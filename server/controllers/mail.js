@@ -15,27 +15,30 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await userService.getUserById(decoded.id);
 
-    console.log("USER: i server: ", user);
+    //console.log("USER: i server: ", user);
 
     //Sender bekreftelse til kunden om at vi har mottatt mailen 
-    try {
-        await sendMail({
-            from: `${process.env.EMAIL_FROM}`,
-            email: user.email,
-            subject: 'Takk for hendvendelsen!',
-            message: `Hei ${user.name}, vi har motatt din epost og jobber med å svare deg tilbake snarest mulig.
-            Vennlig hilsen,
-            LG Rør AS.
-            `,
-          });
-
-          res.json(200, ({
-              success: true,
-              message: `Mailen ble sendt til bruker ${user.name}`,
-          }));
-    } catch (error) {
-        console.log(error);
+    if(user){
+        try {
+            await sendMail({
+                from: `${process.env.EMAIL_FROM}`,
+                email: user.email,
+                subject: 'Takk for hendvendelsen!',
+                message: `Hei ${user.name}, vi har motatt din epost og jobber med å svare deg tilbake snarest mulig.
+                Vennlig hilsen,
+                LG Rør AS.
+                `,
+              });
+    
+              res.json(200, ({
+                  success: true,
+                  message: `Mailen ble sendt til bruker ${user.name}`,
+              }));
+        } catch (error) {
+            console.log(error);
+        }
     }
+
 
     //Sender hendvendelsen til databasen
     try {
@@ -55,8 +58,12 @@ export const get = catchAsyncErrors(async (req, res, next) => {
 });
     
 export const list = catchAsyncErrors(async (req, res, next) => {
-    const result = await mailService.listMails();
-    res.status(200).json(result);
+    const result = await mailService.listMails(req.query);
+    //const userData = await mailService.listMails();
+    res.status(200).json({ 
+        success: true, 
+        data: result,
+    });
 });
     
 export const create = catchAsyncErrors(async (req, res, next) => {

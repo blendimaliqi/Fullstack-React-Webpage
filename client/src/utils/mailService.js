@@ -11,4 +11,16 @@ export const sendMailToUser = async(data) => {
     }
 }
 
-export default sendMailToUser;
+export const listInbox = async (limit, page) => {
+    try {
+    return await http.get(
+        `${API_URL}?limit=${limit}&page=${page}`
+    );
+    } catch (err) {
+      return err.response;
+    }
+  };
+  export default {
+    sendMailToUser,
+    listInbox,
+  };
