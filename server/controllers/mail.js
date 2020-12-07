@@ -11,31 +11,62 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
     if (req.cookies?.token) {
       token = req.cookies.token;
     }
-  
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await userService.getUserById(decoded.id);
 
-    console.log("USER: i server: ", user);
+    //console.log("USER: i server: ", user);
 
     //Sender bekreftelse til kunden om at vi har mottatt mailen 
-    try {
-        await sendMail({
-            from: `${process.env.EMAIL_FROM}`,
-            email: user.email,
-            subject: 'Takk for hendvendelsen!',
-            message: `Hei ${user.name}, vi har motatt din epost og jobber med å svare deg tilbake snarest mulig.
-            Vennlig hilsen,
-            LG Rør AS.
-            `,
-          });
+        try {
+            if(token?. undefined) {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                const user = await userService.getUserById(decoded.id);
 
-          res.json(200, ({
-              success: true,
-              message: `Mailen ble sendt til bruker ${user.name}`,
-          }));
-    } catch (error) {
-        console.log(error);
-    }
+                await sendMail({
+                    from: `${process.env.EMAIL_FROM}`,
+                    email: user.email,
+                    subject: 'Takk for hendvendelsen!',
+                    message: `Hei ${user.name}, vi har motatt din epost og jobber med å svare deg tilbake snarest mulig.
+                    Under finner du kopi av din hendvendelse.
+                    Vennlig hilsen,
+                    LG Rør AS. 
+
+                    Kopi: 
+                    ${req.body.email}: 
+                    ${req.body.question}
+
+                    `,
+                  }); 
+        
+                  res.json(200, ({
+                      success: true,
+                      message: `Mailen ble sendt til bruker ${user.name}`,
+                  }));
+            } else {
+                await sendMail({
+                    from: `${process.env.EMAIL_FROM}`,
+                    email: req.body.email,
+                    subject: 'Takk for hendvendelsen!',
+                    message: `Hei ${req.body.name}, vi har motatt din epost og jobber med å svare deg tilbake snarest mulig.
+                    Under finner du kopi av din hendvendelse.
+                    Vennlig hilsen,
+                    LG Rør AS.
+
+                    Kopi fra ${req.body.email}: 
+
+                    ${req.body.question}
+                    `,
+                  }); 
+        
+                  res.json(200, ({
+                      success: true,
+                      message: `Mailen ble sendt til bruker ${req.body.name}`,
+                  }));
+            }
+       
+        } catch (error) {
+            console.log(error);
+        }
+    
+
 
     //Sender hendvendelsen til databasen
     try {
@@ -55,8 +86,13 @@ export const get = catchAsyncErrors(async (req, res, next) => {
 });
     
 export const list = catchAsyncErrors(async (req, res, next) => {
-    const result = await mailService.listMails();
-    res.status(200).json(result);
+    const result = await mailService.listMails(req.query);
+    console.log("RESULT LOL: ", result)
+    //const userData = await mailService.listMails();
+    res.status(200).json({ 
+        success: true, 
+        data: result,
+    });
 });
     
 export const create = catchAsyncErrors(async (req, res, next) => {

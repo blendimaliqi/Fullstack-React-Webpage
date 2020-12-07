@@ -12,6 +12,7 @@ import NewArticle from '../pages/NewArticle';
 import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
 import Signup from '../pages/Signup';
+import Inbox from '../components/Inbox/Inbox.jsx';
 
 
 const Routes = () => (
@@ -44,6 +45,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/registrer">
             <Signup />
+          </Route>
+          <Route exact path="/useremails">
+            <Inbox />
           </Route>
           <Route path="*">
             <NoMatch />
