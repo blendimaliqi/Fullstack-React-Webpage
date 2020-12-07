@@ -51,5 +51,4 @@ ArticleSchema.index({
   title: 'text',
 });
 
-
 export default mongoose.model('Article', ArticleSchema);
