@@ -168,6 +168,7 @@ export const Fagartikler = ({ history }) => {
       setFilter(null);
     } else {
       setFilter(event.target.value);
+      setCurrentPage(1);
     }
     console.log(filter);
   };
