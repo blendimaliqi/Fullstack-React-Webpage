@@ -12,13 +12,14 @@ function fileFilter(req, file, cb) {
   return cb(null, true);
 }
 
+const customValue = () => Math.random() * Math.PI;
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, './public/images');
   },
   filename(req, file, cb) {
-    cb(null, `artikkelBilde_${file.originalname}`);
+    cb(null, `${customValue()}_${file.originalname}`);
   },
 });
 

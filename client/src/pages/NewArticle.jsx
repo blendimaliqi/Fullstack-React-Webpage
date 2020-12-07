@@ -350,6 +350,7 @@ export const NewArticle = ({ history }) => {
           <input
             type="file"
             name="fileInput"
+            accept=".jpg, .jpeg, .png"
             onChange={(event) => {
               console.log(event.target.files);
               const imageFile = event.target.files[0];
