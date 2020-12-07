@@ -194,7 +194,6 @@ export const Fagartikler = ({ history }) => {
               type="text"
               onChange={handleSearchTerm}
             />
-            
             <FilterSelect onChange={handleCategoryFilter}>
               <option key={0} value="Ingen filter">
                 Ingen filter
