@@ -18,7 +18,7 @@ const PageContainer = styled.section`
 const SearchAndFilterContainer = styled.section`
   display: flex;
   justify-content: space-between;
-  width: 21%;
+  width: 31%;
 `;
 
 const SearchButton = styled.button`
@@ -93,6 +93,8 @@ const PageLink = styled.button`
   background-color: lightgray;
 `;
 
+const SearchInput = styled.input``;
+
 export const Fagartikler = ({ history }) => {
   const { isAdmin, isLoggedIn } = useUserState();
   const [articles, setArticles] = useState();
@@ -102,13 +104,14 @@ export const Fagartikler = ({ history }) => {
   const [categories, setCategories] = useState();
   const [categoryErr, setCategoryErr] = useState(null);
   const [filter, setFilter] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     let mounted = true;
     const fetchArticles = async () => {
       if (mounted) {
-        const { data, err } = await list(filter, 5, currentPage);
+        const { data, err } = await list(filter, 5, currentPage, searchTerm);
         if (data.success === false) {
           // console.log(data);
           setError(data.success);
@@ -140,7 +143,7 @@ export const Fagartikler = ({ history }) => {
       mounted = false;
       source.cancel();
     };
-  }, [filter, currentPage]);
+  }, [searchTerm, filter, currentPage]);
 
   const handlePageChange = (event) => {
     setCurrentPage(event.target.value);
@@ -161,12 +164,16 @@ export const Fagartikler = ({ history }) => {
   };
 
   const handleCategoryFilter = (event) => {
-    if(event.target.value === "Ingen filter") {
+    if (event.target.value === 'Ingen filter') {
       setFilter(null);
     } else {
       setFilter(event.target.value);
     }
     console.log(filter);
+  };
+
+  const handleSearchTerm = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   return (
@@ -182,7 +189,12 @@ export const Fagartikler = ({ history }) => {
             )}
           </NyArtikkelContainer>
           <SearchAndFilterContainer>
-            <SearchButton>SØK</SearchButton>
+            <SearchInput
+              placeholder="Søk på tittel.."
+              type="text"
+              onChange={handleSearchTerm}
+            />
+            
             <FilterSelect onChange={handleCategoryFilter}>
               <option key={0} value="Ingen filter">
                 Ingen filter

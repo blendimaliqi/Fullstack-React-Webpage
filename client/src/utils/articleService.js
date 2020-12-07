@@ -2,13 +2,15 @@ import http from './http';
 
 const API_URL = '/articles';
 
-export const list = async (filter, limit, page) => {
+export const list = async (filter, limit, page, searchTerm) => {
   try {
     if (filter === null) {
-      return await http.get(`${API_URL}?limit=${limit}&page=${page}`);
+      return await http.get(
+        `${API_URL}?limit=${limit}&page=${page}&q=${searchTerm}`
+      );
     }
     return await http.get(
-      `${API_URL}?category=${filter}&limit=${limit}&page=${page}`
+      `${API_URL}?category=${filter}&limit=${limit}&page=${page}&q=${searchTerm}`
     );
 
     // return await http.get(`${API_URL}`);
