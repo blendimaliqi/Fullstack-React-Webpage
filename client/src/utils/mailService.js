@@ -2,9 +2,12 @@ import http from './http';
 
 const API_URL = '/sendmail';
 
-export const sendMailToUser = async() => {
+export const sendMailToUser = async(data) => {
     try {
-        return await http.get(`${API_URL}`);
+        if(data=!null) {
+            return await http.get(`${API_URL}`, {... data}); 
+        }
+        //return await http.get(`${API_URL}`);
     } catch (error) {
         return error.response;
     }
