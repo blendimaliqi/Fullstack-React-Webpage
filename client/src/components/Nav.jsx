@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserState } from '../context/UserProvider';
@@ -77,11 +78,13 @@ const Login = styled.p`
 `;
 
 const Nav = () => {
-  const { isLoggedIn, setUser } = useUserState();
+  const { isLoggedIn, isAdmin, setUser } = useUserState();
+
   const logout = async () => {
     await logoutPost();
-    setUser(null);
+    setUser(null); 
   };
+
 
   return (
     <StyledNav>
@@ -111,6 +114,13 @@ const Nav = () => {
             Kontakt
           </NavLink>
         </NavMenuItem>
+        {isAdmin && (
+        <NavMenuItem>
+        <NavLink exact to="/useremails" activeClassName="active">
+          Inbox
+        </NavLink>
+      </NavMenuItem>
+        )}
         <NavMenuItem>
             <NavLink exact to="/registrer" activeClassName="active">
               <Login>Registrer</Login>
@@ -130,6 +140,8 @@ const Nav = () => {
             </NavLink>
           </NavMenuItem>
         )}
+
+
       </NavMenu>
     </StyledNav>
   );

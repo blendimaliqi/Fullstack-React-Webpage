@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import { sendMail } from '../utils/sendEmail.js';
-import { currentUser } from './auth.js';
-import {authorService, mailService, userService} from '../services/index.js';
+import {mailService, userService} from '../services/index.js';
 
 export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
 
