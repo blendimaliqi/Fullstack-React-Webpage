@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider.jsx';
 import { get } from '../../utils/articleService.js';
+import { downloadImage } from '../../utils/imageService.js';
 import Banner from '../Banner.jsx';
 
 const Container = styled.article`
@@ -66,6 +67,10 @@ const DeleteBtn = styled.button`
   margin-right: 1rem;
 `;
 
+const ArticleImage = styled.img`
+  width: 100%;
+`;
+
 const EditBtn = styled.button`
   color: white;
   background-color: olive;
@@ -79,8 +84,15 @@ export const ArticleDetails = () => {
   const [error, setError] = useState();
   const { id } = useParams();
   const { isAdmin } = useUserState();
+  const [src, setSrc] = useState(null);
 
   useEffect(() => {
+    const download = async (id) => {
+      const { data } = await downloadImage(id);
+      const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
+      setSrc(imgUrl);
+    };
+
     const fetchArticle = async () => {
       const { data, err } = await get(id);
       if (data.success === false) {
@@ -88,6 +100,7 @@ export const ArticleDetails = () => {
         setError(data.success);
         console.log('fikk feil');
       } else {
+        download(data.image);
         setArticle(data);
       }
     };
@@ -101,6 +114,7 @@ export const ArticleDetails = () => {
         <>
           <Banner title={article.title} />
           <Container>
+            {article.image ? <ArticleImage src={src} /> : <ArticleImage />}
             <Ingress>
               <AuthorDateContainer>
                 <Author>{article.author}</Author>
