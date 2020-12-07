@@ -5,8 +5,9 @@ import Banner from '../components/Banner';
 import ModalCategory from '../components/Fagartikler/ModalCategory';
 import { create } from '../utils/articleService.js';
 import { getCurrentUser } from '../utils/loginService.js';
-import { listCategories , createCategory } from '../utils/categoryService.js';
-import {listAuthors} from '../utils/authorService.js';
+import { listCategories, createCategory } from '../utils/categoryService.js';
+import { listAuthors } from '../utils/authorService.js';
+import { uploadImage } from '../utils/imageService';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -93,14 +94,12 @@ const AuthorWrapper = styled.section`
   margin-bottom: 30px;
 `;
 
-const SecretWrapper = styled.section `
+const SecretWrapper = styled.section`
   display: grid;
   grid-template-columns: 1fr;
   margin-bottom: 2rem;
   grid-gap: 20px;
 `;
-
-
 
 export const NewArticle = ({ history }) => {
   const toDay = new Date();
@@ -108,7 +107,6 @@ export const NewArticle = ({ history }) => {
     toDay.getMonth() + 1
   }.${toDay.getFullYear()}`;
   const [adminId, setAdminId] = useState('');
-
 
   const [formData, setFormData] = useState({
     title: '',
@@ -127,7 +125,8 @@ export const NewArticle = ({ history }) => {
   const [selectedCategory, setSelectedCategory] = useState('category');
   const [modalCategory, setModalCategory] = useState();
   const [secret, setSecret] = useState(false);
-
+  const [file, setFile] = useState(null);
+  const [fileId, setFileId] = useState(null);
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -135,9 +134,7 @@ export const NewArticle = ({ history }) => {
       ...prev,
       ...inputValue,
     }));
-    console.log(inputValue);
   };
-
 
   const validateInput = (title, ingress, content, category, author) => ({
     title: title.length === 0,
@@ -174,16 +171,29 @@ export const NewArticle = ({ history }) => {
     console.log(data);
   };
 
-
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValid) {
       return;
     }
 
-    console.log("FORMDATA I SUBMIT",formData);
-    createArticle({...formData, secret: secret});
+    if (file) {
+      const { data } = await uploadImage(file);
+      if (!data.success) {
+        setError(data.message);
+      } else {
+        console.log('SE HER', data?.data?.id);
+        setFileId(data?.data?.id);
+        setError(null);
+        const id = data?.data?.id;
+        const object = { secret, image: id };
+        createArticle({ ...formData, ...object });
+      }
+    } else {
+      createArticle({ ...formData, secret });
+    }
+
+    console.log('FORMDATA I SUBMIT', formData);
     history.push('/fagartikler');
   };
 
@@ -194,8 +204,8 @@ export const NewArticle = ({ history }) => {
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
-    //createCategoryFunction(modalCategory);
-  //setFormData((prev) => (prev.category, <option value={categoryObject._id}>{modalCategory}</option>)  )
+    // createCategoryFunction(modalCategory);
+    // setFormData((prev) => (prev.category, <option value={categoryObject._id}>{modalCategory}</option>)  )
     const categoryObject = {
       name: modalCategory,
     };
@@ -210,12 +220,11 @@ export const NewArticle = ({ history }) => {
 
   const handleSecretTrue = (e) => {
     setSecret(!secret);
-  }
+  };
 
   const closeModal = () => {
     setState(false);
   };
-
 
   const getAdminId = async () => {
     const { data } = await getCurrentUser();
@@ -256,7 +265,7 @@ export const NewArticle = ({ history }) => {
   return (
     <>
       <Banner title="Ny Artikkel" />
-      <InputWrapper onSubmit={handleSubmit}>
+      <InputWrapper onSubmit={handleSubmit} encType="multipart/form-data">
         <ModalCategory
           state={state}
           handleCategoryChange={handleCategoryChange}
@@ -302,7 +311,9 @@ export const NewArticle = ({ history }) => {
           >
             {category &&
               category.map((categoryItem) => (
-                <option key={categoryItem.id} value={categoryItem.id}>{categoryItem.name}</option>
+                <option key={categoryItem.id} value={categoryItem.id}>
+                  {categoryItem.name}
+                </option>
               ))}
           </select>
           <NewCategoryButton onClick={showModal}>NY</NewCategoryButton>
@@ -317,14 +328,34 @@ export const NewArticle = ({ history }) => {
           >
             {author &&
               author.map((authorItem) => (
-                <option key={authorItem.id} value={authorItem.name}>{authorItem.name}</option>
+                <option key={authorItem.id} value={authorItem.name}>
+                  {authorItem.name}
+                </option>
               ))}
           </select>
         </AuthorWrapper>
-
         <SecretWrapper>
-        <p style={({margin: 0})}>Gjør usynlig for brukere som ikke er logget inn</p>
-        <input style={({margin: 0})} type="checkbox" placeholder={"Gjør hemmelig"} onClick={handleSecretTrue} />
+          <p style={{ margin: 0 }}>
+            Gjør usynlig for brukere som ikke er logget inn
+          </p>
+          <input
+            style={{ margin: 0 }}
+            type="checkbox"
+            placeholder="Gjør hemmelig"
+            onClick={handleSecretTrue}
+          />
+          <Label htmlFor="fileInput">
+            Last opp artikkel bilde (Ikke påkrevd):
+          </Label>
+          <input
+            type="file"
+            name="fileInput"
+            onChange={(event) => {
+              console.log(event.target.files);
+              const imageFile = event.target.files[0];
+              setFile(imageFile);
+            }}
+          />
         </SecretWrapper>
         <NyArtikkelButton
           style={{

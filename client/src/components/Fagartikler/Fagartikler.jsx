@@ -7,6 +7,7 @@ import { list } from '../../utils/articleService.js';
 import { listCategories } from '../../utils/categoryService.js';
 import Banner from '../Banner';
 import Artikkel from './ArticleItem';
+import { downloadImage } from '../../utils/imageService';
 
 const PageContainer = styled.section`
   display: flex;
@@ -221,6 +222,7 @@ export const Fagartikler = ({ history }) => {
                 title={article.title}
                 text={article.ingress}
                 category={article.category.name}
+                imageSrc={article.image}
               />
             ))}
 
@@ -235,6 +237,7 @@ export const Fagartikler = ({ history }) => {
                     title={article.title}
                     text={article.ingress}
                     category={article.category.name}
+                    imageSrc={article.image}
                   />
                 )}
               </>

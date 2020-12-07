@@ -12,12 +12,13 @@ function fileFilter(req, file, cb) {
   return cb(null, true);
 }
 
+
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, './public/images');
   },
   filename(req, file, cb) {
-    cb(null, `jada_${file.originalname}`);
+    cb(null, `artikkelBilde_${file.originalname}`);
   },
 });
 

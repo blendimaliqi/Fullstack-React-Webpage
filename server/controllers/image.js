@@ -14,12 +14,7 @@ export const get = catchAsyncErrors(async (req, res, next) => {
 
   console.log(image);
 
-  const imagePath = image.file_path.replace('public/', '');
-  /* res.set({
-    'Content-Type': image.file_mimetype,
-  });
-
-  res.sendFile(path.join('./controllers', '..', image.file_path)); */
+  const imagePath = image.file_path.replace('public', '');
   res.status(200).json({
     success: true,
     data: { image, imagePath },

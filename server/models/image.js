@@ -13,8 +13,15 @@ const ImageSchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+ImageSchema.virtual('ArticleCategory', {
+  ref: 'Article',
+  localField: '_id',
+  foreignField: 'image',
+  justOne: false,
+});
 
 const Image = mongoose.model('Image', ImageSchema);
 

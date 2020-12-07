@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import styled from 'styled-components';
+import { downloadImage } from '../../utils/imageService';
 
-const ArtikkelPhoto = styled.section`
+const ArtikkelPhoto = styled.img`
   width: 200px;
   height: 200px;
   background-color: #f9f9f9;
@@ -57,43 +58,38 @@ const Paragraph = styled.p`
     */
 `;
 
-export const ArticleItem = ({ id, title, text, category, history }) => {
+export const ArticleItem = ({
+  id,
+  title,
+  text,
+  category,
+  history,
+  imageSrc,
+}) => {
+  const [src, setSrc] = useState(null);
+
   const handleSelect = (e) => {
     console.log(e.target.value);
   };
 
-  // const [category, setCategory] = useState('Kategori');
-
-  /* const select = () => {
-        setCategory((
-            <select onChange={handleSelect} value="Kategori">
-                <option>
-                    Julenisse
-                </option>
-                <option>
-                    Julenisse2
-                </option>
-                <option>
-                    Julenisse3
-                </option>
-                <option>
-                    Julenisse4
-                </option>
-            </select>
-        ))
+  useEffect(() => {
+    const download = async () => {
+      if (imageSrc) {
+        const { data } = await downloadImage(imageSrc);
+        const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
+        console.log(`${data?.data?.imagePath}`);
+        setSrc(imgUrl);
+      }
     };
-    
 
-    useEffect(() => {
-        select();
-    }, []);
-    */
+    download();
+  }, [imageSrc]);
 
   return (
     <>
       <ContainerAll onClick={() => history.push(`fagartikler/${id}`)}>
         <Container>
-          <ArtikkelPhoto />
+          <ArtikkelPhoto src={src} />
           <TextContentContainer>
             <TitleCategoryContainer>
               <Header> {title} </Header>
