@@ -139,7 +139,7 @@ export const Inbox = () => {
         let mounted = true;
         const fetchEmails = async () => {
         if (mounted) {
-            const { data, err } = await listInbox(5, 1);
+            const { data, err } = await listInbox(5, currentPage);
             if (data.success === false) {
             // console.log(data);
             setError(data.success);
@@ -199,8 +199,8 @@ export const Inbox = () => {
                 </Question>
             </EmailContainer>
             ))}
+          <PageLinkContainer>{createPageLinks()}</PageLinkContainer>
         </MainPage>
-        <PageLinkContainer>{createPageLinks()}</PageLinkContainer>
       </WholePage>
     </>
   );
