@@ -79,6 +79,7 @@ export const ArticleDetails = () => {
   const [error, setError] = useState();
   const { id } = useParams();
   const { isAdmin } = useUserState();
+  const [clicks, setClicks] = useState();
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -88,7 +89,8 @@ export const ArticleDetails = () => {
         setError(data.success);
         console.log('fikk feil');
       } else {
-        setArticle(data);
+        setArticle(data.dataArticle);
+        setClicks(data.dataClicks);
       }
     };
     fetchArticle();
@@ -116,6 +118,7 @@ export const ArticleDetails = () => {
               <BtnContainer>
                 <DeleteBtn>SLETT</DeleteBtn>
                 <EditBtn>REDIGER</EditBtn>
+            <p>CLICKS: {article.clicks}</p>
               </BtnContainer>
             ) : (
               <BtnContainer />

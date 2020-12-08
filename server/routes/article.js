@@ -5,14 +5,13 @@ import { isAuthenticated, isAuthorized } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/:id', articleController.get);
-
-
 //router.get('/', articleController.listHidden);
 
 
 router.get('/', articleController.listAllArticles);
+router.get('/clicks', articleController.getClicksOnArticle);
 
+router.get('/:id', articleController.get);
 
 router.post(
   '/',

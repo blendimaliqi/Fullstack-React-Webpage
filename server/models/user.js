@@ -26,7 +26,7 @@ const UserSchema = new Schema(
     role: {
       type: String,
       enum: {
-        values: ['user', 'admin'],
+        values: ['user', 'admin', 'superadmin'],
         message: 'Rolle ikke fylt ut',
       },
       default: 'user',

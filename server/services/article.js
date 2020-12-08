@@ -40,3 +40,16 @@ export const removeArticle = async (id) => {
   const article = await Article.findById(id);
   article.remove();
 };
+
+export const articleClicks = async () => {
+  const articles = Article.aggregate([
+    {
+      $group: {
+        _id: '$active',
+        avgClicks: {$avg: '$clicks'},
+        totalClicks: {$sum: '$clicks'},
+      },
+    },
+  ]);
+  return articles;
+};
