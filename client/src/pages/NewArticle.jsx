@@ -7,7 +7,7 @@ import { create } from '../utils/articleService.js';
 import { getCurrentUser } from '../utils/loginService.js';
 import { listCategories, createCategory } from '../utils/categoryService.js';
 import { listAuthors } from '../utils/authorService.js';
-import { uploadImage } from '../utils/imageService';
+import { uploadImage } from '../utils/imageService.js';
 
 const Input = styled.input`
   border: 1px solid black;

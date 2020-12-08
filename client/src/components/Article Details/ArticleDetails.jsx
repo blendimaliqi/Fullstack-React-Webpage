@@ -156,7 +156,7 @@ export const ArticleDetails = ({ history }) => {
                 <DeleteBtn onClick={showModal}>SLETT</DeleteBtn>
                 <EditBtn
                   onClick={() => {
-                    history.push(`/${id}`);
+                    history.push(`/fagartikler/${id}/${id}`);
                   }}
                 >
                   REDIGER
