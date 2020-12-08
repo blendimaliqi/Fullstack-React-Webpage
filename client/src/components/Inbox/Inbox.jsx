@@ -95,6 +95,10 @@ const EmailContainer = styled.section `
     border: 1px solid black;
     flex-direction: column;
     margin-bottom: 50px;
+
+    //De to linjene under er hentet fra https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow
+    overflow: scroll;
+    white-space: nowrap;
     
 
     & h2 {
@@ -124,6 +128,8 @@ const Question = styled.p `
        margin: 0;
        margin-left: 20px;
        margin-top: 10px;
+       width: 600px;
+      
 `;
 
 export const Inbox = () => {

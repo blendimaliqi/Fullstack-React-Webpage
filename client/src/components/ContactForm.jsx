@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useUserState } from '../context/UserProvider';
 import { get } from '../utils/articleService';
 import { getCurrentUser } from '../utils/loginService';
-import {sendMailToUser} from '../utils/mailService.js';
+import {sendMailToUser, sendMailToAdmin} from '../utils/mailService.js';
 
 const ContactSchema = styled.section`
 display: flex;
@@ -58,6 +58,7 @@ const BoxSection = styled.section`
   align-items: center;
   margin-bottom: 30rem;
   width: 80%;
+  margin-top: 200px;
 
   & h1 {
     font-size: 30px;
@@ -91,11 +92,13 @@ export const ContactForm = () => {
     setName(e.target.value);
   };
 
-  const epostToAdmin = {
+  const epostObject = {
     name: name,
     email: email,
     question: question,
   }
+
+
 
   useEffect(() => {
     const getUser = async () => {
@@ -114,14 +117,10 @@ export const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("USER: ", user);
-
     const sendAsync = async () =>  {
-     await sendMailToUser(epostToAdmin);
-     //console.log("MAIL fra client", mail);
+     await sendMailToUser(epostObject);
+     await sendMailToAdmin(epostObject); 
     }
-    console.log("epostToAdmin: ", epostToAdmin)
     sendAsync();
   }
 

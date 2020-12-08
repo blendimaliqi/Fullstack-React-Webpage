@@ -40,6 +40,10 @@ const NavMenuItem = styled.li`
     &.active {
       color: #53a5be;
     }
+
+    & :hover {
+      color: #53a5be;
+    }
   }
 `;
 
@@ -74,6 +78,10 @@ const Login = styled.p`
 
   & {
     font-size: 0.8em;
+  }
+
+  & :hover {
+    background-color:  #81d1e9;
   }
 `;
 
@@ -140,8 +148,6 @@ const Nav = () => {
             </NavLink>
           </NavMenuItem>
         )}
-
-
       </NavMenu>
     </StyledNav>
   );

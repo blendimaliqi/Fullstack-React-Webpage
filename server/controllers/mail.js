@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import { sendMail } from '../utils/sendEmail.js';
+import {sendMailAdmin} from '../utils/sendEmailAdmin.js';
 import {mailService, userService} from '../services/index.js';
 
 export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
@@ -10,7 +11,7 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
     let token;
     if (req.cookies?.token) {
       token = req.cookies.token;
-    }
+    };
 
     //console.log("USER: i server: ", user);
 
@@ -29,8 +30,8 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
                     Vennlig hilsen,
                     LG Rør AS. 
 
-                    Kopi: 
-                    ${req.body.email}: 
+                    Kopi av mailen du sendte: 
+
                     ${req.body.question}
 
                     `,
@@ -50,7 +51,7 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
                     Vennlig hilsen,
                     LG Rør AS.
 
-                    Kopi fra ${req.body.email}: 
+                    Kopi av mailen du sendte: 
 
                     ${req.body.question}
                     `,
@@ -64,10 +65,8 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
        
         } catch (error) {
             console.log(error);
-        }
+        };
     
-
-
     //Sender hendvendelsen til databasen
     try {
         await mailService.createMail(req.body);
@@ -77,11 +76,44 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
     
 });
 
+export const sendAdminMail = catchAsyncErrors(async (req, res, next) => {
+
+    let token;
+    if (req.cookies?.token) {
+      token = req.cookies.token;
+    };
+
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const user = await userService.getUserById(decoded.id);
+            await sendMailAdmin({
+                from: `${user.email}`,
+                email: `${user.email}`,
+                subject: `Ny mail fra ${user.name}`,
+                message: `Du har fått en ny henvendelse fra ${user.name} med epost: ${user.email}.
+
+                Kopi av mailen:
+
+                ${req.body.question}
+
+                `,
+              }); 
+
+              res.json(200, ({
+                success: true,
+                message: `Du har motatt ny mail fra  ${req.body.name}`,
+            }));
+            
+        } catch (error) {
+            console.log(error);
+        };
+});
+
 export const get = catchAsyncErrors(async (req, res, next) => {
     const mail = await mailService.getMailById(req.params.id);
         if (!mail) {
             return next(new ErrorHandler(`Finner ikke mail`, 404));
-        }
+        };
     res.status(200).json(mail);
 });
     
