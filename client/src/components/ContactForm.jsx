@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useUserState } from '../context/UserProvider';
 import { get } from '../utils/articleService';
 import { getCurrentUser } from '../utils/loginService';
-import {sendMailToUser} from '../utils/mailService.js';
+import {sendMailToUser, sendMailToAdmin} from '../utils/mailService.js';
 
 const ContactSchema = styled.section`
 display: flex;
@@ -98,6 +98,8 @@ export const ContactForm = () => {
     question: question,
   }
 
+
+
   useEffect(() => {
     const getUser = async () => {
       try{
@@ -120,6 +122,7 @@ export const ContactForm = () => {
 
     const sendAsync = async () =>  {
      await sendMailToUser(epostToAdmin);
+     await sendMailToAdmin(epostToAdmin); 
      //console.log("MAIL fra client", mail);
     }
     console.log("epostToAdmin: ", epostToAdmin)
