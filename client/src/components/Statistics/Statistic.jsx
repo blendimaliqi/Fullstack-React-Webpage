@@ -136,6 +136,7 @@ export const Statistic = () => {
     const [error, setError] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [pagination, setPagination] = useState();
+    const [dataSet, setDataSet] = useState([]);
   
     useEffect(() => {
         const source = axios.CancelToken.source();
@@ -163,6 +164,7 @@ export const Statistic = () => {
         source.cancel();
         };
     }, [currentPage]);
+
 
     const handlePageChange = (event) => {
         setCurrentPage(event.target.value);
@@ -199,6 +201,9 @@ export const Statistic = () => {
         return Math.random() * Math.PI + index;
     };
 
+    
+
+
     return (
         <>
         <Banner title="Statistikk" />
@@ -217,7 +222,11 @@ export const Statistic = () => {
                    Antall ord: {article.ingress.length + article.content.length}
                 <label key={uniqueKey(index)}> Gjennomsnittelig lesetid:  {averageReadTime(index)}</label>
                 </Inquiry>
-
+                {dataSet.push({
+                    wordCount: article.ingress.length + article.content.length,
+                    clicks: article.clicks,
+                    avgReadTime: averageReadTime(index),
+                })}
             </EmailContainer>
             ))}
           <PageLinkContainer>{createPageLinks()}</PageLinkContainer>
