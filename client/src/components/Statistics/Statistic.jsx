@@ -97,22 +97,8 @@ const EmailContainer = styled.section `
     border: 1px solid black;
     flex-direction: column;
     margin-bottom: 50px;
-    height: 110px;
+    height: 200px;
     
-
-    & h2 {
-        margin-bottom: 0px;
-        margin-top: 0px;
-        margin-left: 20px;
-    }
-
-    & h4 {
-        margin-left: 20px;
-        font-weight: bold;
-        margin-top: 5px;
-        margin-bottom: 0px;
-    }
-
 `;
 
 const Inquiry = styled.p `
@@ -130,10 +116,24 @@ const Question = styled.p `
       
 `;
 
+const LabelContainer = styled.section `
+        margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+`;
+
+const Title = styled.h2 `
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid black;
+`;
+
 const ExportButtonContainer = styled.section `
     width: 50px;
     margin-bottom: 30px;
 `;
+
 
 export const Statistic = () => {
 
@@ -227,22 +227,26 @@ export const Statistic = () => {
             isLoggedIn && isAdmin &&
             articleStats.map((article, index) => (
             <EmailContainer key={uniqueKey(index)}>
-                <h2 key={uniqueKey(index)}>{article.title}</h2>
+                <Title key={uniqueKey(index)}>{article.title}</Title>
                 <Inquiry key={uniqueKey(index)}>
 
                    Visninger: {article.clicks}
                 </Inquiry>
                 <Inquiry key={uniqueKey(index)}>
                    Antall ord: {article.ingress.length + article.content.length}
-                <label key={uniqueKey(index)}> Gjennomsnittelig lesetid:  {averageReadTime(index)}</label>
-                
+                </Inquiry>
+                <LabelContainer>
+                    <label key={uniqueKey(index)}> Gjennomsnittelig lesetid:  {averageReadTime(index)}</label>
+                </LabelContainer>
+                <Inquiry key={uniqueKey(index)}>
+                   Kategori: {article.category.name}
                 </Inquiry>
                 {dataSet.push({
                     Tittel: article.title,
                     Kategori: article.category.name,
                     Visninger: article.clicks,
-                    Gjennomsnittelig_lesetid: averageReadTime(index),
-                    Ord_lengde: article.ingress.length + article.content.length,
+                    Gjennomsnittelig_esetid: averageReadTime(index),
+                    Antall_ord: article.ingress.length + article.content.length,
                 })}
             </EmailContainer>
 
