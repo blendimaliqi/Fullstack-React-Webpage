@@ -15,7 +15,6 @@ export const get = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const listAllArticles = catchAsyncErrors(async (req, res, next) => {
-  console.log("REQ,QUERY CONTROLLER: ", req.query)
   const result = await articleService.listArticles(req.query);
   res.status(200).json({ success: true, data: result });
 });

@@ -78,7 +78,7 @@ export const SignupForm = () => {
           setError(Array.from(data.message));
         } else {
           const user = data?.user;
-          setUser(user);
+          setUser({user});
           setError(null);
         }
       };
