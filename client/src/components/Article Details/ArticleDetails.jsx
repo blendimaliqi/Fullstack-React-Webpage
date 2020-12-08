@@ -87,8 +87,8 @@ export const ArticleDetails = () => {
   const [src, setSrc] = useState(null);
 
   useEffect(() => {
-    const download = async (id) => {
-      const { data } = await downloadImage(id);
+    const download = async (imageId) => {
+      const { data } = await downloadImage(imageId);
       const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
       setSrc(imgUrl);
     };
@@ -100,7 +100,9 @@ export const ArticleDetails = () => {
         setError(data.success);
         console.log('fikk feil');
       } else {
-        download(data.image);
+        if (data.image) {
+          download(data.image);
+        }
         setArticle(data);
       }
     };
