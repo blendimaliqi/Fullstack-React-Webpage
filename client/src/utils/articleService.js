@@ -43,6 +43,14 @@ export const updateArticle = async (id, data) => {
   }
 };
 
+export const deleteArticle = async (id) => {
+  try {
+    return await http.delete(`${API_URL}/${id}`);
+  } catch (err) {
+    return err.response;
+  }
+};
+
 export default {
   create,
   list,

@@ -7,12 +7,7 @@ const router = express.Router();
 
 router.get('/:id', articleController.get);
 
-
-//router.get('/', articleController.listHidden);
-
-
 router.get('/', articleController.listAllArticles);
-
 
 router.post(
   '/',

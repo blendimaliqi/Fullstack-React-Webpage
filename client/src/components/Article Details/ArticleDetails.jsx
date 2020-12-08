@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider.jsx';
-import { get } from '../../utils/articleService.js';
+import { get, deleteArticle } from '../../utils/articleService.js';
 import { downloadImage } from '../../utils/imageService.js';
 import Banner from '../Banner.jsx';
+import DeleteModal from './DeleteModal.jsx';
 
 const Container = styled.article`
   margin: 0 auto;
@@ -85,6 +86,23 @@ export const ArticleDetails = ({ history }) => {
   const { id } = useParams();
   const { isAdmin } = useUserState();
   const [src, setSrc] = useState(null);
+  const [modalState, setModalState] = useState(false);
+
+  const handleModalSubmit = async (e) => {
+    e.preventDefault();
+
+    await deleteArticle(id);
+    history.push('/fagartikler');
+  };
+
+  const showModal = (e) => {
+    e.preventDefault();
+    setModalState(true);
+  };
+
+  const closeModal = () => {
+    setModalState(false);
+  };
 
   useEffect(() => {
     const download = async (imageId) => {
@@ -114,6 +132,11 @@ export const ArticleDetails = ({ history }) => {
       {error && <h1>{error}</h1>}
       {article && (
         <>
+          <DeleteModal
+            state={modalState}
+            handleModalSubmit={handleModalSubmit}
+            setModalOpen={closeModal}
+          />
           <Banner title={article.title} />
           <Container>
             {article.image ? <ArticleImage src={src} /> : <ArticleImage />}
@@ -130,7 +153,7 @@ export const ArticleDetails = ({ history }) => {
             </SubTitleContainer>
             {isAdmin ? (
               <BtnContainer>
-                <DeleteBtn>SLETT</DeleteBtn>
+                <DeleteBtn onClick={showModal}>SLETT</DeleteBtn>
                 <EditBtn
                   onClick={() => {
                     history.push(`/${id}`);

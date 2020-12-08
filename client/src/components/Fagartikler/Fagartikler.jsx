@@ -144,7 +144,7 @@ export const Fagartikler = ({ history }) => {
       mounted = false;
       source.cancel();
     };
-  }, [filter, currentPage, searchTerm]);
+  }, [searchTerm, filter, currentPage]);
 
   const handlePageChange = (event) => {
     setCurrentPage(event.target.value);
