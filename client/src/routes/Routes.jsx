@@ -13,7 +13,7 @@ import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
 import Signup from '../pages/Signup';
 import Inbox from '../components/Inbox/Inbox.jsx';
-
+import UpdateFagArtikkelPage from '../pages/UpdateFagArtikkelPage';
 
 const Routes = () => (
     <Router>
@@ -39,6 +39,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/nyartikkel">
             <NewArticle />
+          </Route>
+          <Route exact path="/:id">
+            <UpdateFagArtikkelPage />
           </Route>
           <Route exact path="/login">
             <Login />

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Banner from '../components/Banner';
-import ModalCategory from '../components/Fagartikler/ModalCategory';
-import { create } from '../utils/articleService.js';
-import { getCurrentUser } from '../utils/loginService.js';
-import { listCategories, createCategory } from '../utils/categoryService.js';
-import { listAuthors } from '../utils/authorService.js';
-import { uploadImage } from '../utils/imageService';
+import Banner from '../Banner.jsx';
+import ModalCategory from './ModalCategory';
+import { updateArticle, get } from '../../utils/articleService.js';
+import { getCurrentUser } from '../../utils/loginService.js';
+import { listCategories, createCategory } from '../../utils/categoryService.js';
+import { listAuthors } from '../../utils/authorService.js';
+import { uploadImage } from '../../utils/imageService';
+import article from '../../../../server/models/article.js';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -108,7 +109,7 @@ const Error = styled.p`
   font-weight: bolder;
 `;
 
-export const NewArticle = ({ history }) => {
+export const UpdateFagArtikkel = ({ history }) => {
   const toDay = new Date();
   const formattedDate = `${toDay.getDate()}.${
     toDay.getMonth() + 1
@@ -125,15 +126,16 @@ export const NewArticle = ({ history }) => {
     administrator: adminId,
   });
 
+  const { id } = useParams();
   const [state, setState] = useState(false);
   const [category, setCategory] = useState();
   const [author, setAuthor] = useState();
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('category');
   const [modalCategory, setModalCategory] = useState();
   const [secret, setSecret] = useState(false);
   const [file, setFile] = useState(null);
   const [fileId, setFileId] = useState(null);
+  const [selectedCat, setSelectedCat] = useState(null);
   const fileTypes = /\.(jpeg|jpg|png)$/;
 
   const updateValue = (event) => {
@@ -142,6 +144,8 @@ export const NewArticle = ({ history }) => {
       ...prev,
       ...inputValue,
     }));
+
+    setSelectedCat(formData.category);
   };
 
   const validateInput = (title, ingress, content, category, author) => ({
@@ -175,8 +179,8 @@ export const NewArticle = ({ history }) => {
 
   const isDisabled = Object.keys(errors).some((i) => errors[i]);
 
-  const createArticle = async (inputData) => {
-    const { data } = await create(inputData);
+  const update = async (articleId, inputData) => {
+    const { data } = await updateArticle(articleId, inputData);
     console.log(data);
   };
 
@@ -195,12 +199,13 @@ export const NewArticle = ({ history }) => {
         console.log('SE HER', data?.data?.id);
         setFileId(data?.data?.id);
         setError(null);
-        const id = data?.data?.id;
-        const object = { secret, image: id };
-        createArticle({ ...formData, ...object });
+        const imdageId = data?.data?.id;
+        const object = { secret, image: imdageId };
+        update(id, { ...formData, ...object });
       }
     } else {
-      createArticle({ ...formData, secret });
+      update(id, { ...formData, secret });
+      console.log(formData);
     }
 
     console.log('FORMDATA I SUBMIT', formData);
@@ -244,6 +249,18 @@ export const NewArticle = ({ history }) => {
   };
 
   useEffect(() => {
+    const fetchArticle = async () => {
+      const { data } = await get(id);
+      if (data.success === false) {
+        console.log(data);
+        setError(data.success);
+        console.log('fikk feil');
+      } else {
+        setFormData(data);
+        console.log(data.category);
+      }
+    };
+
     const fetchCategories = async () => {
       const { data } = await listCategories();
       if (data.success === false) {
@@ -254,11 +271,7 @@ export const NewArticle = ({ history }) => {
         setCategory(data);
       }
     };
-    fetchCategories();
-    getAdminId();
-  }, []);
 
-  useEffect(() => {
     const fetchAuthors = async () => {
       const { data } = await listAuthors();
       if (data.success === false) {
@@ -269,8 +282,14 @@ export const NewArticle = ({ history }) => {
         setAuthor(data);
       }
     };
+
+    fetchArticle();
     fetchAuthors();
+    fetchCategories();
+    getAdminId();
   }, []);
+
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -318,6 +337,7 @@ export const NewArticle = ({ history }) => {
             className={errors.category ? 'error' : ''}
             name="category"
             onChange={updateValue}
+            value={selectedCat}
           >
             {category &&
               category.map((categoryItem) => (
@@ -389,11 +409,11 @@ export const NewArticle = ({ history }) => {
           }}
           disabled={isDisabled}
         >
-          CREATE
+          LAGRE
         </NyArtikkelButton>
       </InputWrapper>
     </>
   );
 };
 
-export default withRouter(NewArticle);
+export default withRouter(UpdateFagArtikkel);

@@ -9,25 +9,8 @@ export class ApiFilters {
     const query = { ...this.queryStr };
     const removeFields = ['sort', 'q', 'fields', 'page', 'limit'];
     removeFields.forEach((el) => delete query[el]);
-    /*let queryStr = JSON.stringify(query);
-    queryStr = queryStr.replace(
-      /\b(gt|gte|lt|lte|in)\b/g,
-      (match) => `$${match}`
-    );*/
 
     this.query = this.query.find(query);
-    return this;
-  }
-
-  // Sort QueryObject (Event.find()) [{...}, {...}, {...}]
-  // events?sort=-createdAt
-  sort() {
-    if (this.queryStr.sort) {
-      const sortBy = this.queryStr.sort.split(',').join(' ');
-      this.query.sort(sortBy);
-    } else {
-      this.query = this.query.sort('-updated');
-    }
     return this;
   }
 
@@ -36,17 +19,6 @@ export class ApiFilters {
     if (this.queryStr.q) {
       const term = this.queryStr.q.split('-').join(' ');
       this.query = this.query.find({ $text: { $search: `"${term}"` } });
-    }
-    return this;
-  }
-
-  // events?fields=?,?
-  limitFields() {
-    if (this.queryStr.fields) {
-      const fields = this.queryStr.fields.split(',').join(' ');
-      this.query = this.query.select(fields);
-    } else {
-      this.query = this.query.select('-__v');
     }
     return this;
   }

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider.jsx';
-import { get } from '../../utils/articleService.js';
+import { get, deleteArticle } from '../../utils/articleService.js';
+import { downloadImage } from '../../utils/imageService.js';
 import Banner from '../Banner.jsx';
+import DeleteModal from './DeleteModal.jsx';
 
 const Container = styled.article`
   margin: 0 auto;
@@ -66,6 +68,10 @@ const DeleteBtn = styled.button`
   margin-right: 1rem;
 `;
 
+const ArticleImage = styled.img`
+  width: 100%;
+`;
+
 const EditBtn = styled.button`
   color: white;
   background-color: olive;
@@ -74,13 +80,37 @@ const EditBtn = styled.button`
   outline: none;
 `;
 
-export const ArticleDetails = () => {
+export const ArticleDetails = ({ history }) => {
   const [article, setArticle] = useState();
   const [error, setError] = useState();
   const { id } = useParams();
   const { isAdmin } = useUserState();
+  const [src, setSrc] = useState(null);
+  const [modalState, setModalState] = useState(false);
+
+  const handleModalSubmit = async (e) => {
+    e.preventDefault();
+
+    await deleteArticle(id);
+    history.push('/fagartikler');
+  };
+
+  const showModal = (e) => {
+    e.preventDefault();
+    setModalState(true);
+  };
+
+  const closeModal = () => {
+    setModalState(false);
+  };
 
   useEffect(() => {
+    const download = async (imageId) => {
+      const { data } = await downloadImage(imageId);
+      const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
+      setSrc(imgUrl);
+    };
+
     const fetchArticle = async () => {
       const { data, err } = await get(id);
       if (data.success === false) {
@@ -88,6 +118,9 @@ export const ArticleDetails = () => {
         setError(data.success);
         console.log('fikk feil');
       } else {
+        if (data.image) {
+          download(data.image);
+        }
         setArticle(data);
       }
     };
@@ -99,8 +132,14 @@ export const ArticleDetails = () => {
       {error && <h1>{error}</h1>}
       {article && (
         <>
+          <DeleteModal
+            state={modalState}
+            handleModalSubmit={handleModalSubmit}
+            setModalOpen={closeModal}
+          />
           <Banner title={article.title} />
           <Container>
+            {article.image ? <ArticleImage src={src} /> : <ArticleImage />}
             <Ingress>
               <AuthorDateContainer>
                 <Author>{article.author}</Author>
@@ -114,8 +153,14 @@ export const ArticleDetails = () => {
             </SubTitleContainer>
             {isAdmin ? (
               <BtnContainer>
-                <DeleteBtn>SLETT</DeleteBtn>
-                <EditBtn>REDIGER</EditBtn>
+                <DeleteBtn onClick={showModal}>SLETT</DeleteBtn>
+                <EditBtn
+                  onClick={() => {
+                    history.push(`/${id}`);
+                  }}
+                >
+                  REDIGER
+                </EditBtn>
               </BtnContainer>
             ) : (
               <BtnContainer />
@@ -127,4 +172,4 @@ export const ArticleDetails = () => {
   );
 };
 
-export default ArticleDetails;
+export default withRouter(ArticleDetails);

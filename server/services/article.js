@@ -8,8 +8,6 @@ export const listArticles = async (queryStr) => {
   const { limit, page } = queryStr;
   const filters = new ApiFilters(Article.find(), queryStr)
     .filter()
-    .sort()
-    .limitFields()
     .searchByQuery();
 
   const articles = await filters.query;

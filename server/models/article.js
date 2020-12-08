@@ -42,7 +42,12 @@ const ArticleSchema = new Schema(
     },
     secret: {
       type: Boolean,
-    }
+    },
+    image: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Image',
+      required: false,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
