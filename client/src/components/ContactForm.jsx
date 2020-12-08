@@ -92,7 +92,7 @@ export const ContactForm = () => {
     setName(e.target.value);
   };
 
-  const epostToAdmin = {
+  const epostObject = {
     name: name,
     email: email,
     question: question,
@@ -117,15 +117,10 @@ export const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("USER: ", user);
-
     const sendAsync = async () =>  {
-     await sendMailToUser(epostToAdmin);
-     await sendMailToAdmin(epostToAdmin); 
-     //console.log("MAIL fra client", mail);
+     await sendMailToUser(epostObject);
+     await sendMailToAdmin(epostObject); 
     }
-    console.log("epostToAdmin: ", epostToAdmin)
     sendAsync();
   }
 
