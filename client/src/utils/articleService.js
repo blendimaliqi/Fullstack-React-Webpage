@@ -27,7 +27,7 @@ export const get = async (id) => {
 };
 
 export const create = async (data) => {
-  await getCsrfToken();
+  //await getCsrfToken();
   try {
     return await http.post(`${API_URL}`, data);
   } catch (err) {

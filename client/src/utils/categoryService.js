@@ -21,7 +21,7 @@ export const getCategoryById = async (id) => {
 
 export const createCategory = async (data) => {
   try {
-    await getCsrfToken();
+    //await getCsrfToken();
     return await http.post(`${API_URL}`, data);
   } catch (err) {
     return err.response;

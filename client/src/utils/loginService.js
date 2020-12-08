@@ -25,7 +25,7 @@ export const getCurrentUser = async () => {
 
 export const loginPost = async (data) => {
   try {
-    await getCsrfToken();
+    //await getCsrfToken();
     return await http.post('/login', { ...data });
   } catch (err) {
     return err.response;
@@ -34,7 +34,7 @@ export const loginPost = async (data) => {
 
 export const logoutPost = async () => {
   try {
-    await getCsrfToken();
+    //await getCsrfToken();
     return await http.post('/logout');
   } catch (err) {
     return err.response;
