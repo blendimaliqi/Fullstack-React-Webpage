@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Banner from '../Banner.jsx';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider';
 import { listInbox } from '../../utils/mailService.js';
 import { listArticleStats } from '../../utils/articleService.js';
+import { ExportToExel } from './ExportToExel.jsx';
 
 const PageContainer = styled.section`
   display: flex;
@@ -129,6 +130,11 @@ const Question = styled.p `
       
 `;
 
+const ExportButtonContainer = styled.section `
+    width: 50px;
+    margin-bottom: 30px;
+`;
+
 export const Statistic = () => {
 
     const { isAdmin, isLoggedIn } = useUserState();
@@ -201,7 +207,10 @@ export const Statistic = () => {
         return Math.random() * Math.PI + index;
     };
 
-    
+    //Lager navnet til filen som eksporteres
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
+    const fileName = `Statistikk_for_${month}-${year}`;
 
 
     return (
@@ -210,24 +219,33 @@ export const Statistic = () => {
         <WholePage>
         <MainPage>
           {error && <h1>{error}</h1>}
+          <ExportButtonContainer>
+          <ExportToExel csvData={dataSet} fileName={fileName} />
+          </ExportButtonContainer>
+        
           {articleStats &&
             isLoggedIn && isAdmin &&
             articleStats.map((article, index) => (
             <EmailContainer key={uniqueKey(index)}>
                 <h2 key={uniqueKey(index)}>{article.title}</h2>
                 <Inquiry key={uniqueKey(index)}>
+
                    Visninger: {article.clicks}
                 </Inquiry>
                 <Inquiry key={uniqueKey(index)}>
                    Antall ord: {article.ingress.length + article.content.length}
                 <label key={uniqueKey(index)}> Gjennomsnittelig lesetid:  {averageReadTime(index)}</label>
+                
                 </Inquiry>
                 {dataSet.push({
-                    wordCount: article.ingress.length + article.content.length,
-                    clicks: article.clicks,
-                    avgReadTime: averageReadTime(index),
+                    Tittel: article.title,
+                    Kategori: article.category.name,
+                    Visninger: article.clicks,
+                    Gjennomsnittelig_lesetid: averageReadTime(index),
+                    Ord_lengde: article.ingress.length + article.content.length,
                 })}
             </EmailContainer>
+
             ))}
           <PageLinkContainer>{createPageLinks()}</PageLinkContainer>
         </MainPage>
