@@ -101,6 +101,13 @@ const SecretWrapper = styled.section`
   grid-gap: 20px;
 `;
 
+const Error = styled.p`
+  margin: 0;
+  padding: 0;
+  color: red;
+  font-weight: bolder;
+`;
+
 export const NewArticle = ({ history }) => {
   const toDay = new Date();
   const formattedDate = `${toDay.getDate()}.${
@@ -127,6 +134,7 @@ export const NewArticle = ({ history }) => {
   const [secret, setSecret] = useState(false);
   const [file, setFile] = useState(null);
   const [fileId, setFileId] = useState(null);
+  const fileTypes = /\.(jpeg|jpg|png)$/;
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -153,6 +161,7 @@ export const NewArticle = ({ history }) => {
       formData.author
     );
     const isDisabled = Object.keys(errors).some((i) => errors[i]);
+
     return !isDisabled;
   };
 
@@ -177,9 +186,10 @@ export const NewArticle = ({ history }) => {
       return;
     }
 
-    if (file) {
+    if (file && fileTypes.test(file.name)) {
       const { data } = await uploadImage(file);
       if (!data.success) {
+        console.log(data.message);
         setError(data.message);
       } else {
         console.log('SE HER', data?.data?.id);
@@ -235,7 +245,7 @@ export const NewArticle = ({ history }) => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const { data, err } = await listCategories();
+      const { data } = await listCategories();
       if (data.success === false) {
         console.log(data);
         setError(data.success);
@@ -354,9 +364,24 @@ export const NewArticle = ({ history }) => {
             onChange={(event) => {
               console.log(event.target.files);
               const imageFile = event.target.files[0];
-              setFile(imageFile);
+
+              if (!fileTypes.test(imageFile.name)) {
+                setError({
+                  field: 'file',
+                  message:
+                    'Kun filer av typen .jpeg, .jpg og .png er tillat, velg annen fil ellers blir den ikke lastet opp',
+                });
+              } else {
+                setError(null);
+                setFile(imageFile);
+              }
             }}
           />
+          {error && error.field === 'file' ? (
+            <Error>{error.message}</Error>
+          ) : (
+            <Error />
+          )}
         </SecretWrapper>
         <NyArtikkelButton
           style={{
