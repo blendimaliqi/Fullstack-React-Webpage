@@ -14,34 +14,11 @@ export class ApiFilters {
     return this;
   }
 
-  // Sort QueryObject (Event.find()) [{...}, {...}, {...}]
-  // events?sort=-createdAt
-  sort() {
-    if (this.queryStr.sort) {
-      const sortBy = this.queryStr.sort.split(',').join(' ');
-      this.query.sort(sortBy);
-    } else {
-      this.query = this.query.sort('-updated');
-    }
-    return this;
-  }
-
   // events?q=string
   searchByQuery() {
     if (this.queryStr.q) {
       const term = this.queryStr.q.split('-').join(' ');
       this.query = this.query.find({ $text: { $search: `"${term}"` } });
-    }
-    return this;
-  }
-
-  // events?fields=?,?
-  limitFields() {
-    if (this.queryStr.fields) {
-      const fields = this.queryStr.fields.split(',').join(' ');
-      this.query = this.query.select(fields);
-    } else {
-      this.query = this.query.select('-__v');
     }
     return this;
   }
