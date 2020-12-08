@@ -35,6 +35,14 @@ export const create = async (data) => {
   }
 };
 
+export const updateArticle = async (id, data) => {
+  try {
+    return await http.put(`${API_URL}/${id}`, data);
+  } catch (err) {
+    return err.response;
+  }
+};
+
 export default {
   create,
   list,

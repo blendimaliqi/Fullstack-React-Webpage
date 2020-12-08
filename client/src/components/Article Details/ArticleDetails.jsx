@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider.jsx';
 import { get } from '../../utils/articleService.js';
@@ -79,7 +79,7 @@ const EditBtn = styled.button`
   outline: none;
 `;
 
-export const ArticleDetails = () => {
+export const ArticleDetails = ({ history }) => {
   const [article, setArticle] = useState();
   const [error, setError] = useState();
   const { id } = useParams();
@@ -131,7 +131,13 @@ export const ArticleDetails = () => {
             {isAdmin ? (
               <BtnContainer>
                 <DeleteBtn>SLETT</DeleteBtn>
-                <EditBtn>REDIGER</EditBtn>
+                <EditBtn
+                  onClick={() => {
+                    history.push(`/${id}`);
+                  }}
+                >
+                  REDIGER
+                </EditBtn>
               </BtnContainer>
             ) : (
               <BtnContainer />
@@ -143,4 +149,4 @@ export const ArticleDetails = () => {
   );
 };
 
-export default ArticleDetails;
+export default withRouter(ArticleDetails);

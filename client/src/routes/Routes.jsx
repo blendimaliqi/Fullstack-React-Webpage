@@ -12,46 +12,49 @@ import NewArticle from '../pages/NewArticle';
 import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
 import Signup from '../pages/Signup';
-
+import UpdateFagArtikkelPage from '../pages/UpdateFagArtikkelPage';
 
 const Routes = () => (
-    <Router>
-      <MainLayout>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/kontakt">
-            <Contact />
-          </Route>
-          <Route exact path="/kontorer">
-            <Office />
-          </Route>
-          <Route exact path="/kontorer/:id">
-            <OfficeDetail />
-          </Route>
-          <Route exact path="/fagartikler">
-            <FagartiklerPage />
-          </Route>
-          <Route exact path="/fagartikler/:id">
-            <ArticleDetails />
-          </Route>
-          <Route exact path="/nyartikkel">
-            <NewArticle />
-          </Route>
-          <Route exact path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/registrer">
-            <Signup />
-          </Route>
-          <Route path="*">
-            <NoMatch />
-          </Route>
-        </Switch>
-        <Footer />
-      </MainLayout>
-    </Router>
+  <Router>
+    <MainLayout>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/kontakt">
+          <Contact />
+        </Route>
+        <Route exact path="/kontorer">
+          <Office />
+        </Route>
+        <Route exact path="/kontorer/:id">
+          <OfficeDetail />
+        </Route>
+        <Route exact path="/fagartikler">
+          <FagartiklerPage />
+        </Route>
+        <Route exact path="/fagartikler/:id">
+          <ArticleDetails />
+        </Route>
+        <Route exact path="/nyartikkel">
+          <NewArticle />
+        </Route>
+        <Route exact path="/:id">
+          <UpdateFagArtikkelPage />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/registrer">
+          <Signup />
+        </Route>
+        <Route path="*">
+          <NoMatch />
+        </Route>
+      </Switch>
+      <Footer />
+    </MainLayout>
+  </Router>
 );
 
 export default Routes;
