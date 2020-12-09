@@ -2,7 +2,6 @@ import { articleService } from '../services/index.js';
 import catchAsyncErrors from '../middleware/catchAsync.js';
 import ErrorHandler from '../utils/errorHandler.js';
 import Article from '../models/article.js';
-import { currentUser } from './auth.js';
 
 export const get = catchAsyncErrors(async (req, res, next) => {
 
