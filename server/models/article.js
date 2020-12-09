@@ -43,12 +43,18 @@ const ArticleSchema = new Schema(
     secret: {
       type: Boolean,
     },
+      image: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Image',
+      required: false,
+    },
     clicks: {
       type: Number,
     },
     clicksAvg: {
       type: Number,
     }
+
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

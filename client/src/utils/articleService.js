@@ -58,6 +58,27 @@ export const create = async (data) => {
   }
 };
 
+export const updateArticle = async (id, data) => {
+  try {
+      if(process.env.NODE_ENV === 'production') {
+      await getCsrfToken();
+    }
+    return await http.put(`${API_URL}/${id}`, data);
+  } catch (err) {
+    return err.response;
+  }
+};
+
+export const deleteArticle = async (id) => {
+  try {
+     if(process.env.NODE_ENV === 'production') {
+      await getCsrfToken();
+    }
+    return await http.delete(`${API_URL}/${id}`);
+  } catch (err) {
+    return err.response;
+  }
+};
 
 
 export default {

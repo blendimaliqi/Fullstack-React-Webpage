@@ -20,7 +20,7 @@ const UserSchema = new Schema(
     password: {
       type: String,
       required: [true, 'Fyll ut passord'],
-      minlength: [4, 'Passordet må minmum bestå av 8 verdier'],
+      minlength: [3, 'Passordet må minmum bestå av 3 karakterer'],
       select: false,
     },
     role: {

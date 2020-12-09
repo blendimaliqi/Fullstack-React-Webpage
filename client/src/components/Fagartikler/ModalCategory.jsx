@@ -78,11 +78,10 @@ export const ModalCategory = ({
     >
       <Wrapper>
         <NewCategoryLabel>Ny Kategori</NewCategoryLabel>
-        <Input
-          placeholder="Placeholder for input felt"
-          onChange={handleCategoryChange}
-        />
-        <NewCategoryButtonm onClick={handleModalSubmit}>Create</NewCategoryButtonm>
+        <Input placeholder="Kategorinavn.." onChange={handleCategoryChange} />
+        <NewCategoryButtonm onClick={handleModalSubmit}>
+          Create
+        </NewCategoryButtonm>
       </Wrapper>
     </Modal>
   ) : null;

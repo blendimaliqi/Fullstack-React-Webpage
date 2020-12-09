@@ -5,7 +5,7 @@ import { isAuthenticated, isAuthorized } from '../middleware/auth.js';
 
 const router = express.Router();
 
-//router.get('/', articleController.listHidden);
+router.get('/:id', articleController.get);
 
 
 router.get('/', articleController.listAllArticles);

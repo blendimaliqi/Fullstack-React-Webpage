@@ -12,7 +12,7 @@ const Container = styled.section`
 
 const Home = () => (
   <Container>
-    <Banner title="Velkommen til FG Rørleggerservice AS" />
+    <Banner title="Velkommen til LG Rørleggerservice AS" />
     <section>
       <HomepageGrid />
     </section>
