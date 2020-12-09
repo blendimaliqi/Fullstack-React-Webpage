@@ -6,8 +6,6 @@ import { PORT } from './constants/index.js';
 import 'dotenv/config.js';
 import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
-import event from './routes/event.js';
-import user from './routes/user.js';
 import article from './routes/article.js';
 import category from './routes/category.js';
 import auth from './routes/auth.js';
@@ -93,8 +91,6 @@ app.use(cookieParser());
   });
  }
 
-app.use(`${process.env.BASEURL}/events`, event);
-app.use(`${process.env.BASEURL}/users`, user);
 app.use(`${process.env.BASEURL}/articles`, article);
 app.use(`${process.env.BASEURL}/categories`, category);
 app.use(`${process.env.BASEURL}/authors`, author);

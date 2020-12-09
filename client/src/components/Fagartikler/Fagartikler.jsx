@@ -155,7 +155,7 @@ export const Fagartikler = ({ history }) => {
 
     for (let i = 1; i <= pagination; i++) {
       links.push(
-        <PageLink key={i} value={i} onClick={handlePageChange}>
+        <PageLink key={uniqueKey(i)} value={i} onClick={handlePageChange}>
           {i}
         </PageLink>
       );
@@ -171,12 +171,15 @@ export const Fagartikler = ({ history }) => {
       setFilter(event.target.value);
       setCurrentPage(1);
     }
-    console.log(filter);
   };
 
   const handleSearchTerm = (event) => {
     setSearchTerm(event.target.value);
   };
+
+  const uniqueKey = (index) => {
+    return Math.random() * Math.PI + index;
+};
 
   return (
     <>
@@ -192,17 +195,18 @@ export const Fagartikler = ({ history }) => {
           </NyArtikkelContainer>
           <SearchAndFilterContainer>
             <SearchInput
+            key={uniqueKey}
               placeholder="Søk på tittel.."
               type="text"
               onChange={handleSearchTerm}
             />
             <FilterSelect onChange={handleCategoryFilter}>
-              <option key={0} value="Ingen filter">
+              <option key={uniqueKey(2)} value="Ingen filter">
                 Ingen filter
               </option>
               {categories &&
-                categories.map((category) => (
-                  <option key={category.id} value={category.id}>
+                categories.map((category, index) => (
+                  <option key={uniqueKey(index)} value={category.id}>
                     {category.name}
                   </option>
                 ))}
@@ -215,10 +219,10 @@ export const Fagartikler = ({ history }) => {
           {categoryErr && <h1>{categoryErr}</h1>}
           {articles &&
             isLoggedIn &&
-            articles.map((article) => (
+            articles.map((article,index) => (
               <Artikkel
                 id={article.id}
-                key={article.id}
+                key={uniqueKey(index)}
                 title={article.title}
                 text={article.ingress}
                 category={article.category.name}
@@ -228,12 +232,12 @@ export const Fagartikler = ({ history }) => {
 
           {articles &&
             !isLoggedIn &&
-            articles.map((article) => (
+            articles.map((article, index) => (
               <>
                 {!article.secret && (
                   <Artikkel
                     id={article.id}
-                    key={article.id}
+                    key={uniqueKey(index)}
                     title={article.title}
                     text={article.ingress}
                     category={article.category.name}
