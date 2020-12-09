@@ -10,8 +10,9 @@ const userSchema = {
     password: Joi.string().min(3).required().messages({
         'any.required': 'Passord må fylles ut',
         'string.min': 'Må bestå av minst 3 tall eller bokstaver',
-        'string.empty': 'Fyll ut passord',
+        'string.empty': 'Fyll ut passord'
     }),
+
 };
 
 
@@ -20,6 +21,9 @@ export const registerSchema = Joi.object().keys({
         'string.empty': 'Navn feltet kan ikke være tomt',
     }),
     ...userSchema,
+    /*password_confirmation: Joi.number().ref('password').min(1).messages({
+        'number.min': 'Passord må bestå av minst 1 tall',
+    }),*/
     role: Joi.string().required(),
 }).options({abortEarly: false});
 

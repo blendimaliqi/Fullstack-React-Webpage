@@ -9,10 +9,6 @@ export const sendToken = (user, res) => {
     sameSite: true,
   };
 
-  if (process.env.NODE_ENV === 'production') {
-    options.secure = true;
-  }
-
   res
     .status(200)
     .cookie('token', token, options)

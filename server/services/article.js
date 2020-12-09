@@ -17,8 +17,6 @@ export const listArticles = async (queryStr) => {
     .pagination()
     .query.populate('category', 'name');
 
-  console.log('PAGINATED FRA SERVICE: ', paginated);
-
   return {
     results: articles.length,
     totalPages: Math.ceil(articles.length / limit) || 1,

@@ -5,7 +5,9 @@ const API_URL = '/sendmail';
 
 export const sendMailToUser = async(data) => {
     try {
-      //await getCsrfToken();
+      if(process.env.NODE_ENV === 'production') {
+        await getCsrfToken();
+      }
         return await http.post(`${API_URL}`, data); 
     } catch (error) {
         return error.response;
@@ -15,7 +17,9 @@ export const sendMailToUser = async(data) => {
 
 export const sendMailToAdmin = async(data) => {
   try {
-    //await getCsrfToken();
+    if(process.env.NODE_ENV === 'production') {
+      await getCsrfToken();
+    }
       return await http.post(`${API_URL}/adminmail`, data); 
   } catch (error) {
       return error.response;

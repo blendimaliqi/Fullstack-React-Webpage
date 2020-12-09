@@ -48,8 +48,10 @@ export const get = async (id) => {
 };
 
 export const create = async (data) => {
-  //await getCsrfToken();
   try {
+    if(process.env.NODE_ENV === 'production') {
+      await getCsrfToken();
+    }
     return await http.post(`${API_URL}`, data);
   } catch (err) {
     return err.response;
