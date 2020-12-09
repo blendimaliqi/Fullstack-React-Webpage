@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useUserState } from '../../context/UserProvider.jsx';
 import { get, deleteArticle } from '../../utils/articleService.js';
 import { downloadImage } from '../../utils/imageService.js';
@@ -85,12 +87,36 @@ export const ArticleDetails = ({ history }) => {
 
   const [src, setSrc] = useState(null);
   const [modalState, setModalState] = useState(false);
+  const notify = (success) => {
+    if (success) {
+      toast.success(`✅Successfully deleted ${article.title}`, {
+        position: 'bottom-center',
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.error('❌ Failtd to delete article!', {
+        position: 'bottom-center',
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   const handleModalSubmit = async (e) => {
     e.preventDefault();
 
     await deleteArticle(id);
-    history.push('/fagartikler');
+    setModalState(false);
+    notify(true);
   };
 
   const showModal = (e) => {
@@ -164,6 +190,16 @@ export const ArticleDetails = ({ history }) => {
             ) : (
               <BtnContainer />
             )}
+            <ToastContainer
+              position="bottom-center"
+              autoClose={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              onClick={() => history.push('/fagartikler')}
+            />
           </Container>
         </>
       )}

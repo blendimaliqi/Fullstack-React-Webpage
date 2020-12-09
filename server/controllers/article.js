@@ -30,30 +30,6 @@ export const listAllArticles = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({ success: true, data: result });
 });
 
-/* export const listHidden = catchAsyncErrors(async (req, res, next) => {
-  const result = await articleService.listArticles();
-
-  const hiddenArticles = [];
-
-  const plebArticles = [];
-
-  result.map((r) => {
-      hiddenArticles.push(r);
-    }
-  );
-
-  hiddenArticles.map((hidden) => {
-    if(!hidden.secret){
-      plebArticles.push(hidden);
-    };
-  })
-
-  console.log(hiddenArticles.length);
-
-  res.status(200).json(plebArticles);
-});
-*/
-
 export const getClicksOnArticle = catchAsyncErrors(async (req, res, next) => {
   const articleClicks = await articleService.articleClicks();
   res.status(200).json({
@@ -61,7 +37,6 @@ export const getClicksOnArticle = catchAsyncErrors(async (req, res, next) => {
     data: articleClicks,
   });
 });
-
 
 export const create = catchAsyncErrors(async (req, res, next) => {
   const article = await articleService.createArticle(req.body);
