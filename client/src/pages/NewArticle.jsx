@@ -52,21 +52,6 @@ const NyArtikkelButton = styled.button`
   color: white;
 `;
 
-const NyArtikkelButtonDisabled = styled.button`
-  display: flex;
-  background-color: #9b9b9b;
-  padding: 1.5rem 2.7rem;
-  opacity: 0.7;
-  border: 0;
-  width: 140px;
-  font-weight: bold;
-  font-size: 0.6rem;
-  max-height: 4rem;
-  align-items: center;
-  margin-right: 1.3rem;
-  color: white;
-`;
-
 const NewCategoryButton = styled.button`
   background-color: #469fb9;
   padding: 1rem 1rem;
@@ -129,7 +114,6 @@ export const NewArticle = ({ history }) => {
   const [category, setCategory] = useState();
   const [author, setAuthor] = useState();
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('category');
   const [modalCategory, setModalCategory] = useState();
   const [secret, setSecret] = useState(false);
   const [file, setFile] = useState(null);
