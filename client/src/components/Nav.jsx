@@ -135,11 +135,13 @@ const Nav = () => {
             </NavLink>
           </NavMenuItem>
         )}
-        <NavMenuItem>
-          <NavLink exact to="/registrer" activeClassName="active">
-            <Login>Registrer</Login>
-          </NavLink>
-        </NavMenuItem>
+        {!isLoggedIn && (
+          <NavMenuItem>
+            <NavLink exact to="/registrer" activeClassName="active">
+              Registrer
+            </NavLink>
+          </NavMenuItem>
+        )}
         {!isLoggedIn && (
           <NavMenuItem>
             <NavLink exact to="/login" activeClassName="active">
