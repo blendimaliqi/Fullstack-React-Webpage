@@ -13,6 +13,7 @@ import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
 import Signup from '../pages/Signup';
 import Inbox from '../components/Inbox/Inbox.jsx';
+import Statistic from '../components/Statistics/Statistic';
 import UpdateFagArtikkelPage from '../pages/UpdateFagArtikkelPage';
 
 const Routes = () => (
@@ -52,6 +53,9 @@ const Routes = () => (
         <Route exact path="/useremails">
           <Inbox />
         </Route>
+        <Route exact path="/stats">
+           <Statistic />
+         </Route>
         <Route path="*">
           <NoMatch />
         </Route>

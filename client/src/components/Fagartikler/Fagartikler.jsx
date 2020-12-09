@@ -97,7 +97,7 @@ const PageLink = styled.button`
 const SearchInput = styled.input``;
 
 export const Fagartikler = ({ history }) => {
-  const { isAdmin, isLoggedIn } = useUserState();
+  const { isAdmin, isLoggedIn, isSuperAdmin } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
   const [pagination, setPagination] = useState();
@@ -184,7 +184,7 @@ export const Fagartikler = ({ history }) => {
       <WholePage>
         <PageContainer>
           <NyArtikkelContainer>
-            {isAdmin && (
+            {( isAdmin || isSuperAdmin ) && (
               <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
                 NY ARTIKKEL
               </NyArtikkelButton>

@@ -15,8 +15,6 @@ export const listArticles = async (queryStr) => {
     .pagination()
     .query.populate('category', 'name');
 
-  console.log('PAGINATED FRA SERVICE: ', paginated);
-
   return {
     results: articles.length,
     totalPages: Math.ceil(articles.length / limit) || 1,
@@ -37,4 +35,17 @@ export const updateArticle = async (id, data) =>
 export const removeArticle = async (id) => {
   const article = await Article.findById(id);
   article.remove();
+};
+
+export const articleClicks = async () => {
+  const articles = Article.aggregate([
+    {
+      $group: {
+        _id: '$active',
+        avgClicks: {$avg: '$clicks'},
+        totalClicks: {$sum: '$clicks'},
+      },
+    },
+  ]);
+  return articles;
 };

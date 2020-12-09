@@ -84,7 +84,10 @@ export const ArticleDetails = ({ history }) => {
   const [article, setArticle] = useState();
   const [error, setError] = useState();
   const { id } = useParams();
-  const { isAdmin } = useUserState();
+
+  const { isAdmin, isSuperAdmin } = useUserState();
+  const [clicks, setClicks] = useState();
+
   const [src, setSrc] = useState(null);
   const [modalState, setModalState] = useState(false);
 
@@ -104,6 +107,7 @@ export const ArticleDetails = ({ history }) => {
     setModalState(false);
   };
 
+
   useEffect(() => {
     const download = async (imageId) => {
       const { data } = await downloadImage(imageId);
@@ -121,7 +125,8 @@ export const ArticleDetails = ({ history }) => {
         if (data.image) {
           download(data.image);
         }
-        setArticle(data);
+        setArticle(data.dataArticle);
+        setClicks(data.dataClicks);
       }
     };
     fetchArticle();
@@ -151,7 +156,7 @@ export const ArticleDetails = ({ history }) => {
               <SubTitleParagraph>{article.content}</SubTitleParagraph>
               <Category>{article.category.name}</Category>
             </SubTitleContainer>
-            {isAdmin ? (
+            {isAdmin || isSuperAdmin ? (
               <BtnContainer>
                 <DeleteBtn onClick={showModal}>SLETT</DeleteBtn>
                 <EditBtn

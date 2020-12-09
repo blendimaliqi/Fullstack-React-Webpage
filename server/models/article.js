@@ -43,17 +43,48 @@ const ArticleSchema = new Schema(
     secret: {
       type: Boolean,
     },
-    image: {
+      image: {
       type: mongoose.Schema.ObjectId,
       ref: 'Image',
       required: false,
     },
+    clicks: {
+      type: Number,
+    },
+    clicksAvg: {
+      type: Number,
+    }
+
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+
+
 ArticleSchema.index({
   title: 'text',
 });
+
+/*ArticleSchema.statics.calcAverageAttendees = async function () {
+  const average = await this.aggregate([
+    {
+      $group: {
+        _id: '$active',
+        avgClicks: { $avg: '$clicks' },
+        //sumClicks: { $sum: '$clicks'},
+      },
+    },
+  ]);
+  await this.updateMany(
+    {},
+    { $set: { clicksAvg: average[0].avgClicks } },
+    //{ $inc: { clicks: 1 } },
+  );
+};
+
+ArticleSchema.post('save', async function () {
+  await this.constructor.calcAverageAttendees();
+});
+*/
 
 export default mongoose.model('Article', ArticleSchema);

@@ -7,12 +7,18 @@ const router = express.Router();
 
 router.get('/:id', articleController.get);
 
+
 router.get('/', articleController.listAllArticles);
+router.get('/clicks', articleController.getClicksOnArticle);
+
+router.get('/:id', articleController.get);
+
+const roles = ['admin', 'superadmin'];
 
 router.post(
   '/',
   isAuthenticated,
-  isAuthorized('admin'),
+  isAuthorized(roles), 
   articleController.create
 );
 router.put('/:id', articleController.update);

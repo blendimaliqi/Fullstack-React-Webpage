@@ -17,6 +17,7 @@ export const getCsrfToken = async () => {
 
 export const getCurrentUser = async () => {
   try {
+    await getCsrfToken();
     return await http.get('/me');
   } catch (err) {
     return err.response;
@@ -25,7 +26,9 @@ export const getCurrentUser = async () => {
 
 export const loginPost = async (data) => {
   try {
-    await getCsrfToken();
+    if(process.env.NODE_ENV === 'production') {
+      await getCsrfToken();
+    }
     return await http.post('/login', { ...data });
   } catch (err) {
     return err.response;
@@ -34,7 +37,9 @@ export const loginPost = async (data) => {
 
 export const logoutPost = async () => {
   try {
-    await getCsrfToken();
+    if(process.env.NODE_ENV === 'production') {
+      await getCsrfToken();
+    }
     return await http.post('/logout');
   } catch (err) {
     return err.response;
