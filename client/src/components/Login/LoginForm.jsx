@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { loginPost } from '../../utils/loginService.js';
 import { useUserState, useUserDispatch } from '../../context/UserProvider.jsx';
 
@@ -48,13 +51,24 @@ const ErrorContainer = styled.section`
   width: 60%;
 `;
 
-export const LoginForm = () => {
+export const LoginForm = ({ history }) => {
   const { setUser, isLoggedIn } = useUserState();
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState(null);
+  const notifyLoginSuccess = (message) => {
+    toast.success(`✅Successfully logged in to ${message}`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
@@ -73,11 +87,14 @@ export const LoginForm = () => {
       if (!data.success) {
         console.log(data.message);
         setError(Array.from(data.message));
+        notifyLoginSuccess(false, Array.from(data.message));
       } else {
         const user = data?.user;
         // setUser({ ...user });
         setUser({ user });
         setError(null);
+        notifyLoginSuccess(data?.user?.email);
+        // setTimeout(() => {history.push('/')}, 2000);
       }
 
       // alert(`Logget inn som: ${data.user.email}`);
@@ -114,8 +131,19 @@ export const LoginForm = () => {
       <BtnContainer>
         <SumbitBtn>Logg inn</SumbitBtn>
       </BtnContainer>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Form>
   );
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);
