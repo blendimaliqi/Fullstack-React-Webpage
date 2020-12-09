@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Banner from '../components/Banner';
 import ModalCategory from '../components/Fagartikler/ModalCategory';
 import { create } from '../utils/articleService.js';
@@ -159,6 +161,18 @@ export const NewArticle = ({ history }) => {
 
   const isDisabled = Object.keys(errors).some((i) => errors[i]);
 
+  const notifyCreationSuccess = (message) => {
+    toast.success(`✅${message}`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const createArticle = async (inputData) => {
     const { data } = await create(inputData);
     console.log(data);
@@ -176,19 +190,24 @@ export const NewArticle = ({ history }) => {
         console.log(data.message);
         setError(data.message);
       } else {
-        console.log('SE HER', data?.data?.id);
-        setFileId(data?.data?.id);
+        console.log('SE HER', data?.id);
+        console.log('MESSAGE', data.message);
+        setFileId(data?.id);
         setError(null);
-        const id = data?.data?.id;
+        const id = data?.id;
         const object = { secret, image: id };
         createArticle({ ...formData, ...object });
+        notifyCreationSuccess(`Artikkel: ${formData.title} opprettet`);
       }
     } else {
       createArticle({ ...formData, secret });
+      notifyCreationSuccess(`Artikkel: ${formData.title} opprettet`);
     }
 
     console.log('FORMDATA I SUBMIT', formData);
-    history.push('/fagartikler');
+    setTimeout(() => {
+      history.push('/fagartikler');
+    }, 3000);
   };
 
   const showModal = (e) => {
@@ -258,7 +277,7 @@ export const NewArticle = ({ history }) => {
 
   return (
     <>
-      <Banner title="Ny Artikkel" />
+      <Banner title="Oppdater artikkel" />
       <InputWrapper onSubmit={handleSubmit} encType="multipart/form-data">
         <ModalCategory
           state={state}
@@ -375,6 +394,17 @@ export const NewArticle = ({ history }) => {
         >
           CREATE
         </NyArtikkelButton>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </InputWrapper>
     </>
   );

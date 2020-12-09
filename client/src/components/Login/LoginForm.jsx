@@ -59,7 +59,7 @@ export const LoginForm = ({ history }) => {
   });
   const [error, setError] = useState(null);
   const notifyLoginSuccess = (message) => {
-    toast.success(`✅Successfully logged in to ${message}`, {
+    toast.success(`✅${message}`, {
       position: 'bottom-center',
       autoClose: 3000,
       hideProgressBar: true,
@@ -92,7 +92,7 @@ export const LoginForm = ({ history }) => {
         // setUser({ ...user });
         setUser({ user });
         setError(null);
-        notifyLoginSuccess(data?.user?.email);
+        notifyLoginSuccess(data?.loginMessage);
         // setTimeout(() => {history.push('/')}, 2000);
       }
 

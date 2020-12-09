@@ -58,7 +58,7 @@ const BtnContainer = styled.section`
 
 const DeleteBtn = styled.button`
   color: white;
-  background-color: tomato;
+  background-color: #D14040;
   padding: 1.5rem 3rem;
   border: 0;
   outline: none;
@@ -71,7 +71,7 @@ const ArticleImage = styled.img`
 
 const EditBtn = styled.button`
   color: white;
-  background-color: olive;
+  background-color: #ADAD44;
   padding: 1.5rem 2.5rem;
   border: 0;
   outline: none;
@@ -91,8 +91,8 @@ export const ArticleDetails = ({ history }) => {
     if (success) {
       toast.success(`✅Successfully deleted ${article.title}`, {
         position: 'bottom-center',
-        autoClose: false,
-        hideProgressBar: false,
+        autoClose: 3000,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -101,8 +101,8 @@ export const ArticleDetails = ({ history }) => {
     } else {
       toast.error('❌ Failtd to delete article!', {
         position: 'bottom-center',
-        autoClose: false,
-        hideProgressBar: false,
+        autoClose: 3000,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -117,6 +117,9 @@ export const ArticleDetails = ({ history }) => {
     await deleteArticle(id);
     setModalState(false);
     notify(true);
+    setTimeout(() => {
+      history.push('/fagartikler');
+    }, 3000);
   };
 
   const showModal = (e) => {
@@ -192,13 +195,14 @@ export const ArticleDetails = ({ history }) => {
             )}
             <ToastContainer
               position="bottom-center"
-              autoClose={false}
+              autoClose={3000}
+              hideProgressBar
               newestOnTop
               closeOnClick
               rtl={false}
               pauseOnFocusLoss
               draggable
-              onClick={() => history.push('/fagartikler')}
+              pauseOnHover
             />
           </Container>
         </>

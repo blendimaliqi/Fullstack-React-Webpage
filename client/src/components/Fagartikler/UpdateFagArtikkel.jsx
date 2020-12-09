@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Banner from '../Banner.jsx';
 import ModalCategory from './ModalCategory';
 import { updateArticle, get } from '../../utils/articleService.js';
@@ -64,7 +66,7 @@ const CancleButton = styled.button`
   align-items: center;
   margin-right: 1.3rem;
   color: white;
-  background-color: tomato;
+  background-color: #D14040;
 `;
 
 const ButtonContainer = styled.section`
@@ -181,6 +183,18 @@ export const UpdateFagArtikkel = ({ history }) => {
 
   const isDisabled = Object.keys(errors).some((i) => errors[i]);
 
+  const notifyUpdateSuccess = (message) => {
+    toast.success(`✅${message}`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const update = async (articleId, inputData) => {
     const { data } = await updateArticle(articleId, inputData);
     console.log(data);
@@ -204,14 +218,18 @@ export const UpdateFagArtikkel = ({ history }) => {
         const imdageId = data?.data?.id;
         const object = { secret, image: imdageId };
         update(id, { ...formData, ...object });
+        notifyUpdateSuccess(`Artikkel: ${formData.title} oppdatert`);
       }
     } else {
       update(id, { ...formData, secret });
+      notifyUpdateSuccess(`Artikkel: ${formData.title} oppdatert`);
       console.log(formData);
     }
 
     console.log('FORMDATA I SUBMIT', formData);
-    history.push('/fagartikler');
+    setTimeout(() => {
+      history.push('/fagartikler');
+    }, 3000);
   };
 
   const showModal = (e) => {
@@ -422,6 +440,17 @@ export const UpdateFagArtikkel = ({ history }) => {
             Avbryt
           </CancleButton>
         </ButtonContainer>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </InputWrapper>
     </>
   );

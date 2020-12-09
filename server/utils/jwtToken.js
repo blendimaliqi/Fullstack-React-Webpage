@@ -19,5 +19,7 @@ export const sendToken = (user, res) => {
         email: user.email,
         role: user.role,
       },
+      message: `Velkommen til lg rør ${user.name}`,
+      loginMessage: `Velykket innlogging, logget inn med: ${user.email}`,
     });
 };
