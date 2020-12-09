@@ -134,7 +134,7 @@ const Question = styled.p `
 
 export const Inbox = () => {
 
-    const { isAdmin, isLoggedIn } = useUserState();
+    const { isAdmin, isLoggedIn, isSuperAdmin } = useUserState();
     const [emails, setEmails] = useState();
     const [error, setError] = useState();
     const [currentPage, setCurrentPage] = useState(1);
@@ -192,7 +192,7 @@ export const Inbox = () => {
         <MainPage>
           {error && <h1>{error}</h1>}
           {emails &&
-            isLoggedIn && isAdmin &&
+            ( isAdmin || isSuperAdmin )  &&
             emails.map((article, index) => (
             <EmailContainer>
                 <h2 key={article.name + index}>{article.name}</h2>

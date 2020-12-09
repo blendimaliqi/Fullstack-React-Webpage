@@ -13,6 +13,11 @@ const NewCategoryButton = styled.button`
   color: white;
 `;
 
+/**
+ * Brukt exempel fra denne siden for export til exel: https://technicaaadda.blogspot.com/2020/11/export-data-to-excel-using-react.html
+ * @param {*} param0 
+ */
+
 export const ExportToExel = ({csvData, fileName}) => {
 
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';

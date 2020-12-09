@@ -63,6 +63,7 @@ export const UserProvider = ({ children }) => {
         isLoading: loading,
         isAdmin: user?.user.role === 'admin',
         isLoggedIn: !!user,
+        isSuperAdmin: user?.user.role ==='superadmin',
         setUser,
       }}
 

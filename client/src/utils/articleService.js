@@ -18,10 +18,21 @@ export const list = async (filter, limit, page, searchTerm) => {
   }
 };
 
-export const listArticleStats = async (limit, page) => {
+export const listArticleStats = async () => {
   try {
   return await http.get(
-      `${API_URL}?limit=${limit}&page=${page}`
+      `${API_URL}`
+  );
+  } catch (err) {
+    return err.response;
+  }
+};
+
+
+export const listArticleStatsTotal = async () => {
+  try {
+  return await http.get(
+      `${API_URL}/clicks`
   );
   } catch (err) {
     return err.response;
@@ -52,4 +63,5 @@ export default {
   list,
   get,
   listArticleStats,
+  listArticleStatsTotal,
 };

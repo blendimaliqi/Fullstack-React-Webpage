@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Banner from '../Banner.jsx';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider';
-import { listInbox } from '../../utils/mailService.js';
-import { listArticleStats } from '../../utils/articleService.js';
+import { listArticleStats, listArticleStatsTotal } from '../../utils/articleService.js';
 import { ExportToExel } from './ExportToExel.jsx';
 
 const PageContainer = styled.section`
@@ -134,14 +133,19 @@ const ExportButtonContainer = styled.section `
     margin-bottom: 30px;
 `;
 
+const TotalView = styled.p `
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
+  font-weight: bold;
+`;
 
 export const Statistic = () => {
 
-    const { isAdmin, isLoggedIn } = useUserState();
+    const { isSuperAdmin, isLoggedIn } = useUserState();
     const [articleStats, setArticleStats] = useState();
+    const [articleStatsTotal, setArticleStatsTotal] = useState();
     const [error, setError] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pagination, setPagination] = useState();
     const [dataSet, setDataSet] = useState([]);
   
     useEffect(() => {
@@ -149,46 +153,38 @@ export const Statistic = () => {
         let mounted = true;
         const fetchStats = async () => {
         if (mounted) {
-            const { data, err } = await listArticleStats(10, currentPage);
+            const { data, err } = await listArticleStats();
             if (data.success === false) {
             // console.log(data);
             setError(data.success);
             // console.log('fikk feil');
             } else {
-            setPagination(data.data.totalPages);
-            setCurrentPage(data.data.currentPage);
-            setArticleStats(data.data.data);
-            console.log("Data i client", data.data.data);
-            }
-        }
+              setArticleStats(data.data.data);
+            };
+          }
         };
         fetchStats();
 
+        const fetchStatsTotal = async () => {
+          if (mounted) {
+              const { data, err } = await listArticleStatsTotal();
+              if (data.success === false) {
+              // console.log(data);
+              setError(data.success);
+              // console.log('fikk feil');
+              } else {
+                setArticleStatsTotal(data.data);
+              };
+            }
+          };
+          fetchStatsTotal();
 
         return function cleanup() {
         mounted = false;
         source.cancel();
         };
-    }, [currentPage]);
+    }, []);
 
-
-    const handlePageChange = (event) => {
-        setCurrentPage(event.target.value);
-      };
-
-    const createPageLinks = () => {
-        const links = [];
-    
-        for (let i = 1; i <= pagination; i++) {
-          links.push(
-            <PageLink key={i} value={i} onClick={handlePageChange}>
-              {i}
-            </PageLink>
-          );
-        }
-    
-        return links;
-    };
 
     const averageReadTime = (index) => {
         const ingressNoSpace = articleStats[index].ingress.split(' ').join('').length;
@@ -222,9 +218,19 @@ export const Statistic = () => {
           <ExportButtonContainer>
           <ExportToExel csvData={dataSet} fileName={fileName} />
           </ExportButtonContainer>
-        
+          {articleStatsTotal && 
+          isLoggedIn && isSuperAdmin &&
+          <>
+          <TotalView> Gjennomsnittlig visning for alle artikler: {(articleStatsTotal[0].avgClicks).toFixed(2)}</TotalView>
+          <TotalView> Antall visninger for alle artikler: {articleStatsTotal[0].totalClicks}</TotalView>
+          {dataSet.length ===0 && dataSet.push({
+            Total_gjennomsnittlig_visninger: (articleStatsTotal[0].avgClicks).toFixed(2),
+            Total_Visninger: articleStatsTotal[0].totalClicks,
+          })}
+          </>
+          }
           {articleStats &&
-            isLoggedIn && isAdmin &&
+            isLoggedIn && isSuperAdmin &&
             articleStats.map((article, index) => (
             <EmailContainer key={uniqueKey(index)}>
                 <Title key={uniqueKey(index)}>{article.title}</Title>
@@ -241,17 +247,16 @@ export const Statistic = () => {
                 <Inquiry key={uniqueKey(index)}>
                    Kategori: {article.category.name}
                 </Inquiry>
-                {dataSet.push({
-                    Tittel: article.title,
-                    Kategori: article.category.name,
-                    Visninger: article.clicks,
-                    Gjennomsnittelig_esetid: averageReadTime(index),
-                    Antall_ord: article.ingress.length + article.content.length,
-                })}
+              {dataSet.length !== articleStats.length && dataSet.push({
+                  Tittel: article.title,
+                  Kategori: article.category.name,
+                  Visninger: article.clicks,
+                  Gjennomsnittelig_lesetid: averageReadTime(index),
+                  Antall_ord: article.ingress.length + article.content.length
+              })}
             </EmailContainer>
-
+              
             ))}
-          <PageLinkContainer>{createPageLinks()}</PageLinkContainer>
         </MainPage>
       </WholePage>
     </>

@@ -78,7 +78,7 @@ export const ArticleDetails = () => {
   const [article, setArticle] = useState();
   const [error, setError] = useState();
   const { id } = useParams();
-  const { isAdmin } = useUserState();
+  const { isAdmin, isSuperAdmin } = useUserState();
   const [clicks, setClicks] = useState();
 
   useEffect(() => {
@@ -114,11 +114,10 @@ export const ArticleDetails = () => {
               <SubTitleParagraph>{article.content}</SubTitleParagraph>
               <Category>{article.category.name}</Category>
             </SubTitleContainer>
-            {isAdmin ? (
+            {isAdmin || isSuperAdmin ? (
               <BtnContainer>
                 <DeleteBtn>SLETT</DeleteBtn>
                 <EditBtn>REDIGER</EditBtn>
-            <p>CLICKS: {article.clicks}</p>
               </BtnContainer>
             ) : (
               <BtnContainer />

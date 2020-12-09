@@ -86,7 +86,7 @@ const Login = styled.p`
 `;
 
 const Nav = () => {
-  const { isLoggedIn, isAdmin, setUser } = useUserState();
+  const { isLoggedIn, isAdmin, setUser, isSuperAdmin } = useUserState();
 
   const logout = async () => {
     await logoutPost();
@@ -122,10 +122,17 @@ const Nav = () => {
             Kontakt
           </NavLink>
         </NavMenuItem>
-        {isAdmin && (
+        { ( isAdmin || isSuperAdmin )  && (
         <NavMenuItem>
         <NavLink exact to="/useremails" activeClassName="active">
           Inbox
+        </NavLink>
+      </NavMenuItem>
+        )}
+        {isSuperAdmin  && (
+        <NavMenuItem>
+        <NavLink exact to="/stats" activeClassName="active">
+          Statistikk
         </NavLink>
       </NavMenuItem>
         )}
