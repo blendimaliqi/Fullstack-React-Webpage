@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserState } from '../context/UserProvider';
@@ -81,7 +81,7 @@ const Login = styled.p`
   }
 
   & :hover {
-    background-color:  #81d1e9;
+    background-color: #81d1e9;
   }
 `;
 
@@ -90,9 +90,8 @@ const Nav = () => {
 
   const logout = async () => {
     await logoutPost();
-    setUser(null); 
+    setUser(null);
   };
-
 
   return (
     <StyledNav>
@@ -122,19 +121,19 @@ const Nav = () => {
             Kontakt
           </NavLink>
         </NavMenuItem>
-        { ( isAdmin || isSuperAdmin )  && (
-        <NavMenuItem>
-        <NavLink exact to="/useremails" activeClassName="active">
-          Inbox
-        </NavLink>
-      </NavMenuItem>
+        {(isAdmin || isSuperAdmin) && (
+          <NavMenuItem>
+            <NavLink exact to="/useremails" activeClassName="active">
+              Inbox
+            </NavLink>
+          </NavMenuItem>
         )}
-        {isSuperAdmin  && (
-        <NavMenuItem>
-        <NavLink exact to="/stats" activeClassName="active">
-          Statistikk
-        </NavLink>
-      </NavMenuItem>
+        {isSuperAdmin && (
+          <NavMenuItem>
+            <NavLink exact to="/stats" activeClassName="active">
+              Statistikk
+            </NavLink>
+          </NavMenuItem>
         )}
         <NavMenuItem>
           <NavLink exact to="/registrer" activeClassName="active">

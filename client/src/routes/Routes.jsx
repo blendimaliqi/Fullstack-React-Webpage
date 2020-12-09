@@ -54,8 +54,8 @@ const Routes = () => (
           <Inbox />
         </Route>
         <Route exact path="/stats">
-           <Statistic />
-         </Route>
+          <Statistic />
+        </Route>
         <Route path="*">
           <NoMatch />
         </Route>

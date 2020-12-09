@@ -1,5 +1,5 @@
 import http from './http';
-import {getCsrfToken} from './loginService';
+import { getCsrfToken } from './loginService';
 
 const API_URL = '/categories';
 
@@ -21,7 +21,7 @@ export const getCategoryById = async (id) => {
 
 export const createCategory = async (data) => {
   try {
-    if(process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production') {
       await getCsrfToken();
     }
     return await http.post(`${API_URL}`, data);

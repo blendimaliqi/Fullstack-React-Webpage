@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '@chakra-ui/core';
 import styled from 'styled-components';
 import Nav from '../components/Nav';
 import GlobalStyle from '../styles/GlobalStyles.jsx';

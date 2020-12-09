@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Heading, Flex, Text, Icon } from '@chakra-ui/core';
 import styled from 'styled-components';
-import { list } from '../utils/eventService';
 import HomepageGrid from '../components/Homepage/HomepageGrid.jsx';
 import Banner from '../components/Banner';
 

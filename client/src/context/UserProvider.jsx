@@ -23,7 +23,6 @@ const reducer = (state, { type, userData }) => {
   }
 };
 
-
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [user, setUser] = useState(null);
@@ -31,13 +30,13 @@ export const UserProvider = ({ children }) => {
   const [admin, setAdmin] = useState();
 
   const roleChecker = (userData) => {
-    if(userData.user.role === 'admin') {
-      console.log("ROLE: " +userData.user.role);
+    if (userData.user.role === 'admin') {
+      console.log(`ROLE: ${userData.user.role}`);
       setAdmin(true);
     } else {
       setAdmin(false);
     }
-  }
+  };
 
   useEffect(() => {
     const fetchCurrentUserData = async () => {
@@ -63,10 +62,9 @@ export const UserProvider = ({ children }) => {
         isLoading: loading,
         isAdmin: user?.user.role === 'admin',
         isLoggedIn: !!user,
-        isSuperAdmin: user?.user.role ==='superadmin',
+        isSuperAdmin: user?.user.role === 'superadmin',
         setUser,
       }}
-
     >
       {children}
     </UserContext.Provider>

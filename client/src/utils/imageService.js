@@ -6,7 +6,9 @@ const API_DOWNLOAD = '/download';
 
 export const uploadImage = async (image) => {
   try {
-    await getCsrfToken();
+    if (process.env.NODE_ENV === 'production') {
+      await getCsrfToken();
+    }
     const data = new FormData();
     data.append('image', image);
     return await http.post(`${API_UPLOAD}`, data, {
