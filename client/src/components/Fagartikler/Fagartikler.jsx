@@ -178,13 +178,15 @@ export const Fagartikler = ({ history }) => {
     setSearchTerm(event.target.value);
   };
 
+  const uniqueKey = (index) => Math.random() * Math.PI + index;
+
   return (
     <>
       <Banner title="Fagartikler" />
       <WholePage>
         <PageContainer>
           <NyArtikkelContainer>
-            {( isAdmin || isSuperAdmin ) && (
+            {(isAdmin || isSuperAdmin) && (
               <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
                 NY ARTIKKEL
               </NyArtikkelButton>
@@ -215,7 +217,7 @@ export const Fagartikler = ({ history }) => {
           {categoryErr && <h1>{categoryErr}</h1>}
           {articles &&
             isLoggedIn &&
-            articles.map((article) => (
+            articles.map((article, index) => (
               <Artikkel
                 id={article.id}
                 key={article.id}
@@ -228,7 +230,7 @@ export const Fagartikler = ({ history }) => {
 
           {articles &&
             !isLoggedIn &&
-            articles.map((article) => (
+            articles.map((article, index) => (
               <>
                 {!article.secret && (
                   <Artikkel

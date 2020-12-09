@@ -53,19 +53,24 @@ const NyArtikkelButton = styled.button`
   color: white;
 `;
 
-const NyArtikkelButtonDisabled = styled.button`
+const CancleButton = styled.button`
   display: flex;
-  background-color: #9b9b9b;
   padding: 1.5rem 2.7rem;
-  opacity: 0.7;
   border: 0;
   width: 140px;
   font-weight: bold;
-  font-size: 0.6rem;
+  font-size: 1, 8rem;
   max-height: 4rem;
   align-items: center;
   margin-right: 1.3rem;
   color: white;
+  background-color: tomato;
+`;
+
+const ButtonContainer = styled.section`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-space-around;
 `;
 
 const NewCategoryButton = styled.button`
@@ -135,7 +140,6 @@ export const UpdateFagArtikkel = ({ history }) => {
   const [secret, setSecret] = useState(false);
   const [file, setFile] = useState(null);
   const [fileId, setFileId] = useState(null);
-  const [selectedCat, setSelectedCat] = useState(null);
   const fileTypes = /\.(jpeg|jpg|png)$/;
 
   const updateValue = (event) => {
@@ -144,8 +148,6 @@ export const UpdateFagArtikkel = ({ history }) => {
       ...prev,
       ...inputValue,
     }));
-
-    setSelectedCat(formData.category);
   };
 
   const validateInput = (title, ingress, content, category, author) => ({
@@ -256,7 +258,7 @@ export const UpdateFagArtikkel = ({ history }) => {
         setError(data.success);
         console.log('fikk feil');
       } else {
-        setFormData(data);
+        setFormData(data.dataArticle);
         console.log(data.category);
       }
     };
@@ -293,7 +295,7 @@ export const UpdateFagArtikkel = ({ history }) => {
 
   return (
     <>
-      <Banner title="Ny Artikkel" />
+      <Banner title={`Oppdater: ${formData.title}`} />
       <InputWrapper onSubmit={handleSubmit} encType="multipart/form-data">
         <ModalCategory
           state={state}
@@ -337,7 +339,6 @@ export const UpdateFagArtikkel = ({ history }) => {
             className={errors.category ? 'error' : ''}
             name="category"
             onChange={updateValue}
-            value={selectedCat}
           >
             {category &&
               category.map((categoryItem) => (
@@ -403,14 +404,24 @@ export const UpdateFagArtikkel = ({ history }) => {
             <Error />
           )}
         </SecretWrapper>
-        <NyArtikkelButton
-          style={{
-            backgroundColor: !isDisabled ? '#53a5be' : '#DBDBDB',
-          }}
-          disabled={isDisabled}
-        >
-          LAGRE
-        </NyArtikkelButton>
+        <ButtonContainer>
+          <NyArtikkelButton
+            style={{
+              backgroundColor: !isDisabled ? '#53a5be' : '#DBDBDB',
+            }}
+            disabled={isDisabled}
+          >
+            LAGRE
+          </NyArtikkelButton>
+          <CancleButton
+            onClick={(event) => {
+              event.preventDefault();
+              history.push(`/fagartikler/${id}`);
+            }}
+          >
+            Avbryt
+          </CancleButton>
+        </ButtonContainer>
       </InputWrapper>
     </>
   );

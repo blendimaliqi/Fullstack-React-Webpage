@@ -122,8 +122,8 @@ export const ArticleDetails = ({ history }) => {
         setError(data.success);
         console.log('fikk feil');
       } else {
-        if (data.image) {
-          download(data.image);
+        if (data.dataArticle.image) {
+          download(data.dataArticle.image);
         }
         setArticle(data.dataArticle);
         setClicks(data.dataClicks);
