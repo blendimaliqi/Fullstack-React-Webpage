@@ -39,7 +39,7 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
 
       res.json(200, {
         success: true,
-        message: `Mailen ble sendt til bruker ${user.name}`,
+        message: `Hendvendelse motatt av LGrør, bekreftelse sendt til ${req.body.email}`,
       });
     } else {
       await sendMail({
@@ -59,7 +59,7 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
 
       res.json(200, {
         success: true,
-        message: `Mailen ble sendt til bruker ${req.body.name}`,
+        message: `Hendvendelse motatt av LGrør, bekreftelse sendt til ${req.body.email}`,
       });
     }
   } catch (error) {

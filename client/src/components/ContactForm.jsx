@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import { useUserState } from '../context/UserProvider';
 import { get } from '../utils/articleService';
@@ -113,11 +114,26 @@ export const ContactForm = () => {
     getUser();
   }, []);
 
+  const notifyInquirySentSuccess = (message) => {
+    toast.success(`✅${message}`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const sendAsync = async () => {
-      await sendMailToUser(epostObject);
+      const { data } = await sendMailToUser(epostObject);
       await sendMailToAdmin(epostObject);
+      if (data.success) {
+        notifyInquirySentSuccess(data?.message);
+      }
     };
     sendAsync();
   };
@@ -127,7 +143,7 @@ export const ContactForm = () => {
       <BoxSection>
         <KontaktSkjema>Kontaktskjema</KontaktSkjema>
         <Form>
-          {isLoggedIn && name?.length != 0 && (
+          {isLoggedIn && name?.length !== 0 && (
             <input defaultValue={name} type="text" />
           )}
           {!isLoggedIn && (
@@ -157,6 +173,17 @@ export const ContactForm = () => {
 
           <SendButton onClick={handleSubmit}>Send</SendButton>
         </Form>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </BoxSection>
     </ContactSchema>
   );
