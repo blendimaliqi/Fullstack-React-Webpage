@@ -344,7 +344,7 @@ const Office = () => {
 
             {filterOptions !== 'Alle kontorer' && (
               <>
-                {chosenOffice.length != 0 && (
+                {chosenOffice.length !== 0 && (
                   <>
                     <LocationTitle style={{ marginTop: '0' }}>
                       {filterOptions} ({chosenOffice.length}
@@ -386,7 +386,7 @@ const Office = () => {
             )}
             {filterOptions !== 'Alle kontorer' && (
               <>
-                {chosenOffice.length != 0 && (
+                {chosenOffice.length !== 0 && (
                   <>
                     <LocationTitle style={{ marginTop: '0' }}>
                       {filterOptions} ({chosenOffice.length}
