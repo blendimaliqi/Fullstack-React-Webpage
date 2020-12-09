@@ -23,11 +23,6 @@ const SubTitleContainer = styled.section`
   flex-direction: column;
 `;
 
-const SubTitle = styled.h2`
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-`;
-
 const SubTitleParagraph = styled.p`
   font-size: 1.3rem;
 `;
@@ -106,7 +101,6 @@ export const ArticleDetails = ({ history }) => {
   const closeModal = () => {
     setModalState(false);
   };
-
 
   useEffect(() => {
     const download = async (imageId) => {

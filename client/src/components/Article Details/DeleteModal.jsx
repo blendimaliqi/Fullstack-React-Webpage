@@ -58,8 +58,8 @@ const ButtonContainer = styled.section`
   margin-top: 2rem;
 `;
 
-const ModalMessage = styled.p`¨
-    margin: 1rem 0;
+const ModalMessage = styled.p`
+  margin: 1rem 0;
 `;
 
 export const DeleteModal = ({

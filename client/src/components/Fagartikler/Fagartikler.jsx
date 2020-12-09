@@ -22,19 +22,6 @@ const SearchAndFilterContainer = styled.section`
   width: 31%;
 `;
 
-const SearchButton = styled.button`
-  display: flex;
-  background-color: lightgray;
-  padding: 1.5rem 2.7rem;
-  border: 0;
-  font-weight: bold;
-  font-size: 0.6rem;
-  max-height: 4rem;
-  //justify-content: space-around;
-  //align-items: center;
-  //margin-right: 1.3rem;
-`;
-
 const FilterSelect = styled.select`
   display: flex;
   background-color: lightgray;
@@ -217,7 +204,7 @@ export const Fagartikler = ({ history }) => {
           {categoryErr && <h1>{categoryErr}</h1>}
           {articles &&
             isLoggedIn &&
-            articles.map((article, index) => (
+            articles.map((article) => (
               <Artikkel
                 id={article.id}
                 key={article.id}
@@ -230,7 +217,7 @@ export const Fagartikler = ({ history }) => {
 
           {articles &&
             !isLoggedIn &&
-            articles.map((article, index) => (
+            articles.map((article) => (
               <>
                 {!article.secret && (
                   <Artikkel
