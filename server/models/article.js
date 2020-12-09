@@ -43,7 +43,7 @@ const ArticleSchema = new Schema(
     secret: {
       type: Boolean,
     },
-      image: {
+    image: {
       type: mongoose.Schema.ObjectId,
       ref: 'Image',
       required: false,
@@ -53,19 +53,16 @@ const ArticleSchema = new Schema(
     },
     clicksAvg: {
       type: Number,
-    }
-
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-
-
 
 ArticleSchema.index({
   title: 'text',
 });
 
-/*ArticleSchema.statics.calcAverageAttendees = async function () {
+/* ArticleSchema.statics.calcAverageAttendees = async function () {
   const average = await this.aggregate([
     {
       $group: {

@@ -93,7 +93,7 @@ export const LoginForm = ({ history }) => {
         setUser({ user });
         setError(null);
         notifyLoginSuccess(data?.loginMessage);
-        // setTimeout(() => {history.push('/')}, 2000);
+        setTimeout(() => {history.push('/')}, 2000);
       }
 
       // alert(`Logget inn som: ${data.user.email}`);

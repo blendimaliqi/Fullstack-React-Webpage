@@ -114,13 +114,13 @@ export const get = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const list = catchAsyncErrors(async (req, res, next) => {
-    const result = await mailService.listMails(req.query);
-    //console.log("RESULT LOL: ", result)
-    //const userData = await mailService.listMails();
-    res.status(200).json({ 
-        success: true, 
-        data: result,
-    });
+  const result = await mailService.listMails(req.query);
+  // console.log("RESULT LOL: ", result)
+  // const userData = await mailService.listMails();
+  res.status(200).json({
+    success: true,
+    data: result,
+  });
 });
 
 export const create = catchAsyncErrors(async (req, res, next) => {

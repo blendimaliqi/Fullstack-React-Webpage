@@ -15,7 +15,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
       message: `Du har fått en ny brukerkonto med epost: ${user.email}`,
     });
   } catch (error) {
-    //Logg dette ordentlig
+    // Logg dette ordentlig
     console.log(error);
   }
 
@@ -56,20 +56,20 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const currentUser = catchAsyncErrors(async (req, res, next) => {
-    //const { id } = req.user;
-   //const user = await userService.getUserById(id);
-   
-   const user = await userService.getUserById(req.user.id);
+  // const { id } = req.user;
+  // const user = await userService.getUserById(id);
 
-   console.log("USER I CURRENT: ", user);
+  const user = await userService.getUserById(req.user.id);
+
+  console.log('USER I CURRENT: ', user);
   // const user = await userService.getUserById(req.params);
-  /*let token;
+  /* let token;
   if (req.cookies?.token) {
     token = req.cookies.token;
   }
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  const user = await userService.getUserById(decoded.id);*/
+  const user = await userService.getUserById(decoded.id); */
 
   if (!user) {
     return next(new ErrorHandler('Finner ikke brukeren', 404));

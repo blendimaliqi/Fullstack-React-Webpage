@@ -42,8 +42,8 @@ export const articleClicks = async () => {
     {
       $group: {
         _id: '$active',
-        avgClicks: {$avg: '$clicks'},
-        totalClicks: {$sum: '$clicks'},
+        avgClicks: { $avg: '$clicks' },
+        totalClicks: { $sum: '$clicks' },
       },
     },
   ]);

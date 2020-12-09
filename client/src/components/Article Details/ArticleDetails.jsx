@@ -58,7 +58,7 @@ const BtnContainer = styled.section`
 
 const DeleteBtn = styled.button`
   color: white;
-  background-color: #D14040;
+  background-color:#D14040;
   padding: 1.5rem 3rem;
   border: 0;
   outline: none;

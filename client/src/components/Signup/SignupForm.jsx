@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { registerPost } from '../../utils/registerService.js';
@@ -50,7 +51,7 @@ const ErrorContainer = styled.section`
   width: 60%;
 `;
 
-export const SignupForm = () => {
+export const SignupForm = ({ history }) => {
   const { setUser } = useUserState();
   const [registerData, setRegisterData] = useState({
     name: '',
@@ -94,6 +95,9 @@ export const SignupForm = () => {
         setUser({ user });
         setError(null);
         notifyRegisterSuccess(data?.message);
+        setTimeout(() => {
+          history.push('/');
+        }, 3000);
       }
     };
     register();
@@ -149,4 +153,4 @@ export const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default withRouter(SignupForm);

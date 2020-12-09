@@ -28,7 +28,7 @@ export default (err, req, res, next) => {
 
     if (err.code === 11000) {
       const message = `Duplikat av ${Object.keys(err.keyValue)}`;
-      error = new ErrorHandler(message, 400);
+      error = new ErrorHandler(message, 409);
     }
 
     res.status(error.statusCode).json({

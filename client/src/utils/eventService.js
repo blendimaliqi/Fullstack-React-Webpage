@@ -1,6 +1,5 @@
 import http from './http';
 
-
 const API_URL = '/events';
 
 export const list = async () => {

@@ -31,7 +31,7 @@ export const isAuthorized = ([...roles]) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
     return next(new ErrorHandler(`${req.user.role}`, 403));
   }
-  if (req.user.role === 'admin' || req.user.role == 'superadmin') {
+  if (req.user.role === 'admin' || req.user.role === 'superadmin') {
     next();
   }
 };

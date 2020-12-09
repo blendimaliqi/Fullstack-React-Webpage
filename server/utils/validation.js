@@ -1,5 +1,3 @@
-import e from 'express';
-
 export const validateInput = async (schema, input) => {
   try {
     return await schema.validateAsync({ ...input });

@@ -192,16 +192,18 @@ export const NewArticle = ({ history }) => {
       } else {
         console.log('SE HER', data?.id);
         console.log('MESSAGE', data.message);
-        setFileId(data?.id);
+        setFileId(data?.data.id);
         setError(null);
-        const id = data?.id;
+        const id = data?.data.id;
         const object = { secret, image: id };
         createArticle({ ...formData, ...object });
-        notifyCreationSuccess(`Artikkel: ${formData.title} opprettet`);
+        notifyCreationSuccess(
+          `Artikkel: ${formData.title} opprettet med bilde`
+        );
       }
     } else {
       createArticle({ ...formData, secret });
-      notifyCreationSuccess(`Artikkel: ${formData.title} opprettet`);
+      notifyCreationSuccess(`Artikkel: ${formData.title} opprettet uten bilde`);
     }
 
     console.log('FORMDATA I SUBMIT', formData);

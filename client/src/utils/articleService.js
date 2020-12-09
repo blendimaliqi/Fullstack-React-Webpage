@@ -20,7 +20,7 @@ export const list = async (filter, limit, page, searchTerm) => {
 
 export const listArticleStats = async () => {
   try {
-    return await http.get(`${API_URL}`);
+    return await http.get(`${API_URL}?limit=1000&page=1`);
   } catch (err) {
     return err.response;
   }
