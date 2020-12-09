@@ -1,5 +1,5 @@
 import http from './http';
-import {getCsrfToken} from './loginService.js';
+import { getCsrfToken } from './loginService.js';
 
 const API_UPLOAD = '/upload';
 const API_DOWNLOAD = '/download';

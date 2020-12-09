@@ -8,7 +8,7 @@ export const sendMailToUser = async (data) => {
     if (process.env.NODE_ENV === 'production') {
       await getCsrfToken();
     }
-    return await http.post(`${API_URL}`, data); 
+    return await http.post(`${API_URL}`, data);
   } catch (error) {
     return error.response;
   }
