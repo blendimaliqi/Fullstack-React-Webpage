@@ -87,7 +87,6 @@ export const LoginForm = ({ history }) => {
       if (!data.success) {
         console.log(data.message);
         setError(Array.from(data.message));
-        notifyLoginSuccess(false, Array.from(data.message));
       } else {
         const user = data?.user;
         // setUser({ ...user });
