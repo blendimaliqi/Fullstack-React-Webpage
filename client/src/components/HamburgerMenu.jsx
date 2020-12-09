@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import LeftNav from './LeftNav';
 
-
+//Tatt utgangspunkt fra denne videoen https://www.youtube.com/watch?v=GGkBwpxV7AI&ab_channel=FullStackMastery
 const Hamburger = styled.div `
     width: 2rem;
     height: 2rem;

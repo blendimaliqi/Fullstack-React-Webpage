@@ -246,7 +246,7 @@ export const Fagartikler = ({ history }) => {
                 )}
               </>
             ))}
-          <PageLinkContainer>{createPageLinks()}</PageLinkContainer>
+          <PageLinkContainer key={uniqueKey(1123)}>{createPageLinks()}</PageLinkContainer>
         </MainPage>
       </WholePage>
     </>
