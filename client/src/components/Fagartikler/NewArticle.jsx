@@ -279,7 +279,7 @@ export const NewArticle = ({ history }) => {
 
   return (
     <>
-      <Banner title="Oppdater artikkel" />
+      <Banner title="Ny artikkel" />
       <InputWrapper onSubmit={handleSubmit} encType="multipart/form-data">
         <ModalCategory
           state={state}
