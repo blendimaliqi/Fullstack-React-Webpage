@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserState } from '../context/UserProvider';
 import { logoutPost } from '../utils/loginService.js';
-import HamburgerMenu from './HamburgerMenu.jsx';
 
 const StyledNav = styled.nav`
   width: 100%;
@@ -52,13 +51,10 @@ const NavMenuItem = styled.li`
 
 const Title = styled.h1`
   display: flex;
-  //padding: 20px;
   font-weight: bolder;
   color: #333;
   font-size: 14px;
   font-weight: 700;
-  //line-height: 3.456;
-  //padding: 5px 0;
   text-decoration: none !important;
 
   & > a {

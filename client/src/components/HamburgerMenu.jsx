@@ -8,7 +8,7 @@ import RightNav from './RightNav';
  * de ulike divsa og har forskjellig transform rotasjoner på disse
  * for å lage en animasjon med transition. Hamburgermenyen har en onclick med boolean som aktiverer en transiiton på 0.3 sekunder.
  * Hamburgermenyen viser seg til max 750px også blir den satt til usynlig, så fort den går 750px blir den satt til display: flex.
- *  */ 
+ *  */
 const Hamburger = styled.div`
   width: 2rem;
   height: 2rem;

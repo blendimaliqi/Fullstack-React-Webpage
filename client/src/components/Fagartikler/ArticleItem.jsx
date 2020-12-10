@@ -39,6 +39,8 @@ const Header = styled.h1`
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 10px;
+  width: 600px;
+  overflow: hidden;
 `;
 
 const Category = styled.p`

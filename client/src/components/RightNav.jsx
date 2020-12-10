@@ -4,11 +4,11 @@ import { NavLink } from 'react-router-dom';
 import { useUserState } from '../context/UserProvider';
 import { logoutPost } from '../utils/loginService.js';
 
-/**INSPIRASJON FRA VIDEO: https://www.youtube.com/watch?v=GGkBwpxV7AI&ab_channel=FullStackMastery
- * Setter 0 på margin, padding, top og right for å få den til å plassere seg oppe til høyre og setter en 
+/** INSPIRASJON FRA VIDEO: https://www.youtube.com/watch?v=GGkBwpxV7AI&ab_channel=FullStackMastery
+ * Setter 0 på margin, padding, top og right for å få den til å plassere seg oppe til høyre og setter en
  * fixed position for å få den til å holde seg der. Har også en animasjon at den dukker opp fra høyre side
  * transform animasjon avhengig av boolean. Vises ikke over 750px width.
- * 
+ *
  */
 const StyledRightNav = styled.ul`
   margin: 0;

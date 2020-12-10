@@ -44,7 +44,7 @@ const NewCategoryButtonm = styled.button`
   color: white;
 `;
 
-/** INSPIRASJON FRA OBLIG 5
+/** INSPIRASJON FRA OPPGAVE LEKSJON 6
  * Denne sender med props som holder på en state "isOpen" som har en boolean og avgjør om den skal
  * være synlig eller ikke. onRequestClose endrer isOpen boolean verdien dersom
  * man trykker museklikk utenfor modalen, noe som lukker den.
