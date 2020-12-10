@@ -19,6 +19,7 @@ import author from './routes/author.js';
 import image from './routes/image.js';
 import contact from './routes/contact.js';
 
+/** ALT VI BRUKER I SERVER ER GJENBRUK FRA FORELESERS EKSEMPLER, FOR UTENOM EGEN LAGDE ROUTES */
 const app = express();
 
 // Hvis i prod legg på sikkerhetstiltak
