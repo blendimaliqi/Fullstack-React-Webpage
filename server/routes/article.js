@@ -20,8 +20,18 @@ router.post(
   isAuthorized(roles),
   articleController.create
 );
-router.put('/:id', articleController.update);
-router.delete('/:id', articleController.remove);
+router.put(
+  '/:id',
+  isAuthenticated,
+  isAuthorized(roles),
+  articleController.update
+);
+router.delete(
+  '/:id',
+  isAuthenticated,
+  isAuthorized(roles),
+  articleController.remove
+);
 
 /** SKAL VI BRUKE DENNE? */
 router.get('/clicks', articleController.getClicksOnArticle);
