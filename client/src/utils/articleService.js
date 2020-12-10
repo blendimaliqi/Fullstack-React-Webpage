@@ -3,6 +3,14 @@ import { getCsrfToken } from './loginService';
 
 const API_URL = '/articles';
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * Axios api kall for å liste ut artikler med filter, søketerm
+ * eller paginering
+ * @param {Filter} filter - category = ObjectId (til opprettet kategori)
+ * @param {Pagination} limit - hvor mange artikler som skal vises per side
+ * @param {Pagination} page - hvilken side som skal vises
+ * @param {q} searchTerm - søketerm
+ */
 export const list = async (filter, limit, page, searchTerm) => {
   try {
     if (filter === null) {
@@ -18,6 +26,9 @@ export const list = async (filter, limit, page, searchTerm) => {
   }
 };
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * Axios api kall for å liste ut artikkelstatistikk
+ */
 export const listArticleStats = async () => {
   try {
     return await http.get(`${API_URL}?limit=1000&page=1`);
@@ -26,6 +37,9 @@ export const listArticleStats = async () => {
   }
 };
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * Axios api kall for å liste ut total artikkel statistikk
+ */
 export const listArticleStatsTotal = async () => {
   try {
     return await http.get(`${API_URL}/clicks`);
@@ -34,6 +48,10 @@ export const listArticleStatsTotal = async () => {
   }
 };
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * Axios api kall for å hente artikkel via id
+ * @param {Arikkel} id - til artikkel som skal hentes
+ */
 export const get = async (id) => {
   try {
     return await http.get(`${API_URL}/${id}`);
@@ -42,6 +60,10 @@ export const get = async (id) => {
   }
 };
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * Axis api kall for å lage artikkel
+ * @param {Artikkel} data - title, ingress, content, date, category, author, secret, image
+ */
 export const create = async (data) => {
   try {
     if (process.env.NODE_ENV === 'production') {
@@ -53,6 +75,11 @@ export const create = async (data) => {
   }
 };
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * Axios api kall for å oppdatere en artikkel
+ * @param {Artikkel} id - til artikkel som skal oppdateres
+ * @param {Artikkel} data - som skal oppdateres (title, ingress, content, date, category, author, secret, image)
+ */
 export const updateArticle = async (id, data) => {
   try {
     if (process.env.NODE_ENV === 'production') {
@@ -64,6 +91,10 @@ export const updateArticle = async (id, data) => {
   }
 };
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * Axios api kall for å slette en artikkel
+ * @param {Artikkel} id - til artikkel som skal slettes
+ */
 export const deleteArticle = async (id) => {
   try {
     if (process.env.NODE_ENV === 'production') {

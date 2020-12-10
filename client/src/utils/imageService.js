@@ -4,6 +4,11 @@ import { getCsrfToken } from './loginService.js';
 const API_UPLOAD = '/upload';
 const API_DOWNLOAD = '/download';
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER
+ * Axios api kall for å laste opp et bilde.
+ * Hvis i pro kreves csrf-token
+ * @param {File} image - bilde som skal lastes opp
+ */
 export const uploadImage = async (image) => {
   try {
     if (process.env.NODE_ENV === 'production') {
@@ -21,6 +26,10 @@ export const uploadImage = async (image) => {
   }
 };
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER
+ * Axios api kall for å laste ned bilde via id
+ * @param {File} id - Object id til allerede opplastet bilde
+ */
 export const downloadImage = async (id) => {
   try {
     return await http.get(`${API_DOWNLOAD}/${id}`);

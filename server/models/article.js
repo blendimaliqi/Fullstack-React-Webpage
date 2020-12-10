@@ -58,10 +58,12 @@ const ArticleSchema = new Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+/** BASERT PÅ FORELESERS EKSEMPLER */
 ArticleSchema.index({
   title: 'text',
 });
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER */
 /* ArticleSchema.statics.calcAverageAttendees = async function () {
   const average = await this.aggregate([
     {

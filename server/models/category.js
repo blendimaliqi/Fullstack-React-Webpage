@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
+/** KATEGORI MODELL */
 const CategorySchema = new Schema(
   {
     name: {

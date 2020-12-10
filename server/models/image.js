@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
+/** GJENBRUKT FRA FORELESERS EKSEMPLER */
 const ImageSchema = new Schema(
   {
     file_path: {

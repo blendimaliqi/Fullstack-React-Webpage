@@ -1,5 +1,11 @@
 import Joi from 'joi';
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER
+ * Valideringsskjema som brukes av mellomvare for å validere email
+ * og passord til bruker. Email: sjekker at den ikke er tom, at det
+ * er i epost format. Passord: sjekker at det ikke er tomt og at det
+ * inneholder minst 3 karakterer.
+ */
 const userSchema = {
   email: Joi.string().email().required().messages({
     'any.required': 'Epost må fylles ut',
@@ -14,19 +20,25 @@ const userSchema = {
   }),
 };
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER
+ * Valideringsskjema som brukes av mellomvare ved registrering av bruker.
+ * Sjekker at navn ikke er tomt og bruker userSchema sine valideringer i
+ * tillegg.
+ */
 export const registerSchema = Joi.object()
   .keys({
     name: Joi.string().required().messages({
       'string.empty': 'Navn feltet kan ikke være tomt',
     }),
     ...userSchema,
-    /* password_confirmation: Joi.number().ref('password').min(1).messages({
-        'number.min': 'Passord må bestå av minst 1 tall',
-    }), */
     role: Joi.string().required(),
   })
   .options({ abortEarly: false });
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER
+ * Valideringsskjema som brukes av mellomvare ved innlogging.
+ * Benytter seg av userSchema valideringene.
+ */
 export const loginSchema = Joi.object()
   .keys({
     ...userSchema,

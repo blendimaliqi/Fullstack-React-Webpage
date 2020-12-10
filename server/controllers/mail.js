@@ -5,17 +5,19 @@ import { sendMail } from '../utils/sendEmail.js';
 import { sendMailAdmin } from '../utils/sendEmailAdmin.js';
 import { mailService, userService } from '../services/index.js';
 
+/** Linje 18-21, 27-29 er GJENBRUK FRA FORELESERS EKSEMPLER
+ * API controller funksjon for å sende mail til bruker. Håndterer promises via
+ * mellomvare. Hvis bruker er innlogget, bruker vi token til bruker for å hente ut
+ * brukerinfo  for å sende bekreftelsesmail til bruker ellers bruker vi informasjon
+ * fra request for å sende bekreftelsesmail til hendvender. Til sist last opp kopi av
+ * mail til database.
+ */
 export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
-  // console.log("SERVERSIDE REQ.BODY: " ,req);
-
   let token;
   if (req.cookies?.token) {
     token = req.cookies.token;
   }
 
-  // console.log("USER: i server: ", user);
-
-  // Sender bekreftelse til kunden om at vi har mottatt mailen
   try {
     if (token?.undefined) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -74,6 +76,11 @@ export const sendUserMail = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
+/** Linje 90-93 og 96-97 er GJENBRUK FRA FORELESERS EKSEMPLER
+ * API controller funksjon for å sende kopi til admin, håndterer promises via
+ * mellomvare. Også her brukes token for å hente ut brukerinformasjon fra innlogget
+ * hendvender. Dette var måten vi satt det opp for å kunne sende kopi til admin.
+ */
 export const sendAdminMail = catchAsyncErrors(async (req, res, next) => {
   let token;
   if (req.cookies?.token) {
@@ -105,6 +112,11 @@ export const sendAdminMail = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * API controller funksjon for å hente mail basert på id. Håndterer promises
+ * via mellomvare. Hvis mail ikke finnes kast en 404 (not found) med error melding,
+ * ellers kast en 200 (OK) sammen med hentet mail.
+ */
 export const get = catchAsyncErrors(async (req, res, next) => {
   const mail = await mailService.getMailById(req.params.id);
   if (!mail) {
@@ -113,6 +125,12 @@ export const get = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json(mail);
 });
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * API controller funksjon for å liste ut mails. Håndterer promises
+ * via mellomvare. Sender med en request query fordi vi benytter paginering
+ * i inbox for en mer oversiktlig visning av mailer. Kast en 200 (OK) sammen
+ * med alle mailene.
+ */
 export const list = catchAsyncErrors(async (req, res, next) => {
   const result = await mailService.listMails(req.query);
   // console.log("RESULT LOL: ", result)
@@ -123,6 +141,11 @@ export const list = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+/** BASERT PÅ FORELESERS EKSEMPLER
+ * API controller funksjon for å lage mail. Håndterer promises
+ * via mellomvare. Sender med body basert på Mail modellen, kast en
+ * 201 (created) sammen med resultatet
+ */
 export const create = catchAsyncErrors(async (req, res, next) => {
   const mail = await mailService.createMail(req.body);
   res.status(201).json(mail);

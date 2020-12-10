@@ -1,5 +1,11 @@
 import ErrorHandler from '../utils/errorHandler.js';
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER
+ * Global errorhåndtering.
+ * Hvis i dev returner komplett info om error.
+ * Hvis i prod håndter spesifikk errors og returner custom
+ * tilbakemelding ved hjelp av ErrorHandler klassen
+ */
 export default (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
 
