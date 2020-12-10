@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider';
@@ -20,19 +20,6 @@ const SearchAndFilterContainer = styled.section`
   display: flex;
   justify-content: space-between;
   width: 31%;
-`;
-
-const SearchButton = styled.button`
-  display: flex;
-  background-color: lightgray;
-  padding: 1.5rem 2.7rem;
-  border: 0;
-  font-weight: bold;
-  font-size: 0.6rem;
-  max-height: 4rem;
-  //justify-content: space-around;
-  //align-items: center;
-  //margin-right: 1.3rem;
 `;
 
 const FilterSelect = styled.select`
@@ -96,7 +83,7 @@ const PageLink = styled.button`
 
 const SearchInput = styled.input``;
 
-export const Fagartikler = ({ history }) => {
+export const Fagartikler = () => {
   const { isAdmin, isLoggedIn, isSuperAdmin } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
@@ -155,7 +142,7 @@ export const Fagartikler = ({ history }) => {
 
     for (let i = 1; i <= pagination; i++) {
       links.push(
-        <PageLink key={uniqueKey(i)} value={i} onClick={handlePageChange}>
+        <PageLink key={i} value={i} onClick={handlePageChange}>
           {i}
         </PageLink>
       );
@@ -171,15 +158,16 @@ export const Fagartikler = ({ history }) => {
       setFilter(event.target.value);
       setCurrentPage(1);
     }
+    console.log(filter);
   };
 
   const handleSearchTerm = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const uniqueKey = (index) => {
-    return Math.random() * Math.PI + index;
-};
+  const uniqueKey = (index) => Math.random() * Math.PI + index;
+
+  const history = useHistory();
 
   return (
     <>
@@ -187,7 +175,7 @@ export const Fagartikler = ({ history }) => {
       <WholePage>
         <PageContainer>
           <NyArtikkelContainer>
-            {( isAdmin || isSuperAdmin ) && (
+            {(isAdmin || isSuperAdmin) && (
               <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
                 NY ARTIKKEL
               </NyArtikkelButton>
@@ -195,18 +183,17 @@ export const Fagartikler = ({ history }) => {
           </NyArtikkelContainer>
           <SearchAndFilterContainer>
             <SearchInput
-            key={uniqueKey}
               placeholder="Søk på tittel.."
               type="text"
               onChange={handleSearchTerm}
             />
             <FilterSelect onChange={handleCategoryFilter}>
-              <option key={uniqueKey(2)} value="Ingen filter">
+              <option key={0} value="Ingen filter">
                 Ingen filter
               </option>
               {categories &&
-                categories.map((category, index) => (
-                  <option key={uniqueKey(index)} value={category.id}>
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 ))}
@@ -219,10 +206,10 @@ export const Fagartikler = ({ history }) => {
           {categoryErr && <h1>{categoryErr}</h1>}
           {articles &&
             isLoggedIn &&
-            articles.map((article,index) => (
+            articles.map((article) => (
               <Artikkel
                 id={article.id}
-                key={uniqueKey(index)}
+                key={article.id}
                 title={article.title}
                 text={article.ingress}
                 category={article.category.name}
@@ -232,12 +219,12 @@ export const Fagartikler = ({ history }) => {
 
           {articles &&
             !isLoggedIn &&
-            articles.map((article, index) => (
+            articles.map((article) => (
               <>
                 {!article.secret && (
                   <Artikkel
                     id={article.id}
-                    key={uniqueKey(index)}
+                    key={article.id}
                     title={article.title}
                     text={article.ingress}
                     category={article.category.name}
@@ -246,7 +233,7 @@ export const Fagartikler = ({ history }) => {
                 )}
               </>
             ))}
-          <PageLinkContainer key={uniqueKey(1123)}>{createPageLinks()}</PageLinkContainer>
+          <PageLinkContainer>{createPageLinks()}</PageLinkContainer>
         </MainPage>
       </WholePage>
     </>

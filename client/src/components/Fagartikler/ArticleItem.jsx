@@ -85,22 +85,17 @@ export const ArticleItem = ({
     download();
   }, [imageSrc]);
 
-  const uniqueKey = (index) => {
-    return Math.random() * Math.PI + index;
-};
-
-
   return (
     <>
       <ContainerAll onClick={() => history.push(`fagartikler/${id}`)}>
         <Container>
-          <ArtikkelPhoto key={uniqueKey(4)} src={src} />
+          <ArtikkelPhoto src={src} />
           <TextContentContainer>
             <TitleCategoryContainer>
-              <Header key={uniqueKey(1)}> {title} </Header>
-              <Category key={uniqueKey(3)}>{category}</Category>
+              <Header> {title} </Header>
+              <Category>{category}</Category>
             </TitleCategoryContainer>
-            <Paragraph key={uniqueKey(2)}>{text}</Paragraph>
+            <Paragraph>{text}</Paragraph>
           </TextContentContainer>
         </Container>
       </ContainerAll>
