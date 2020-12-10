@@ -97,7 +97,7 @@ const Nav = () => {
     <StyledNav>
       <Title>
         <NavLink exact to="/" activeClassName="active">
-          FG
+          LG
         </NavLink>
       </Title>
       <NavMenu>
