@@ -50,12 +50,7 @@ const Category = styled.p`
 const Paragraph = styled.p`
   margin-left: 10px;
   width: 500px;
-  /* kodesnutt under for å begrense tekst i paragraf hentet fra : https://stackoverflow.com/questions/21447269/how-to-limit-the-length-of-text-in-a-paragraph/21447588
-    width: 600px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    */
+  overflow: hidden;
 `;
 
 export const ArticleItem = ({
