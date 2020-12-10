@@ -13,11 +13,14 @@ const NewCategoryButton = styled.button`
   color: white;
 `;
 
-/**
- * Brukt exempel fra denne siden for export til exel: https://technicaaadda.blogspot.com/2020/11/export-data-to-excel-using-react.html
- * @param {*} param0 
+/** GJENBRUK FOR EXPORT KOMPONENTEN HENTET FRA : https://technicaaadda.blogspot.com/2020/11/export-data-to-excel-using-react.html
+ * Bruker bibloteker file-saver og xlsx. xlsx håndterer overføringen fra dataSet objektvariabelene til csv data
+ * som brukes til å opprette excel fil av Filesaver der den tar imot den modifiserte dataen fra xlsx med navnet vi har gitt filen
+ * og fileextension for filtype excel. 
+ * 
+ * @param  csvData data vi lager utifra applikasjonen og sender inn i metoden
+ * @param fileName filnavnet på filen som opprettes
  */
-
 export const ExportToExel = ({csvData, fileName}) => {
 
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
@@ -31,7 +34,10 @@ export const ExportToExel = ({csvData, fileName}) => {
         const data = new Blob([excelBuffer], {type: fileType});
         FileSaver.saveAs(data, fileName + fileExtension);
     }
-
+    /**
+     * Komponenten returnerer en button som tar imot data og filnavn på onclick
+     * og deretter aktiverer exportToCSV metoden. 
+     */
     return (
         <NewCategoryButton  onClick={(e) => exportToCSV(csvData,fileName)}>Export</NewCategoryButton>
     )

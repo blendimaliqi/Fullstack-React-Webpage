@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserState } from '../context/UserProvider';
 import { logoutPost } from '../utils/loginService.js';
+import HamburgerMenu from './HamburgerMenu.jsx';
 
 const StyledNav = styled.nav`
-  width: 100%;
-  max-height: 3rem;
-  display: flex;
-  justify-content: flex-end;
-  box-shadow: 3px 9px 9px rgba(196, 199, 204, 0.6);
-`;
+    width: 100%;
+    max-height: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    box-shadow: 3px 9px 9px rgba(196, 199, 204, 0.6);
 
+    @media (max-width: 750px) {
+        display: none;
+    }
+
+    `;
 const NavMenu = styled.ul`
   display: flex;
   margin: 0;
@@ -21,6 +25,7 @@ const NavMenu = styled.ul`
   list-style: none;
   padding: 0;
   justify-content: flex-end;
+
 `;
 
 const NavMenuItem = styled.li`

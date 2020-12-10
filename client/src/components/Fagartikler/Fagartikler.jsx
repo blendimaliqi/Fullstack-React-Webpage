@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useUserState } from '../../context/UserProvider';
@@ -20,19 +20,6 @@ const SearchAndFilterContainer = styled.section`
   display: flex;
   justify-content: space-between;
   width: 31%;
-`;
-
-const SearchButton = styled.button`
-  display: flex;
-  background-color: lightgray;
-  padding: 1.5rem 2.7rem;
-  border: 0;
-  font-weight: bold;
-  font-size: 0.6rem;
-  max-height: 4rem;
-  //justify-content: space-around;
-  //align-items: center;
-  //margin-right: 1.3rem;
 `;
 
 const FilterSelect = styled.select`
@@ -96,7 +83,7 @@ const PageLink = styled.button`
 
 const SearchInput = styled.input``;
 
-export const Fagartikler = ({ history }) => {
+export const Fagartikler = () => {
   const { isAdmin, isLoggedIn, isSuperAdmin } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
@@ -178,13 +165,17 @@ export const Fagartikler = ({ history }) => {
     setSearchTerm(event.target.value);
   };
 
+  const uniqueKey = (index) => Math.random() * Math.PI + index;
+
+  const history = useHistory();
+
   return (
     <>
       <Banner title="Fagartikler" />
       <WholePage>
         <PageContainer>
           <NyArtikkelContainer>
-            {( isAdmin || isSuperAdmin ) && (
+            {(isAdmin || isSuperAdmin) && (
               <NyArtikkelButton onClick={() => history.push('/nyartikkel')}>
                 NY ARTIKKEL
               </NyArtikkelButton>

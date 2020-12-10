@@ -15,6 +15,7 @@ import Signup from '../pages/Signup';
 import Inbox from '../components/Inbox/Inbox.jsx';
 import Statistic from '../components/Statistics/Statistic';
 import UpdateFagArtikkelPage from '../pages/UpdateFagArtikkelPage';
+import { Fagartikler } from '../components/Fagartikler/Fagartikler';
 
 const Routes = () => (
   <Router>
@@ -33,7 +34,7 @@ const Routes = () => (
           <OfficeDetail />
         </Route>
         <Route exact path="/fagartikler">
-          <FagartiklerPage />
+          <Fagartikler />
         </Route>
         <Route exact path="/fagartikler/:id">
           <ArticleDetails />

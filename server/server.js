@@ -6,8 +6,6 @@ import { PORT } from './constants/index.js';
 import 'dotenv/config.js';
 import errorMiddleware from './middleware/errors.js';
 import connectDatabase from './config/db.js';
-import event from './routes/event.js';
-import user from './routes/user.js';
 import article from './routes/article.js';
 import category from './routes/category.js';
 import auth from './routes/auth.js';
@@ -35,14 +33,14 @@ if(process.env.NODE_ENV === 'production') {
 //parameter polution for å hindre NOsql feil.
   app.use(hpp());
 
-// CSRF: Windowms: hvor mange request pr minutt vi skal godkjenne. sier at vi godkjenner 10 requests pr minutt. Max 100 request fra samme ip uavehngig av tidsintervall
+// CSRF: Windowms: hvor mange request pr minutt vi skal godkjenne. sier at vi godkjenner 100 requests pr minutt. Max 100 request fra samme ip uavehngig av tidsintervall
 const limiter  = rateLimit({
-  windowMs: 10* 60* 1000,
+  windowMs: 100* 60* 1000,
   max: 100,
 });
 
 //CSRF
-app.use(limiter);
+//app.use(limiter);
 
 }
 
@@ -93,8 +91,6 @@ app.use(cookieParser());
   });
  }
 
-app.use(`${process.env.BASEURL}/events`, event);
-app.use(`${process.env.BASEURL}/users`, user);
 app.use(`${process.env.BASEURL}/articles`, article);
 app.use(`${process.env.BASEURL}/categories`, category);
 app.use(`${process.env.BASEURL}/authors`, author);

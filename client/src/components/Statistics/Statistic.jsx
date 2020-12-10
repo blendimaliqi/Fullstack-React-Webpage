@@ -185,7 +185,14 @@ export const Statistic = () => {
         };
     }, []);
 
-
+    /** 
+     * Her har vi brukt formelen som blir linket til i eksamensoppgaven for å 
+     * avgjøre gjennomsnittlig lesetid på artikkelen. I denne funksjonen henter vi først ingress og hovedinfo med index
+     * som blir passert fra map funksjonen. Deretter henter vi antall ord
+     * ved å gjøre alt til en array og splitte på whitespace, slik at dette ikke kommer med. Så joiner array
+     * slik at det kun er ordene som er der. Videre bruker vi formel til å regne gjsnitt og returnerer dette.
+     * @param index Index i mapfunksjonen i render
+     */
     const averageReadTime = (index) => {
         const ingressNoSpace = articleStats[index].ingress.split(' ').join('').length;
         const contentNoSpace = articleStats[index].content.split(' ').join('').length;
@@ -199,9 +206,16 @@ export const Statistic = () => {
         return minutes + " minutter og " + seconds + " sekunder";
     }
 
+    /**
+     * En funskjon som generer en random verdi som vi bruker for å sette
+     * unike key ettersom keys trenger unike nøkler for at react bedre 
+     * kan holde styr på dem.
+     * @param index Index i mapfunksjonen i render
+     */
     const uniqueKey = (index) => {
         return Math.random() * Math.PI + index;
     };
+
 
     //Lager navnet til filen som eksporteres
     const month = new Date().getMonth();
@@ -215,6 +229,9 @@ export const Statistic = () => {
         <WholePage>
         <MainPage>
           {error && <h1>{error}</h1>}
+          {/** INSPIRASJON FOR EXPORT HENTET FRA : https://technicaaadda.blogspot.com/2020/11/export-data-to-excel-using-react.html
+           * Denne tar imot et dataset og filnavn og bruker metoden i sin komponent ExportToExcel.jsx til å håndtere eksporteringen.
+           */}
           <ExportButtonContainer>
           <ExportToExel csvData={dataSet} fileName={fileName} />
           </ExportButtonContainer>
@@ -247,6 +264,11 @@ export const Statistic = () => {
                 <Inquiry key={uniqueKey(index)}>
                    Kategori: {article.category.name}
                 </Inquiry>
+                {/**
+                 * Bruker map funksjonen for å hente instans av artiklene og pushe de som
+                 * objekt i en array dataSet som jeg bruker som data for eksportering. 
+                 * Denne vil ha denne formen når den eksporteres.
+                 */}
               {dataSet.length !== articleStats.length && dataSet.push({
                   Tittel: article.title,
                   Kategori: article.category.name,
