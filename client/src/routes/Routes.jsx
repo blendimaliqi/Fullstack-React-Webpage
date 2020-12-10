@@ -5,7 +5,7 @@ import { Footer } from '../components/Footer';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
 import OfficeDetail from '../components/OfficeDetail/OfficeDetail';
-import Office from '../pages/Office';
+import OfficePage from '../pages/OfficePage.jsx';
 import { Contact } from '../pages/Contact';
 import FagartiklerPage from '../pages/FagartiklerPage';
 import NewArticle from '../pages/NewArticle';
@@ -27,7 +27,7 @@ const Routes = () => (
           <Contact />
         </Route>
         <Route exact path="/kontorer">
-          <Office />
+          <OfficePage />
         </Route>
         <Route exact path="/kontorer/:id">
           <OfficeDetail />

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThLarge, faThList } from '@fortawesome/free-solid-svg-icons';
-import OfficeGrid from '../components/Office/OfficeGrid.jsx';
-import OfficeList from '../components/Office/OfficeList.jsx';
-import Banner from '../components/Banner';
+import OfficeGrid from './OfficeGrid.jsx';
+import OfficeList from './OfficeList.jsx';
+import Banner from '../Banner.jsx';
 
 const Container = styled.section`
   margin-top: 8rem;
