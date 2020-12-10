@@ -1,6 +1,7 @@
 import Article from '../models/article.js';
 import { ApiFilters } from '../utils/apiFilters.js';
 
+
 /** BASERT PÅ FORELESERS EKSEMPLER
  * API funksjon for å hente artikkel basert på id. (Populerer
  * resultat med navn på tilknyttet kategori)
@@ -60,20 +61,4 @@ export const updateArticle = async (id, data) =>
 export const removeArticle = async (id) => {
   const article = await Article.findById(id);
   article.remove();
-};
-
-/**
- * SKAL VI BRUKE DENNE?
- */
-export const articleClicks = async () => {
-  const articles = Article.aggregate([
-    {
-      $group: {
-        _id: '$active',
-        avgClicks: { $avg: '$clicks' },
-        totalClicks: { $sum: '$clicks' },
-      },
-    },
-  ]);
-  return articles;
 };

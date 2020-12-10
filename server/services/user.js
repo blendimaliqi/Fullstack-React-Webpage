@@ -23,4 +23,3 @@ export const getUserByEmail = async (email, usePassword) => {
  * @param {User} data - basert på User modell
  */
 export const createUser = async (data) => User.create(data);
-

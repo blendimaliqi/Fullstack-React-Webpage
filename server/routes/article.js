@@ -33,7 +33,4 @@ router.delete(
   articleController.remove
 );
 
-/** SKAL VI BRUKE DENNE? */
-router.get('/clicks', articleController.getClicksOnArticle);
-
 export default router;

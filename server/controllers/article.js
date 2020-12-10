@@ -41,18 +41,6 @@ export const listAllArticles = catchAsyncErrors(async (req, res, next) => {
 });
 
 /** BASERT PÅ FORELESERS EKSEMPLER
- * API controller funksjon for å hente ut aggregering (avgClicks og totalClicks).
- * Håndterer promises via mellomvare. Kast en 200(OK) sammen med resultat av aggrering.
- */
-export const getClicksOnArticle = catchAsyncErrors(async (req, res, next) => {
-  const articleClicks = await articleService.articleClicks();
-  res.status(200).json({
-    success: true,
-    data: articleClicks,
-  });
-});
-
-/** BASERT PÅ FORELESERS EKSEMPLER
  * API controller funksjon for å lage en artikkel. Håndterer promises via mellomvare. 
  * Kast en 201(Created) sammen med resultat av aggrering.
  */
