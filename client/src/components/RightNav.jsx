@@ -4,7 +4,13 @@ import { NavLink } from 'react-router-dom';
 import { useUserState } from '../context/UserProvider';
 import { logoutPost } from '../utils/loginService.js';
 
-const StyledLeftNav = styled.ul`
+/**INSPIRASJON FRA VIDEO: https://www.youtube.com/watch?v=GGkBwpxV7AI&ab_channel=FullStackMastery
+ * Setter 0 på margin, padding, top og right for å få den til å plassere seg oppe til høyre og setter en 
+ * fixed position for å få den til å holde seg der. Har også en animasjon at den dukker opp fra høyre side
+ * transform animasjon avhengig av boolean. Vises ikke over 750px width.
+ * 
+ */
+const StyledRightNav = styled.ul`
   margin: 0;
   padding: 0;
   transform: ${({ open }) => (open ? 'translateX(100%)' : 'translateX(0)')};
@@ -65,7 +71,13 @@ const Title = styled.h1`
   }
 `;
 
-export const LeftNav = ({ open }) => {
+/**
+ * Gjenburker mye kode fra den andre nav baren "Nav.jsx" vi bruker her, ettersom det er de samme linkene
+ * i en mindre versjon. Da benytter vi også samme logikk som sjekker om if logged in, admin, superadmin 
+ * og viser/sjuler linker basert på disse conditions.
+ * @param {boolean} open tar imot open fra hamburger menu og åpner eller lukker seg basert på om den er true eller false 
+ */
+export const RightNav = ({ open }) => {
   const { isLoggedIn, isAdmin, setUser, isSuperAdmin } = useUserState();
 
   const logout = async () => {
@@ -74,7 +86,7 @@ export const LeftNav = ({ open }) => {
   };
 
   return (
-    <StyledLeftNav open={open}>
+    <StyledRightNav open={open}>
       <Title>
         <NavLink exact to="/" activeClassName="active">
           LG
@@ -135,8 +147,8 @@ export const LeftNav = ({ open }) => {
           </NavLink>
         </NavMenuItem>
       )}
-    </StyledLeftNav>
+    </StyledRightNav>
   );
 };
 
-export default LeftNav;
+export default RightNav;
