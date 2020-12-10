@@ -8,7 +8,7 @@ import OfficeDetail from '../components/OfficeDetail/OfficeDetail';
 import OfficePage from '../pages/OfficePage.jsx';
 import { Contact } from '../pages/Contact';
 import FagartiklerPage from '../pages/FagartiklerPage';
-import NewArticle from '../pages/NewArticle';
+import NewArticlePage from '../pages/NewArticlePage';
 import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
 import Signup from '../pages/Signup';
@@ -39,7 +39,7 @@ const Routes = () => (
           <ArticleDetails />
         </Route>
         <Route exact path="/nyartikkel">
-          <NewArticle />
+          <NewArticlePage />
         </Route>
         <Route exact path="/fagartikler/:id/:id">
           <UpdateFagArtikkelPage />

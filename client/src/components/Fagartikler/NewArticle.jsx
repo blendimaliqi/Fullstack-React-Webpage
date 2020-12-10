@@ -3,13 +3,13 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Banner from '../components/Banner';
-import ModalCategory from '../components/Fagartikler/ModalCategory';
-import { create } from '../utils/articleService.js';
-import { getCurrentUser } from '../utils/loginService.js';
-import { listCategories, createCategory } from '../utils/categoryService.js';
-import { listAuthors } from '../utils/authorService.js';
-import { uploadImage } from '../utils/imageService.js';
+import Banner from '../Banner';
+import ModalCategory from './ModalCategory';
+import { create } from '../../utils/articleService.js';
+import { getCurrentUser } from '../../utils/loginService.js';
+import { listCategories, createCategory } from '../../utils/categoryService.js';
+import { listAuthors } from '../../utils/authorService.js';
+import { uploadImage } from '../../utils/imageService.js';
 
 const Input = styled.input`
   border: 1px solid black;
