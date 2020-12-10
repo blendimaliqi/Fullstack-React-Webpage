@@ -134,21 +134,6 @@ export const Statistic = () => {
    * @param index Index i mapfunksjonen i render
    */
   const uniqueKey = (index) => Math.random() * Math.PI + index;
-  fetchStats();
-
-  const fetchStatsTotal = async () => {
-    if (mounted) {
-      const { data, err } = await listArticleStatsTotal();
-      if (data.success === false) {
-        // console.log(data);
-        setError(data.success);
-        // console.log('fikk feil');
-      } else {
-        setArticleStatsTotal(data.data);
-      }
-    }
-  };
-  fetchStatsTotal();
 
   // Lager navnet til filen som eksporteres
   const month = new Date().getMonth();
