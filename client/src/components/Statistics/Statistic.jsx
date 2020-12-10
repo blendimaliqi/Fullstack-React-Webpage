@@ -3,10 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Banner from '../Banner.jsx';
 import { useUserState } from '../../context/UserProvider';
-import {
-  listArticleStats,
-  listArticleStatsTotal,
-} from '../../utils/articleService.js';
+import { listArticleStats } from '../../utils/articleService.js';
 import { ExportToExel } from './ExportToExel.jsx';
 
 const MainPage = styled.section`
@@ -63,7 +60,6 @@ const TotalView = styled.p`
 export const Statistic = () => {
   const { isSuperAdmin, isLoggedIn } = useUserState();
   const [articleStats, setArticleStats] = useState();
-  const [articleStatsTotal, setArticleStatsTotal] = useState();
   const [error, setError] = useState();
   const [dataSet, setDataSet] = useState([]);
 
@@ -83,20 +79,6 @@ export const Statistic = () => {
       }
     };
     fetchStats();
-
-    const fetchStatsTotal = async () => {
-      if (mounted) {
-        const { data, err } = await listArticleStatsTotal();
-        if (data.success === false) {
-          // console.log(data);
-          setError(data.success);
-          // console.log('fikk feil');
-        } else {
-          setArticleStatsTotal(data.data);
-        }
-      }
-    };
-    fetchStatsTotal();
 
     return function cleanup() {
       mounted = false;
@@ -152,27 +134,6 @@ export const Statistic = () => {
           <ExportButtonContainer>
             <ExportToExel csvData={dataSet} fileName={fileName} />
           </ExportButtonContainer>
-          {articleStatsTotal && isLoggedIn && isSuperAdmin && (
-            <>
-              <TotalView>
-                {' '}
-                Gjennomsnittlig visning for alle artikler:{' '}
-                {articleStatsTotal[0].avgClicks.toFixed(2)}
-              </TotalView>
-              <TotalView>
-                {' '}
-                Antall visninger for alle artikler:{' '}
-                {articleStatsTotal[0].totalClicks}
-              </TotalView>
-              {dataSet.length === 0 &&
-                dataSet.push({
-                  Total_gjennomsnittlig_visninger: articleStatsTotal[0].avgClicks.toFixed(
-                    2
-                  ),
-                  Total_Visninger: articleStatsTotal[0].totalClicks,
-                })}
-            </>
-          )}
           {articleStats &&
             isLoggedIn &&
             isSuperAdmin &&

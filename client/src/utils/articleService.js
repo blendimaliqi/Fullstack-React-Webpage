@@ -37,16 +37,7 @@ export const listArticleStats = async () => {
   }
 };
 
-/** BASERT PÅ FORELESERS EKSEMPLER
- * Axios api kall for å liste ut total artikkel statistikk
- */
-export const listArticleStatsTotal = async () => {
-  try {
-    return await http.get(`${API_URL}/clicks`);
-  } catch (err) {
-    return err.response;
-  }
-};
+
 
 /** BASERT PÅ FORELESERS EKSEMPLER
  * Axios api kall for å hente artikkel via id
@@ -111,5 +102,4 @@ export default {
   list,
   get,
   listArticleStats,
-  listArticleStatsTotal,
 };
