@@ -1,7 +1,6 @@
 import Article from '../models/article.js';
 import { ApiFilters } from '../utils/apiFilters.js';
 
-
 /** BASERT PÅ FORELESERS EKSEMPLER
  * API funksjon for å hente artikkel basert på id. (Populerer
  * resultat med navn på tilknyttet kategori)

@@ -84,6 +84,7 @@ const PageLink = styled.button`
 const SearchInput = styled.input``;
 
 export const Fagartikler = () => {
+  /** BASERT PÅ FORELESERS EKSEMPLER */
   const { isAdmin, isLoggedIn, isSuperAdmin } = useUserState();
   const [articles, setArticles] = useState();
   const [error, setError] = useState();
@@ -95,10 +96,11 @@ export const Fagartikler = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+    /** Linje 100-101, linje 103, 119: Lånt fra //Lånt fra: https://dev.to/otamnitram/react-useeffect-cleanup-how-and-when-to-use-it-2hbm */
     const source = axios.CancelToken.source();
     let mounted = true;
     const fetchArticles = async () => {
-      if (mounted) {
+      if (mounted) {   // 103
         const { data, err } = await list(filter, 5, currentPage, searchTerm);
         if (data.success === false) {
           // console.log(data);
@@ -114,7 +116,7 @@ export const Fagartikler = () => {
     };
 
     const fetchCategories = async () => {
-      if (mounted) {
+      if (mounted) { // 119
         const { data } = await listCategories();
         if (data.success === false) {
           setCategoryErr(data.success);
@@ -128,6 +130,7 @@ export const Fagartikler = () => {
     fetchCategories();
 
     return function cleanup() {
+      /** Linje 134-135: Lånt fra //Lånt fra: https://dev.to/otamnitram/react-useeffect-cleanup-how-and-when-to-use-it-2hbm */
       mounted = false;
       source.cancel();
     };
@@ -137,6 +140,9 @@ export const Fagartikler = () => {
     setCurrentPage(event.target.value);
   };
 
+  /** INSPIRASJON FRA https://blog.cloudboost.io/for-loops-in-react-render-no-you-didnt-6c9f4aa73778
+   * Iterer over lengden på antall sider i pagineringen og lager like mange pagelinks
+   */
   const createPageLinks = () => {
     const links = [];
 
@@ -164,8 +170,6 @@ export const Fagartikler = () => {
   const handleSearchTerm = (event) => {
     setSearchTerm(event.target.value);
   };
-
-  const uniqueKey = (index) => Math.random() * Math.PI + index;
 
   const history = useHistory();
   return (

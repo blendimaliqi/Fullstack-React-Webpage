@@ -3,7 +3,7 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import styled from 'styled-components';
 
-const NewCategoryButton = styled.button`
+const ExportButton = styled.button`
   background-color: #469fb9;
   border: 0;
   height: 50px;
@@ -39,8 +39,8 @@ export const ExportToExel = ({ csvData, fileName }) => {
    * og deretter aktiverer exportToCSV metoden.
    */
   return (
-    <NewCategoryButton onClick={(e) => exportToCSV(csvData, fileName)}>
+    <ExportButton onClick={(e) => exportToCSV(csvData, fileName)}>
       Export
-    </NewCategoryButton>
+    </ExportButton>
   );
 };

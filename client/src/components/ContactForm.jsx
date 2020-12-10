@@ -77,6 +77,7 @@ export const ContactForm = () => {
   const [name, setName] = useState();
 
   const [question, setQuestion] = useState();
+  /** BASERT PÅ FORELESERS EKSEMPLER */
   const { isLoggedIn, isAdmin } = useUserState();
 
   const [user, setUser] = useState();
@@ -114,6 +115,10 @@ export const ContactForm = () => {
     getUser();
   }, []);
 
+  /** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+   * Lager en toast som skal displayes hvis sending av mail er suksess
+   * @param {boolean} success
+   */
   const notifyInquirySentSuccess = (message) => {
     toast.success(`✅${message}`, {
       position: 'bottom-center',
@@ -173,6 +178,10 @@ export const ContactForm = () => {
 
           <SendButton onClick={handleSubmit}>Send</SendButton>
         </Form>
+        {/** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+         * Lager en toastcontainer som skal brukes for å displaye toasten på suksess
+         * @param {boolean} success
+         */}
         <ToastContainer
           position="bottom-center"
           autoClose={3000}

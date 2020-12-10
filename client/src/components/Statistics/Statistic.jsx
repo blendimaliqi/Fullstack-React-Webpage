@@ -8,7 +8,6 @@ import { ExportToExel } from './ExportToExel.jsx';
 
 const MainPage = styled.section`
   display: grid;
-  //justify-content: center;
   margin: 0 auto;
   width: 60%;
 `;
@@ -50,24 +49,19 @@ const ExportButtonContainer = styled.section`
   margin-bottom: 30px;
 `;
 
-const TotalView = styled.p`
-  padding: 0;
-  margin: 0;
-  margin-bottom: 20px;
-  font-weight: bold;
-`;
-
 export const Statistic = () => {
+  /** BASERT PÅ FORELESERS EKSEMPLER */
   const { isSuperAdmin, isLoggedIn } = useUserState();
   const [articleStats, setArticleStats] = useState();
   const [error, setError] = useState();
   const [dataSet, setDataSet] = useState([]);
 
   useEffect(() => {
+    /** Linje 61-62, 64, 78-79: Lånt fra //Lånt fra: https://dev.to/otamnitram/react-useeffect-cleanup-how-and-when-to-use-it-2hbm */
     const source = axios.CancelToken.source();
     let mounted = true;
     const fetchStats = async () => {
-      if (mounted) {
+      if (mounted) { // 64
         const { data, err } = await listArticleStats();
         if (data.success === false) {
           // console.log(data);
@@ -81,8 +75,8 @@ export const Statistic = () => {
     fetchStats();
 
     return function cleanup() {
-      mounted = false;
-      source.cancel();
+      mounted = false; // 78
+      source.cancel(); // 79
     };
   }, []);
 
@@ -104,7 +98,6 @@ export const Statistic = () => {
     const decimal = totalDivided - Math.floor(totalDivided);
     const seconds = Math.floor(decimal * 0.6 * 100);
     const minutes = Math.floor(totalDivided - decimal);
-    // console.log(minutes + " minutes and " + seconds + " seconds");
 
     return `${minutes} minutter og ${seconds} sekunder`;
   };

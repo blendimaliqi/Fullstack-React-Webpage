@@ -37,8 +37,6 @@ export const listArticleStats = async () => {
   }
 };
 
-
-
 /** BASERT PÅ FORELESERS EKSEMPLER
  * Axios api kall for å hente artikkel via id
  * @param {Arikkel} id - til artikkel som skal hentes

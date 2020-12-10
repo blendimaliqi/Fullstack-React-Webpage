@@ -7,7 +7,6 @@ import { listInbox } from '../../utils/mailService.js';
 
 const MainPage = styled.section`
   display: grid;
-  //justify-content: center;
   margin: 0 auto;
   width: 60%;
 `;
@@ -73,6 +72,7 @@ const Question = styled.p`
 `;
 
 export const Inbox = () => {
+  /** BASERT PÅ FORELESERS EKSEMPLER */
   const { isAdmin, isLoggedIn, isSuperAdmin } = useUserState();
   const [emails, setEmails] = useState();
   const [error, setError] = useState();
@@ -80,10 +80,11 @@ export const Inbox = () => {
   const [pagination, setPagination] = useState();
 
   useEffect(() => {
+    /** Linje 84-85, linje 87, 104-105: Lånt fra //Lånt fra: https://dev.to/otamnitram/react-useeffect-cleanup-how-and-when-to-use-it-2hbm */
     const source = axios.CancelToken.source();
     let mounted = true;
     const fetchEmails = async () => {
-      if (mounted) {
+      if (mounted) { // 87
         const { data, err } = await listInbox(5, currentPage);
         if (data.success === false) {
           // console.log(data);
@@ -100,8 +101,8 @@ export const Inbox = () => {
     fetchEmails();
 
     return function cleanup() {
-      mounted = false;
-      source.cancel();
+      mounted = false; // 104
+      source.cancel(); // 105
     };
   }, [currentPage]);
 
@@ -109,6 +110,9 @@ export const Inbox = () => {
     setCurrentPage(event.target.value);
   };
 
+  /** INSPIRASJON FRA https://blog.cloudboost.io/for-loops-in-react-render-no-you-didnt-6c9f4aa73778
+   * Iterer over lengden på antall sider i pagineringen og lager like mange pagelinks
+   */
   const createPageLinks = () => {
     const links = [];
 

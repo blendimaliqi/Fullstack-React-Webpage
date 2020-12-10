@@ -142,8 +142,10 @@ export const UpdateFagArtikkel = ({ history }) => {
   const [secret, setSecret] = useState(false);
   const [file, setFile] = useState(null);
   const [fileId, setFileId] = useState(null);
+  /** LÅNT REGEX FRA FORELESERS EKSEMPEL PÅ FILEFILTER */
   const fileTypes = /\.(jpeg|jpg|png)$/;
 
+  /** GJENBRUK FRA FORELESERS EKSEMPLER */
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
     setFormData((prev) => ({
@@ -152,6 +154,10 @@ export const UpdateFagArtikkel = ({ history }) => {
     }));
   };
 
+  /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/
+   * Lager et objekt som skal validere hvert felt, hvert felt er i utgangspunktet
+   * true, når lengden på feltet blir over null blir den false og blir valid (litt reverse logikk)
+   */
   const validateInput = (title, ingress, content, category, author) => ({
     title: title.length === 0,
     ingress: ingress.length === 0,
@@ -160,6 +166,10 @@ export const UpdateFagArtikkel = ({ history }) => {
     author: author.length === 0,
   });
 
+  /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/
+   * Funksjon som itererer over feltene i formData, hvis noen av feletene er true
+   * er button disabled, om alle er false blir button enabled
+   */
   const isValid = () => {
     const errors = validateInput(
       formData.title,
@@ -173,6 +183,7 @@ export const UpdateFagArtikkel = ({ history }) => {
     return !isDisabled;
   };
 
+  /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/ */
   const errors = validateInput(
     formData.title,
     formData.ingress,
@@ -181,8 +192,13 @@ export const UpdateFagArtikkel = ({ history }) => {
     formData.author
   );
 
+  /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/ */
   const isDisabled = Object.keys(errors).some((i) => errors[i]);
 
+  /** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+   * Lager en toast som skal displayes hvis oppdatering av artikkel er suksess
+   * @param {boolean} success
+   */
   const notifyUpdateSuccess = (message) => {
     toast.success(`✅${message}`, {
       position: 'bottom-center',
@@ -202,6 +218,7 @@ export const UpdateFagArtikkel = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/ */
     if (!isValid) {
       return;
     }
@@ -239,8 +256,6 @@ export const UpdateFagArtikkel = ({ history }) => {
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
-    // createCategoryFunction(modalCategory);
-    // setFormData((prev) => (prev.category, <option value={categoryObject._id}>{modalCategory}</option>)  )
     const categoryObject = {
       name: modalCategory,
     };
@@ -323,7 +338,11 @@ export const UpdateFagArtikkel = ({ history }) => {
         />
         <Label htmlFor="title">Tittel </Label>
         <Input
-          className={errors.title ? 'error' : ''}
+          className={
+            errors.title
+              ? 'error'
+              : '' /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/ */
+          }
           type="text"
           name="title"
           autoComplete="off"
@@ -332,7 +351,11 @@ export const UpdateFagArtikkel = ({ history }) => {
         />
         <Label htmlFor="ingress">Ingress </Label>
         <Input
-          className={errors.ingress ? 'error' : ''}
+          className={
+            errors.ingress
+              ? 'error'
+              : '' /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/ */
+          }
           type="text"
           name="ingress"
           autoComplete="off"
@@ -341,7 +364,11 @@ export const UpdateFagArtikkel = ({ history }) => {
         />
         <Label htmlFor="content">Innhold </Label>
         <Content
-          className={errors.content ? 'error' : ''}
+          className={
+            errors.content
+              ? 'error'
+              : '' /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/ */
+          }
           type="text"
           name="content"
           autoComplete="off"
@@ -354,7 +381,11 @@ export const UpdateFagArtikkel = ({ history }) => {
         <Label htmlFor="category">Label for kategori </Label>
         <CategoryWrapper>
           <select
-            className={errors.category ? 'error' : ''}
+            className={
+              errors.category
+                ? 'error'
+                : '' /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/ */
+            }
             name="category"
             onChange={updateValue}
           >
@@ -371,7 +402,11 @@ export const UpdateFagArtikkel = ({ history }) => {
         <Label htmlFor="author">Label for forfatter </Label>
         <AuthorWrapper>
           <select
-            className={errors.author ? 'error' : ''}
+            className={
+              errors.author
+                ? 'error'
+                : '' /** LÅNT KODE FRA:  https://goshakkk.name/instant-form-fields-validation-react/ */
+            }
             name="author"
             onChange={updateValue}
           >
@@ -440,6 +475,10 @@ export const UpdateFagArtikkel = ({ history }) => {
             Avbryt
           </CancleButton>
         </ButtonContainer>
+        {/** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+         * Lager toastcontainer som brukes for å displaye toast på suksess
+         * @param {boolean} success
+         */}
         <ToastContainer
           position="bottom-center"
           autoClose={3000}

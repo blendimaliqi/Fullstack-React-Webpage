@@ -58,7 +58,7 @@ const BtnContainer = styled.section`
 
 const DeleteBtn = styled.button`
   color: white;
-  background-color:#D14040;
+  background-color: #d14040;
   padding: 1.5rem 3rem;
   border: 0;
   outline: none;
@@ -71,7 +71,7 @@ const ArticleImage = styled.img`
 
 const EditBtn = styled.button`
   color: white;
-  background-color: #ADAD44;
+  background-color: #adad44;
   padding: 1.5rem 2.5rem;
   border: 0;
   outline: none;
@@ -87,19 +87,14 @@ export const ArticleDetails = ({ history }) => {
 
   const [src, setSrc] = useState(null);
   const [modalState, setModalState] = useState(false);
+
+  /** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+   * Lager en toast som skal displayes hvis sletting av artikkel er suksess
+   * @param {boolean} success
+   */
   const notify = (success) => {
     if (success) {
       toast.success(`✅Successfully deleted ${article.title}`, {
-        position: 'bottom-center',
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } else {
-      toast.error('❌ Failtd to delete article!', {
         position: 'bottom-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -132,6 +127,7 @@ export const ArticleDetails = ({ history }) => {
   };
 
   useEffect(() => {
+    /** BASERT PÅ EKSEMPLER FRA FORELESER */
     const download = async (imageId) => {
       const { data } = await downloadImage(imageId);
       const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
@@ -193,6 +189,8 @@ export const ArticleDetails = ({ history }) => {
             ) : (
               <BtnContainer />
             )}
+            {/* GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+             ToastContainer som brukes for å displayed toast */}
             <ToastContainer
               position="bottom-center"
               autoClose={3000}

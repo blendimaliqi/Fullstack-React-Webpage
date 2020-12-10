@@ -52,12 +52,18 @@ const ErrorContainer = styled.section`
 `;
 
 export const LoginForm = ({ history }) => {
+  /** BASERT PÅ FORELESERS EKSEMPLER */
   const { setUser, isLoggedIn } = useUserState();
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState(null);
+
+  /** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+   * Lager en toast som skal displayes hvis log in er suksess
+   * @param {boolean} success
+   */
   const notifyLoginSuccess = (message) => {
     toast.success(`✅${message}`, {
       position: 'bottom-center',
@@ -70,6 +76,7 @@ export const LoginForm = ({ history }) => {
     });
   };
 
+  /** GJENBRUK FRA FORELESERS EKSEMPLER */
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
     setLoginData((prev) => ({
@@ -89,14 +96,11 @@ export const LoginForm = ({ history }) => {
         setError(Array.from(data.message));
       } else {
         const user = data?.user;
-        // setUser({ ...user });
         setUser({ user });
         setError(null);
         notifyLoginSuccess(data?.loginMessage);
         setTimeout(() => {history.push('/')}, 2000);
       }
-
-      // alert(`Logget inn som: ${data.user.email}`);
     };
 
     login();
@@ -105,7 +109,6 @@ export const LoginForm = ({ history }) => {
   return (
     <Form onSubmit={handleLogin}>
       <ErrorContainer>
-        {/* error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage /> */}
         {error &&
           error.map((err, index) => (
             <ErrorMessage key={(index + 1) * Math.random()}>
@@ -130,6 +133,10 @@ export const LoginForm = ({ history }) => {
       <BtnContainer>
         <SumbitBtn>Logg inn</SumbitBtn>
       </BtnContainer>
+      {/** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+       * Lager en toastcontainer som skal brukes til å displaye toast ved suksess
+       * @param {boolean} success
+       */}
       <ToastContainer
         position="bottom-center"
         autoClose={3000}

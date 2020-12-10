@@ -253,8 +253,6 @@ const Office = () => {
     },
   ]);
 
-  const [offices, setOffices] = useState([]);
-
   const [gridView, setGridView] = useState(true);
   const [listView, setListView] = useState(false);
 

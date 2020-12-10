@@ -52,6 +52,7 @@ const ErrorContainer = styled.section`
 `;
 
 export const SignupForm = ({ history }) => {
+  /** BASERT PÅ FORELESERS EKSEMPLER */
   const { setUser } = useUserState();
   const [registerData, setRegisterData] = useState({
     name: '',
@@ -61,6 +62,7 @@ export const SignupForm = ({ history }) => {
   });
   const [error, setError] = useState(null);
 
+  /** GJENBRUK FRA FORELESERS EKSEMPLER */
   const updateValue = (event) => {
     const inputValue = { [event.target.name]: event.target.value };
     setRegisterData((prev) => ({
@@ -69,6 +71,10 @@ export const SignupForm = ({ history }) => {
     }));
   };
 
+  /** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+   * Lager en toast som skal displayes hvis registrering av bruker er suksess
+   * @param {boolean} success
+   */
   const notifyRegisterSuccess = (message) => {
     toast.success(`✅${message}`, {
       position: 'bottom-center',
@@ -106,7 +112,6 @@ export const SignupForm = ({ history }) => {
   return (
     <Form onSubmit={handleRegister}>
       <ErrorContainer>
-        {/* error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage /> */}
         {error &&
           error.map((err, index) => (
             <ErrorMessage key={(index + 1) * Math.random()}>
@@ -138,6 +143,10 @@ export const SignupForm = ({ history }) => {
       <BtnContainer>
         <SumbitBtn>Registrer</SumbitBtn>
       </BtnContainer>
+      {/** GENERERT KODE FRA https://fkhadra.github.io/react-toastify/introduction/#the-playground
+       * Lager en toast som skal displayes hvis registrering av bruker er suksess
+       * @param {boolean} success
+       */}
       <ToastContainer
         position="bottom-center"
         autoClose={3000}

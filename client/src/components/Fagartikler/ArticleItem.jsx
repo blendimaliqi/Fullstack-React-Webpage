@@ -70,6 +70,7 @@ export const ArticleItem = ({
   useEffect(() => {
     const download = async () => {
       if (imageSrc) {
+        /** BASERT PÅ FORELESERS EKSEMPLER */
         const { data } = await downloadImage(imageSrc);
         const imgUrl = `${process.env.BASE_URL}/${data?.data?.imagePath}`;
         console.log(`${data?.data?.imagePath}`);

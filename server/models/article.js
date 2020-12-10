@@ -63,27 +63,4 @@ ArticleSchema.index({
   title: 'text',
 });
 
-/** GJENBRUK FRA FORELESERS EKSEMPLER */
-/* ArticleSchema.statics.calcAverageAttendees = async function () {
-  const average = await this.aggregate([
-    {
-      $group: {
-        _id: '$active',
-        avgClicks: { $avg: '$clicks' },
-        //sumClicks: { $sum: '$clicks'},
-      },
-    },
-  ]);
-  await this.updateMany(
-    {},
-    { $set: { clicksAvg: average[0].avgClicks } },
-    //{ $inc: { clicks: 1 } },
-  );
-};
-
-ArticleSchema.post('save', async function () {
-  await this.constructor.calcAverageAttendees();
-});
-*/
-
 export default mongoose.model('Article', ArticleSchema);
