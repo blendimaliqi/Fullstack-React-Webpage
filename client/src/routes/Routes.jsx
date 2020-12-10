@@ -12,8 +12,8 @@ import NewArticlePage from '../pages/NewArticlePage';
 import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
 import Signup from '../pages/Signup';
-import Inbox from '../components/Inbox/Inbox.jsx';
-import Statistic from '../components/Statistics/Statistic';
+import InboxPage from '../pages/InboxPage.jsx';
+import StatisticsPage from '../pages/StatisticsPage.jsx';
 import UpdateFagArtikkelPage from '../pages/UpdateFagArtikkelPage';
 
 const Routes = () => (
@@ -51,10 +51,10 @@ const Routes = () => (
           <Signup />
         </Route>
         <Route exact path="/useremails">
-          <Inbox />
+          <InboxPage />
         </Route>
         <Route exact path="/stats">
-          <Statistic />
+          <StatisticsPage />
         </Route>
         <Route path="*">
           <NoMatch />
