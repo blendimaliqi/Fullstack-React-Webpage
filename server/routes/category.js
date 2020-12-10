@@ -1,5 +1,6 @@
 import express from 'express';
 import { categoryController } from '../controllers/index.js';
+import { isAuthenticated, isAuthorized } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -7,8 +8,14 @@ const router = express.Router();
  * Category ruter, get(liste kategorier) post(lage kategori),
  * get(hente kategori basert på id)
  */
+const roles = ['admin', 'superadmin'];
 router.get('/:id', categoryController.get);
 router.get('/', categoryController.list);
-router.post('/', categoryController.create);
+router.post(
+  '/',
+  isAuthenticated,
+  isAuthorized(roles),
+  categoryController.create
+);
 
 export default router;
