@@ -85,6 +85,7 @@ const Login = styled.p`
   }
 `;
 
+/** INSPIRERT FRA FORELESERS EKSEMPLER */
 const Nav = () => {
   const { isLoggedIn, isAdmin, setUser, isSuperAdmin } = useUserState();
 

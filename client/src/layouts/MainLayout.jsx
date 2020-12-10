@@ -14,6 +14,9 @@ const Container = styled.section`
   min-height: 100%;
 `;
 
+/** GJENBRUKT FRA FORELESERS EKSEMPEL
+ * @param {children} - Den renderer barne elementer
+ */
 const MainLayout = ({ children }) => (
   <Container>
     <GlobalStyle />
