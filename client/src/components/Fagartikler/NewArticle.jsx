@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import Banner from '../components/Banner';
-import ModalCategory from '../components/Fagartikler/ModalCategory';
-import { create } from '../utils/articleService.js';
-import { getCurrentUser } from '../utils/loginService.js';
-import { listCategories, createCategory } from '../utils/categoryService.js';
-import { listAuthors } from '../utils/authorService.js';
-import { uploadImage } from '../utils/imageService.js';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Banner from '../Banner';
+import ModalCategory from './ModalCategory';
+import { create } from '../../utils/articleService.js';
+import { getCurrentUser } from '../../utils/loginService.js';
+import { listCategories, createCategory } from '../../utils/categoryService.js';
+import { listAuthors } from '../../utils/authorService.js';
+import { uploadImage } from '../../utils/imageService.js';
 
 const Input = styled.input`
   border: 1px solid black;
@@ -46,21 +48,6 @@ const NyArtikkelButton = styled.button`
   width: 140px;
   font-weight: bold;
   font-size: 1, 8rem;
-  max-height: 4rem;
-  align-items: center;
-  margin-right: 1.3rem;
-  color: white;
-`;
-
-const NyArtikkelButtonDisabled = styled.button`
-  display: flex;
-  background-color: #9b9b9b;
-  padding: 1.5rem 2.7rem;
-  opacity: 0.7;
-  border: 0;
-  width: 140px;
-  font-weight: bold;
-  font-size: 0.6rem;
   max-height: 4rem;
   align-items: center;
   margin-right: 1.3rem;
@@ -129,7 +116,6 @@ export const NewArticle = ({ history }) => {
   const [category, setCategory] = useState();
   const [author, setAuthor] = useState();
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('category');
   const [modalCategory, setModalCategory] = useState();
   const [secret, setSecret] = useState(false);
   const [file, setFile] = useState(null);
@@ -175,6 +161,18 @@ export const NewArticle = ({ history }) => {
 
   const isDisabled = Object.keys(errors).some((i) => errors[i]);
 
+  const notifyCreationSuccess = (message) => {
+    toast.success(`✅${message}`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const createArticle = async (inputData) => {
     const { data } = await create(inputData);
     console.log(data);
@@ -192,19 +190,26 @@ export const NewArticle = ({ history }) => {
         console.log(data.message);
         setError(data.message);
       } else {
-        console.log('SE HER', data?.data?.id);
-        setFileId(data?.data?.id);
+        console.log('SE HER', data?.id);
+        console.log('MESSAGE', data.message);
+        setFileId(data?.data.id);
         setError(null);
-        const id = data?.data?.id;
+        const id = data?.data.id;
         const object = { secret, image: id };
         createArticle({ ...formData, ...object });
+        notifyCreationSuccess(
+          `Artikkel: ${formData.title} opprettet med bilde`
+        );
       }
     } else {
       createArticle({ ...formData, secret });
+      notifyCreationSuccess(`Artikkel: ${formData.title} opprettet uten bilde`);
     }
 
     console.log('FORMDATA I SUBMIT', formData);
-    history.push('/fagartikler');
+    setTimeout(() => {
+      history.push('/fagartikler');
+    }, 3000);
   };
 
   const showModal = (e) => {
@@ -274,7 +279,7 @@ export const NewArticle = ({ history }) => {
 
   return (
     <>
-      <Banner title="Ny Artikkel" />
+      <Banner title="Oppdater artikkel" />
       <InputWrapper onSubmit={handleSubmit} encType="multipart/form-data">
         <ModalCategory
           state={state}
@@ -391,6 +396,17 @@ export const NewArticle = ({ history }) => {
         >
           CREATE
         </NyArtikkelButton>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </InputWrapper>
     </>
   );

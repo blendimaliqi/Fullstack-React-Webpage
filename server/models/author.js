@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
+/** FORFATTER MODELL */
 const AuthorSchema = new Schema(
   {
     name: {

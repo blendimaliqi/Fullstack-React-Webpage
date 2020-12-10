@@ -34,7 +34,7 @@ const BlackBox = styled.section`
   padding: 3px;
 `;
 
-const ListItem = ({ index, name, adress, phone, location, history }) => {
+const ListItem = ({ index, name, adress, phone, thelocation, history }) => {
   const { id } = useParams();
 
   return (
@@ -43,7 +43,7 @@ const ListItem = ({ index, name, adress, phone, location, history }) => {
       <Name>{`${name} ${index + 1}`}</Name>
       <Paragraph>{`${adress} ${index + 1}`}</Paragraph>
       <Paragraph>{phone}</Paragraph>
-      <Paragraph>{`${location}${index + 1}@epost.no`}</Paragraph>
+      <Paragraph>{`${thelocation}${index + 1}@epost.no`}</Paragraph>
     </Container>
   );
 };

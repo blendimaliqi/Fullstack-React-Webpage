@@ -168,7 +168,6 @@ export const Fagartikler = () => {
   const uniqueKey = (index) => Math.random() * Math.PI + index;
 
   const history = useHistory();
-
   return (
     <>
       <Banner title="Fagartikler" />

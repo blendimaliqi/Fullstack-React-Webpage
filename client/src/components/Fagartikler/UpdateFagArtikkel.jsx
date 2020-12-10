@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Banner from '../Banner.jsx';
 import ModalCategory from './ModalCategory';
 import { updateArticle, get } from '../../utils/articleService.js';
@@ -53,19 +55,24 @@ const NyArtikkelButton = styled.button`
   color: white;
 `;
 
-const NyArtikkelButtonDisabled = styled.button`
+const CancleButton = styled.button`
   display: flex;
-  background-color: #9b9b9b;
   padding: 1.5rem 2.7rem;
-  opacity: 0.7;
   border: 0;
   width: 140px;
   font-weight: bold;
-  font-size: 0.6rem;
+  font-size: 1, 8rem;
   max-height: 4rem;
   align-items: center;
   margin-right: 1.3rem;
   color: white;
+  background-color: #D14040;
+`;
+
+const ButtonContainer = styled.section`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-space-around;
 `;
 
 const NewCategoryButton = styled.button`
@@ -135,7 +142,6 @@ export const UpdateFagArtikkel = ({ history }) => {
   const [secret, setSecret] = useState(false);
   const [file, setFile] = useState(null);
   const [fileId, setFileId] = useState(null);
-  const [selectedCat, setSelectedCat] = useState(null);
   const fileTypes = /\.(jpeg|jpg|png)$/;
 
   const updateValue = (event) => {
@@ -144,8 +150,6 @@ export const UpdateFagArtikkel = ({ history }) => {
       ...prev,
       ...inputValue,
     }));
-
-    setSelectedCat(formData.category);
   };
 
   const validateInput = (title, ingress, content, category, author) => ({
@@ -179,6 +183,18 @@ export const UpdateFagArtikkel = ({ history }) => {
 
   const isDisabled = Object.keys(errors).some((i) => errors[i]);
 
+  const notifyUpdateSuccess = (message) => {
+    toast.success(`✅${message}`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const update = async (articleId, inputData) => {
     const { data } = await updateArticle(articleId, inputData);
     console.log(data);
@@ -202,14 +218,18 @@ export const UpdateFagArtikkel = ({ history }) => {
         const imdageId = data?.data?.id;
         const object = { secret, image: imdageId };
         update(id, { ...formData, ...object });
+        notifyUpdateSuccess(`Artikkel: ${formData.title} oppdatert`);
       }
     } else {
       update(id, { ...formData, secret });
+      notifyUpdateSuccess(`Artikkel: ${formData.title} oppdatert`);
       console.log(formData);
     }
 
     console.log('FORMDATA I SUBMIT', formData);
-    history.push('/fagartikler');
+    setTimeout(() => {
+      history.push('/fagartikler');
+    }, 3000);
   };
 
   const showModal = (e) => {
@@ -256,7 +276,7 @@ export const UpdateFagArtikkel = ({ history }) => {
         setError(data.success);
         console.log('fikk feil');
       } else {
-        setFormData(data);
+        setFormData(data.dataArticle);
         console.log(data.category);
       }
     };
@@ -293,7 +313,7 @@ export const UpdateFagArtikkel = ({ history }) => {
 
   return (
     <>
-      <Banner title="Ny Artikkel" />
+      <Banner title={`Oppdater: ${formData.title}`} />
       <InputWrapper onSubmit={handleSubmit} encType="multipart/form-data">
         <ModalCategory
           state={state}
@@ -337,7 +357,6 @@ export const UpdateFagArtikkel = ({ history }) => {
             className={errors.category ? 'error' : ''}
             name="category"
             onChange={updateValue}
-            value={selectedCat}
           >
             {category &&
               category.map((categoryItem) => (
@@ -403,14 +422,35 @@ export const UpdateFagArtikkel = ({ history }) => {
             <Error />
           )}
         </SecretWrapper>
-        <NyArtikkelButton
-          style={{
-            backgroundColor: !isDisabled ? '#53a5be' : '#DBDBDB',
-          }}
-          disabled={isDisabled}
-        >
-          LAGRE
-        </NyArtikkelButton>
+        <ButtonContainer>
+          <NyArtikkelButton
+            style={{
+              backgroundColor: !isDisabled ? '#53a5be' : '#DBDBDB',
+            }}
+            disabled={isDisabled}
+          >
+            LAGRE
+          </NyArtikkelButton>
+          <CancleButton
+            onClick={(event) => {
+              event.preventDefault();
+              history.push(`/fagartikler/${id}`);
+            }}
+          >
+            Avbryt
+          </CancleButton>
+        </ButtonContainer>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </InputWrapper>
     </>
   );

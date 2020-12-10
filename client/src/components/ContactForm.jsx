@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import { useUserState } from '../context/UserProvider';
 import { get } from '../utils/articleService';
 import { getCurrentUser } from '../utils/loginService';
-import {sendMailToUser, sendMailToAdmin} from '../utils/mailService.js';
+import { sendMailToUser, sendMailToAdmin } from '../utils/mailService.js';
 
 const ContactSchema = styled.section`
-display: flex;
-justify-content:center;
+  display: flex;
+  justify-content: center;
   width: 90%;
   height: 300px;
   margin: 0 auto;
@@ -66,7 +67,7 @@ const BoxSection = styled.section`
   }
 `;
 
-const KontaktSkjema = styled.p `
+const KontaktSkjema = styled.p`
   font-size: 35px;
   border-bottom: 1px solid black;
 `;
@@ -93,59 +94,96 @@ export const ContactForm = () => {
   };
 
   const epostObject = {
-    name: name,
-    email: email,
-    question: question,
-  }
-
-
+    name,
+    email,
+    question,
+  };
 
   useEffect(() => {
     const getUser = async () => {
-      try{
-        const { data } =  await getCurrentUser();
+      try {
+        const { data } = await getCurrentUser();
         setUser(data.data);
         setEmail(data.data.email);
         setName(data.data.name);
-      }catch (err) {
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
-    }
+    };
 
     getUser();
   }, []);
 
+  const notifyInquirySentSuccess = (message) => {
+    toast.success(`✅${message}`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const sendAsync = async () =>  {
-     await sendMailToUser(epostObject);
-     await sendMailToAdmin(epostObject); 
-    }
+    const sendAsync = async () => {
+      const { data } = await sendMailToUser(epostObject);
+      await sendMailToAdmin(epostObject);
+      if (data.success) {
+        notifyInquirySentSuccess(data?.message);
+      }
+    };
     sendAsync();
-  }
+  };
 
   return (
-    <ContactSchema >
+    <ContactSchema>
       <BoxSection>
         <KontaktSkjema>Kontaktskjema</KontaktSkjema>
         <Form>
-        {isLoggedIn && name?.length !=0 &&
-          <input defaultValue={name} type="text" />
-          }
-          {!isLoggedIn && 
-          <input defaultValue="" onChange={handleNameChange} placeholder="Navn" type="text" />
+          {isLoggedIn && name?.length !== 0 && (
+            <input defaultValue={name} type="text" />
+          )}
+          {!isLoggedIn && (
+            <input
+              defaultValue=""
+              onChange={handleNameChange}
+              placeholder="Navn"
+              type="text"
+            />
+          )}
+          {isLoggedIn && email?.length !== 0 && (
+            <input defaultValue={email} type="text" />
+          )}
+          {!isLoggedIn && (
+            <input
+              defaultValue=""
+              onChange={handleEmailChange}
+              placeholder="E-post"
+              type="text"
+            />
+          )}
+          <textarea
+            type="text"
+            placeholder="Hendvendelse"
+            onChange={handleChange}
+          />
 
-          }
-          {isLoggedIn && email?.length !=0 &&
-          <input defaultValue={email} type="text" />
-          }
-          {!isLoggedIn &&
-          <input defaultValue="" onChange={handleEmailChange} placeholder="E-post" type="text" />
-          }
-          <textarea type="text" placeholder="Hendvendelse" onChange={handleChange} />
-            
           <SendButton onClick={handleSubmit}>Send</SendButton>
         </Form>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </BoxSection>
     </ContactSchema>
   );

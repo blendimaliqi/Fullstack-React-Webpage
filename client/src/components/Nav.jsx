@@ -86,24 +86,24 @@ const Login = styled.p`
   }
 
   & :hover {
-    background-color:  #81d1e9;
+    background-color: #81d1e9;
   }
 `;
 
+/** INSPIRERT FRA FORELESERS EKSEMPLER */
 const Nav = () => {
   const { isLoggedIn, isAdmin, setUser, isSuperAdmin } = useUserState();
 
   const logout = async () => {
     await logoutPost();
-    setUser(null); 
+    setUser(null);
   };
-
 
   return (
     <StyledNav>
       <Title>
         <NavLink exact to="/" activeClassName="active">
-          FG
+          LG
         </NavLink>
       </Title>
       <NavMenu>
@@ -127,25 +127,27 @@ const Nav = () => {
             Kontakt
           </NavLink>
         </NavMenuItem>
-        { ( isAdmin || isSuperAdmin )  && (
-        <NavMenuItem>
-        <NavLink exact to="/useremails" activeClassName="active">
-          Inbox
-        </NavLink>
-      </NavMenuItem>
+        {(isAdmin || isSuperAdmin) && (
+          <NavMenuItem>
+            <NavLink exact to="/useremails" activeClassName="active">
+              Inbox
+            </NavLink>
+          </NavMenuItem>
         )}
-        {isSuperAdmin  && (
-        <NavMenuItem>
-        <NavLink exact to="/stats" activeClassName="active">
-          Statistikk
-        </NavLink>
-      </NavMenuItem>
+        {isSuperAdmin && (
+          <NavMenuItem>
+            <NavLink exact to="/stats" activeClassName="active">
+              Statistikk
+            </NavLink>
+          </NavMenuItem>
         )}
-        <NavMenuItem>
-          <NavLink exact to="/registrer" activeClassName="active">
-            <Login>Registrer</Login>
-          </NavLink>
-        </NavMenuItem>
+        {!isLoggedIn && (
+          <NavMenuItem>
+            <NavLink exact to="/registrer" activeClassName="active">
+              Registrer
+            </NavLink>
+          </NavMenuItem>
+        )}
         {!isLoggedIn && (
           <NavMenuItem>
             <NavLink exact to="/login" activeClassName="active">

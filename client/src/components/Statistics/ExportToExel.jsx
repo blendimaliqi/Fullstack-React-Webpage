@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import styled from 'styled-components';
@@ -16,30 +16,31 @@ const NewCategoryButton = styled.button`
 /** GJENBRUK FOR EXPORT KOMPONENTEN HENTET FRA : https://technicaaadda.blogspot.com/2020/11/export-data-to-excel-using-react.html
  * Bruker bibloteker file-saver og xlsx. xlsx håndterer overføringen fra dataSet objektvariabelene til csv data
  * som brukes til å opprette excel fil av Filesaver der den tar imot den modifiserte dataen fra xlsx med navnet vi har gitt filen
- * og fileextension for filtype excel. 
- * 
+ * og fileextension for filtype excel.
+ *
  * @param  csvData data vi lager utifra applikasjonen og sender inn i metoden
  * @param fileName filnavnet på filen som opprettes
  */
-export const ExportToExel = ({csvData, fileName}) => {
+export const ExportToExel = ({ csvData, fileName }) => {
+  const fileType =
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 
-    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  const fileExtension = '.xlsx';
 
-    const fileExtension = '.xlsx';
-
-    const exportToCSV = (csvData, fileName) => {
-        const ws = XLSX.utils.json_to_sheet(csvData);
-        const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        const data = new Blob([excelBuffer], {type: fileType});
-        FileSaver.saveAs(data, fileName + fileExtension);
-    }
-    /**
-     * Komponenten returnerer en button som tar imot data og filnavn på onclick
-     * og deretter aktiverer exportToCSV metoden. 
-     */
-    return (
-        <NewCategoryButton  onClick={(e) => exportToCSV(csvData,fileName)}>Export</NewCategoryButton>
-    )
+  const exportToCSV = (csvData, fileName) => {
+    const ws = XLSX.utils.json_to_sheet(csvData);
+    const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, fileName + fileExtension);
+  };
+  /**
+   * Komponenten returnerer en button som tar imot data og filnavn på onclick
+   * og deretter aktiverer exportToCSV metoden.
+   */
+  return (
+    <NewCategoryButton onClick={(e) => exportToCSV(csvData, fileName)}>
+      Export
+    </NewCategoryButton>
+  );
 };
-

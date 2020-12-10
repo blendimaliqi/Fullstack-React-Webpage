@@ -1,5 +1,11 @@
 import ErrorHandler from '../utils/errorHandler.js';
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER
+ * Global errorhåndtering.
+ * Hvis i dev returner komplett info om error.
+ * Hvis i prod håndter spesifikk errors og returner custom
+ * tilbakemelding ved hjelp av ErrorHandler klassen
+ */
 export default (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
 
@@ -28,7 +34,7 @@ export default (err, req, res, next) => {
 
     if (err.code === 11000) {
       const message = `Duplikat av ${Object.keys(err.keyValue)}`;
-      error = new ErrorHandler(message, 400);
+      error = new ErrorHandler(message, 409);
     }
 
     res.status(error.statusCode).json({

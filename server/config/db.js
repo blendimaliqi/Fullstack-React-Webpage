@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+/** GJENBRUK FRA FORELESERS EKSEMPLER
+ * Konfigurasjon av database tilkobling
+ */
 const connectDatabase = async () => {
   let dbCon;
   try {

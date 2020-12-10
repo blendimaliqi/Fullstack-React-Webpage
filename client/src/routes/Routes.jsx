@@ -5,15 +5,15 @@ import { Footer } from '../components/Footer';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
 import OfficeDetail from '../components/OfficeDetail/OfficeDetail';
-import Office from '../pages/Office';
+import OfficePage from '../pages/OfficePage.jsx';
 import { Contact } from '../pages/Contact';
 import FagartiklerPage from '../pages/FagartiklerPage';
-import NewArticle from '../pages/NewArticle';
+import NewArticlePage from '../pages/NewArticlePage';
 import ArticleDetails from '../components/Article Details/ArticleDetails';
 import Login from '../pages/Login.jsx';
 import Signup from '../pages/Signup';
-import Inbox from '../components/Inbox/Inbox.jsx';
-import Statistic from '../components/Statistics/Statistic';
+import InboxPage from '../pages/InboxPage.jsx';
+import StatisticsPage from '../pages/StatisticsPage.jsx';
 import UpdateFagArtikkelPage from '../pages/UpdateFagArtikkelPage';
 import { Fagartikler } from '../components/Fagartikler/Fagartikler';
 
@@ -28,7 +28,7 @@ const Routes = () => (
           <Contact />
         </Route>
         <Route exact path="/kontorer">
-          <Office />
+          <OfficePage />
         </Route>
         <Route exact path="/kontorer/:id">
           <OfficeDetail />
@@ -40,7 +40,7 @@ const Routes = () => (
           <ArticleDetails />
         </Route>
         <Route exact path="/nyartikkel">
-          <NewArticle />
+          <NewArticlePage />
         </Route>
         <Route exact path="/fagartikler/:id/:id">
           <UpdateFagArtikkelPage />
@@ -52,11 +52,11 @@ const Routes = () => (
           <Signup />
         </Route>
         <Route exact path="/useremails">
-          <Inbox />
+          <InboxPage />
         </Route>
         <Route exact path="/stats">
-           <Statistic />
-         </Route>
+          <StatisticsPage />
+        </Route>
         <Route path="*">
           <NoMatch />
         </Route>

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
+/** MAIL MODELL */
 const MailSchema = new Schema(
   {
     name: {

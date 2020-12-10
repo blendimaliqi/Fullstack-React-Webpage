@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useUserState } from '../../context/UserProvider.jsx';
 import { get, deleteArticle } from '../../utils/articleService.js';
 import { downloadImage } from '../../utils/imageService.js';
@@ -21,11 +23,6 @@ const Ingress = styled.section`
 const SubTitleContainer = styled.section`
   display: flex;
   flex-direction: column;
-`;
-
-const SubTitle = styled.h2`
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
 `;
 
 const SubTitleParagraph = styled.p`
@@ -61,7 +58,7 @@ const BtnContainer = styled.section`
 
 const DeleteBtn = styled.button`
   color: white;
-  background-color: tomato;
+  background-color:#D14040;
   padding: 1.5rem 3rem;
   border: 0;
   outline: none;
@@ -74,7 +71,7 @@ const ArticleImage = styled.img`
 
 const EditBtn = styled.button`
   color: white;
-  background-color: olive;
+  background-color: #ADAD44;
   padding: 1.5rem 2.5rem;
   border: 0;
   outline: none;
@@ -90,12 +87,39 @@ export const ArticleDetails = ({ history }) => {
 
   const [src, setSrc] = useState(null);
   const [modalState, setModalState] = useState(false);
+  const notify = (success) => {
+    if (success) {
+      toast.success(`✅Successfully deleted ${article.title}`, {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.error('❌ Failtd to delete article!', {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   const handleModalSubmit = async (e) => {
     e.preventDefault();
 
     await deleteArticle(id);
-    history.push('/fagartikler');
+    setModalState(false);
+    notify(true);
+    setTimeout(() => {
+      history.push('/fagartikler');
+    }, 3000);
   };
 
   const showModal = (e) => {
@@ -106,7 +130,6 @@ export const ArticleDetails = ({ history }) => {
   const closeModal = () => {
     setModalState(false);
   };
-
 
   useEffect(() => {
     const download = async (imageId) => {
@@ -122,8 +145,8 @@ export const ArticleDetails = ({ history }) => {
         setError(data.success);
         console.log('fikk feil');
       } else {
-        if (data.image) {
-          download(data.image);
+        if (data.dataArticle.image) {
+          download(data.dataArticle.image);
         }
         setArticle(data.dataArticle);
         setClicks(data.dataClicks);
@@ -170,6 +193,17 @@ export const ArticleDetails = ({ history }) => {
             ) : (
               <BtnContainer />
             )}
+            <ToastContainer
+              position="bottom-center"
+              autoClose={3000}
+              hideProgressBar
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
           </Container>
         </>
       )}

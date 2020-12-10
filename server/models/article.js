@@ -43,7 +43,7 @@ const ArticleSchema = new Schema(
     secret: {
       type: Boolean,
     },
-      image: {
+    image: {
       type: mongoose.Schema.ObjectId,
       ref: 'Image',
       required: false,
@@ -53,19 +53,18 @@ const ArticleSchema = new Schema(
     },
     clicksAvg: {
       type: Number,
-    }
-
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-
-
+/** BASERT PÅ FORELESERS EKSEMPLER */
 ArticleSchema.index({
   title: 'text',
 });
 
-/*ArticleSchema.statics.calcAverageAttendees = async function () {
+/** GJENBRUK FRA FORELESERS EKSEMPLER */
+/* ArticleSchema.statics.calcAverageAttendees = async function () {
   const average = await this.aggregate([
     {
       $group: {

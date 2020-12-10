@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {registerPost} from '../../utils/registerService.js';
+import { withRouter } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { registerPost } from '../../utils/registerService.js';
 import { useUserState } from '../../context/UserProvider.jsx';
 
 const Input = styled.input`
@@ -48,82 +51,106 @@ const ErrorContainer = styled.section`
   width: 60%;
 `;
 
-export const SignupForm = () => {
+export const SignupForm = ({ history }) => {
+  const { setUser } = useUserState();
+  const [registerData, setRegisterData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'user',
+  });
+  const [error, setError] = useState(null);
 
-    const { setUser } = useUserState();
-    const [registerData, setRegisterData] = useState({
-      name: '',
-      email: '',
-      password: '',
-      role: 'user'
+  const updateValue = (event) => {
+    const inputValue = { [event.target.name]: event.target.value };
+    setRegisterData((prev) => ({
+      ...prev,
+      ...inputValue,
+    }));
+  };
+
+  const notifyRegisterSuccess = (message) => {
+    toast.success(`✅${message}`, {
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
     });
-    const [error, setError] = useState(null);
-  
-    const updateValue = (event) => {
-      const inputValue = { [event.target.name]: event.target.value };
-      setRegisterData((prev) => ({
-        ...prev,
-        ...inputValue,
-      }));
+  };
+
+  const handleRegister = (event) => {
+    event.preventDefault();
+
+    const register = async () => {
+      const { data } = await registerPost(registerData);
+      console.log(data);
+      if (!data.success) {
+        console.log(data.message);
+        setError(Array.from(data.message));
+      } else {
+        const user = data?.user;
+        setUser({ user });
+        setError(null);
+        notifyRegisterSuccess(data?.message);
+        setTimeout(() => {
+          history.push('/');
+        }, 3000);
+      }
     };
-  
-    const handleRegister = (event) => {
-      event.preventDefault();
-  
-      const register = async () => {
-        const { data } = await registerPost(registerData);
-        console.log(data);
-        if (!data.success) {
-          console.log(data.message);
-          setError(Array.from(data.message));
-        } else {
-          const user = data?.user;
-          setUser({user});
-          setError(null);
-        }
-      };
-      register();
-    };
-  
-  
+    register();
+  };
 
+  return (
+    <Form onSubmit={handleRegister}>
+      <ErrorContainer>
+        {/* error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage /> */}
+        {error &&
+          error.map((err, index) => (
+            <ErrorMessage key={(index + 1) * Math.random()}>
+              {err.message}
+            </ErrorMessage>
+          ))}
+      </ErrorContainer>
+      <Input
+        name="name"
+        type="text"
+        placeholder="Navn.."
+        value={registerData.name}
+        onChange={updateValue}
+      />
+      <Input
+        name="email"
+        type="text"
+        placeholder="Brukernavn.."
+        value={registerData.email}
+        onChange={updateValue}
+      />
+      <Input
+        name="password"
+        type="password"
+        placeholder="Passord.."
+        value={registerData.password}
+        onChange={updateValue}
+      />
+      <BtnContainer>
+        <SumbitBtn>Registrer</SumbitBtn>
+      </BtnContainer>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </Form>
+  );
+};
 
-    return (
-        <Form onSubmit={handleRegister}>
-          <ErrorContainer>
-            {/*error ? <ErrorMessage>{error}</ErrorMessage> : <ErrorMessage />*/}
-            {error && (
-              error.map((err, index) => (
-              <ErrorMessage key={(index + 1) * Math.random()}>{err.message}</ErrorMessage>
-              ))
-            )}
-          </ErrorContainer>
-          <Input
-            name="name"
-            type="text"
-            placeholder="Navn.."
-            value={registerData.name}
-            onChange={updateValue}
-          />
-          <Input
-            name="email"
-            type="text"
-            placeholder="Brukernavn.."
-            value={registerData.email}
-            onChange={updateValue}
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder="Passord.."
-            value={registerData.password}
-            onChange={updateValue}
-          />
-          <BtnContainer>
-            <SumbitBtn>Registrer</SumbitBtn>
-          </BtnContainer>
-        </Form>
-      );
-}
-
-export default SignupForm; 
+export default withRouter(SignupForm);
