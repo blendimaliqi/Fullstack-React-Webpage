@@ -1,10 +1,6 @@
 # ITF31619-Webapplikasjoner
 #### Eksamen i webapplikasjoner 2020
 
-##### Deltagere:
-- Blendi Maliqi(183590)
-- Kristoffer Mienna(172750)
-
 ## For å få applikasjonen vår i gang:
 Trenger å ha lastet ned yarn, mongodb og mongodbCompass (hvis det er preferert) og det er viktig at node verjonen er under 15 
 (grunnet toaster biblotek som ikke er kompatibel med nyeste node versjon som kom ut i oktober 2020). 
